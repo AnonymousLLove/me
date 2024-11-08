@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:love_bird/homeScreen/homeScreen2.dart';
+import 'package:love_bird/homeScreen/homeScreen.dart';
 
 String selectedMinHeight = "No minimum"; // Default value
 String selectedMaxHeight = "No maximum"; //
@@ -204,7 +204,7 @@ class _MoreOptionsState extends State<MoreOptions> {
             Navigator.pop(context); // Go back when pressed
           },
         ),
-        title: Text(
+        title: const Text(
           'More options',
           textAlign: TextAlign.center,
           style: TextStyle(
@@ -231,9 +231,9 @@ class _MoreOptionsState extends State<MoreOptions> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            Padding(
-              padding: const EdgeInsets.only(left: 18.0, right: 18),
-              child: const Text(
+            const Padding(
+              padding: EdgeInsets.only(left: 18.0, right: 18),
+              child: Text(
                 textAlign: TextAlign.center,
                 'Use the filters to focus your search on the people you really want to meet',
                 style: TextStyle(color: Colors.grey),
@@ -243,9 +243,9 @@ class _MoreOptionsState extends State<MoreOptions> {
             Expanded(
               child: ListView(
                 children: [
-                  Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 15.0),
-                    child: const Text(
+                  const Padding(
+                    padding: EdgeInsets.symmetric(horizontal: 15.0),
+                    child: Text(
                       'Popular',
                       style:
                           TextStyle(fontSize: 15, fontWeight: FontWeight.bold),
@@ -357,10 +357,10 @@ class _MoreOptionsState extends State<MoreOptions> {
                       ),
                     ),
                   ),
-                  SizedBox(height: 7),
-                  Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 15.0),
-                    child: const Text(
+                  const SizedBox(height: 7),
+                  const Padding(
+                    padding: EdgeInsets.symmetric(horizontal: 15.0),
+                    child: Text(
                       'LifeStyle',
                       style:
                           TextStyle(fontSize: 15, fontWeight: FontWeight.bold),
@@ -464,10 +464,10 @@ class _MoreOptionsState extends State<MoreOptions> {
                       ),
                     ),
                   ),
-                  SizedBox(height: 7),
-                  Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 15.0),
-                    child: const Text(
+                  const SizedBox(height: 7),
+                  const Padding(
+                    padding: EdgeInsets.symmetric(horizontal: 15.0),
+                    child: Text(
                       'Personality',
                       style:
                           TextStyle(fontSize: 15, fontWeight: FontWeight.bold),
@@ -505,13 +505,12 @@ class _MoreOptionsState extends State<MoreOptions> {
               ),
             ),
             Padding(
-              padding: EdgeInsets.all(10),
+              padding: const EdgeInsets.all(10),
               child: InkWell(
                 onTap: () {
                   Navigator.push(
                     context,
-                    MaterialPageRoute(
-                        builder: (context) => DatingProfilePage()),
+                    MaterialPageRoute(builder: (context) => const HomeScreen()),
                   );
                 },
                 child: Container(
@@ -538,9 +537,9 @@ class _MoreOptionsState extends State<MoreOptions> {
     return ListTile(
       title: Text(
         title,
-        style: TextStyle(fontWeight: FontWeight.bold, fontSize: 13),
+        style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 13),
       ),
-      subtitle: Text(subtitle, style: TextStyle(fontSize: 13)),
+      subtitle: Text(subtitle, style: const TextStyle(fontSize: 13)),
       trailing: GestureDetector(
         onTap: onTap, // Call the provided onTap function
         child: const Icon(Icons.chevron_right),
@@ -580,7 +579,7 @@ class _MoreOptionsState extends State<MoreOptions> {
                           onPressed: () {
                             Navigator.pop(context);
                           },
-                          icon: Icon(Icons.chevron_left),
+                          icon: const Icon(Icons.chevron_left),
                         ),
                         SizedBox(width: screenSize.width * 0.15),
                         const Text(
@@ -593,7 +592,7 @@ class _MoreOptionsState extends State<MoreOptions> {
                           onPressed: () {
                             Navigator.pop(context);
                           },
-                          icon: Icon(Icons.close),
+                          icon: const Icon(Icons.close),
                         ),
                       ],
                     ),
@@ -625,12 +624,12 @@ class _MoreOptionsState extends State<MoreOptions> {
                               borderRadius: BorderRadius.circular(20),
                               border: Border.all(
                                 width: 1,
-                                color: Color.fromRGBO(149, 140, 250, 1),
+                                color: const Color.fromRGBO(149, 140, 250, 1),
                               )),
-                          child: Center(
+                          child: const Center(
                             child: Text(
                               'Photo Verified',
-                              style: const TextStyle(
+                              style: TextStyle(
                                   color: Colors.black,
                                   fontSize: 16,
                                   fontWeight: FontWeight.bold),
@@ -661,7 +660,7 @@ class _MoreOptionsState extends State<MoreOptions> {
                                   isContainerTapped // Change color based on state
                                       ? const Color(
                                           0xFF3628DD) // Container color when tapped
-                                      : Color.fromRGBO(
+                                      : const Color.fromRGBO(
                                           149, 140, 250, 1), // Default color
                               borderRadius: BorderRadius.circular(20),
                               border: Border.all(
@@ -669,8 +668,8 @@ class _MoreOptionsState extends State<MoreOptions> {
                                 color: const Color(0xFF3628DD),
                               ),
                             ),
-                            child: Center(
-                              child: const Text(
+                            child: const Center(
+                              child: Text(
                                 'See other people if I run out',
                                 style: TextStyle(
                                     color: Colors.white, fontSize: 16),
@@ -697,11 +696,11 @@ class _MoreOptionsState extends State<MoreOptions> {
                             color: const Color(0xFF3628DD),
                             borderRadius: BorderRadius.circular(20),
                           ),
-                          child: Center(
+                          child: const Center(
                             child: Text(
                               'Apply',
-                              style: const TextStyle(
-                                  color: Colors.white, fontSize: 16),
+                              style:
+                                  TextStyle(color: Colors.white, fontSize: 16),
                             ),
                           ),
                         ),
@@ -738,8 +737,8 @@ class _MoreOptionsState extends State<MoreOptions> {
       "160cm (5'3\")",
       "150cm (5'0\")",
     ];
-    String _selectedMinHeight = "No minimum"; // Default value for min
-    String _selectedMaxHeight = "No maximum"; // Default value for max
+    String selectedMinHeight = "No minimum"; // Default value for min
+    String selectedMaxHeight = "No maximum"; // Default value for max
     final screenSize = MediaQuery.of(context).size;
     bool isContainerTapped = false;
 
@@ -767,7 +766,7 @@ class _MoreOptionsState extends State<MoreOptions> {
                                 context,
                               );
                             },
-                            icon: (Icon(Icons.chevron_left))),
+                            icon: (const Icon(Icons.chevron_left))),
                         SizedBox(width: screenSize.width * 0.15),
                         const Text(
                           'Height',
@@ -779,7 +778,7 @@ class _MoreOptionsState extends State<MoreOptions> {
                             onPressed: () {
                               Navigator.pop(context);
                             },
-                            icon: (Icon(Icons.close))),
+                            icon: (const Icon(Icons.close))),
                       ],
                     ),
                     const Text(
@@ -799,7 +798,7 @@ class _MoreOptionsState extends State<MoreOptions> {
                                   itemExtent: 60, // Height of each item
                                   onSelectedItemChanged: (index) {
                                     setState(() {
-                                      _selectedMinHeight = heightValues[index];
+                                      selectedMinHeight = heightValues[index];
                                     });
                                   },
                                   childDelegate: ListWheelChildBuilderDelegate(
@@ -811,7 +810,7 @@ class _MoreOptionsState extends State<MoreOptions> {
                                             style: TextStyle(
                                               fontSize: 18,
                                               color: heightValues[index] ==
-                                                      _selectedMinHeight
+                                                      selectedMinHeight
                                                   ? Colors.black
                                                   : Colors.grey,
                                             ),
@@ -837,7 +836,7 @@ class _MoreOptionsState extends State<MoreOptions> {
                                   itemExtent: 60, // Height of each item
                                   onSelectedItemChanged: (index) {
                                     setState(() {
-                                      _selectedMaxHeight = heightValues2[index];
+                                      selectedMaxHeight = heightValues2[index];
                                     });
                                   },
                                   childDelegate: ListWheelChildBuilderDelegate(
@@ -849,7 +848,7 @@ class _MoreOptionsState extends State<MoreOptions> {
                                             style: TextStyle(
                                               fontSize: 18,
                                               color: heightValues2[index] ==
-                                                      _selectedMaxHeight
+                                                      selectedMaxHeight
                                                   ? Colors.black
                                                   : Colors.grey,
                                             ),
@@ -888,7 +887,7 @@ class _MoreOptionsState extends State<MoreOptions> {
                                 isContainerTapped // Change color based on state
                                     ? const Color(
                                         0xFF3628DD) // Container color when tapped
-                                    : Color.fromRGBO(
+                                    : const Color.fromRGBO(
                                         149, 140, 250, 1), // Default color
                             borderRadius: BorderRadius.circular(20),
                             border: Border.all(
@@ -896,8 +895,8 @@ class _MoreOptionsState extends State<MoreOptions> {
                               color: const Color(0xFF3628DD),
                             ),
                           ),
-                          child: Center(
-                            child: const Text(
+                          child: const Center(
+                            child: Text(
                               'See other people if I run out',
                               style:
                                   TextStyle(color: Colors.white, fontSize: 16),
@@ -915,7 +914,7 @@ class _MoreOptionsState extends State<MoreOptions> {
                       child: InkWell(
                         onTap: () {
                           onHeightRangeSelected(
-                              _selectedMinHeight, _selectedMaxHeight);
+                              selectedMinHeight, selectedMaxHeight);
                           Navigator.pop(context);
                         },
                         child: Container(
@@ -925,11 +924,11 @@ class _MoreOptionsState extends State<MoreOptions> {
                             color: const Color(0xFF3628DD),
                             borderRadius: BorderRadius.circular(20),
                           ),
-                          child: Center(
+                          child: const Center(
                             child: Text(
                               'Apply',
-                              style: const TextStyle(
-                                  color: Colors.white, fontSize: 16),
+                              style:
+                                  TextStyle(color: Colors.white, fontSize: 16),
                             ),
                           ),
                         ),
@@ -974,7 +973,7 @@ class _MoreOptionsState extends State<MoreOptions> {
                               Navigator.pop(context);
                               showSexualityPreferencePopup(context);
                             },
-                            icon: Icon(Icons.chevron_left),
+                            icon: const Icon(Icons.chevron_left),
                           ),
                           SizedBox(width: screenSize.width * 0.15),
                           const Text(
@@ -987,7 +986,7 @@ class _MoreOptionsState extends State<MoreOptions> {
                             onPressed: () {
                               Navigator.pop(context);
                             },
-                            icon: Icon(Icons.close),
+                            icon: const Icon(Icons.close),
                           ),
                         ],
                       ),
@@ -1113,7 +1112,7 @@ class _MoreOptionsState extends State<MoreOptions> {
                                   isContainerTapped // Change color based on state
                                       ? const Color(
                                           0xFF3628DD) // Container color when tapped
-                                      : Color.fromRGBO(
+                                      : const Color.fromRGBO(
                                           149, 140, 250, 1), // Default color
                               borderRadius: BorderRadius.circular(20),
                               border: Border.all(
@@ -1121,8 +1120,8 @@ class _MoreOptionsState extends State<MoreOptions> {
                                 color: const Color(0xFF3628DD),
                               ),
                             ),
-                            child: Center(
-                              child: const Text(
+                            child: const Center(
+                              child: Text(
                                 'See other people if I run out',
                                 style: TextStyle(
                                     color: Colors.white, fontSize: 16),
@@ -1147,10 +1146,10 @@ class _MoreOptionsState extends State<MoreOptions> {
                               color: const Color(0xFF3628DD),
                               borderRadius: BorderRadius.circular(20),
                             ),
-                            child: Center(
+                            child: const Center(
                               child: Text(
                                 'Apply',
-                                style: const TextStyle(
+                                style: TextStyle(
                                     color: Colors.white, fontSize: 16),
                               ),
                             ),
@@ -1196,7 +1195,7 @@ class _MoreOptionsState extends State<MoreOptions> {
                               Navigator.pop(context);
                               showRelationshipPreferencePopup(context);
                             },
-                            icon: Icon(Icons.chevron_left),
+                            icon: const Icon(Icons.chevron_left),
                           ),
                           SizedBox(width: screenSize.width * 0.15),
                           const Text(
@@ -1209,7 +1208,7 @@ class _MoreOptionsState extends State<MoreOptions> {
                             onPressed: () {
                               Navigator.pop(context);
                             },
-                            icon: Icon(Icons.close),
+                            icon: const Icon(Icons.close),
                           ),
                         ],
                       ),
@@ -1239,7 +1238,7 @@ class _MoreOptionsState extends State<MoreOptions> {
                         ].map((starSign) {
                           return CheckboxListTile(
                             title: Text(starSign,
-                                style: TextStyle(
+                                style: const TextStyle(
                                     fontWeight: FontWeight.bold, fontSize: 16)),
                             value: selectedStarSign == starSign,
                             onChanged: (bool? value) {
@@ -1279,7 +1278,7 @@ class _MoreOptionsState extends State<MoreOptions> {
                                   isContainerTapped // Change color based on state
                                       ? const Color(
                                           0xFF3628DD) // Container color when tapped
-                                      : Color.fromRGBO(
+                                      : const Color.fromRGBO(
                                           149, 140, 250, 1), // Default color
                               borderRadius: BorderRadius.circular(20),
                               border: Border.all(
@@ -1287,8 +1286,8 @@ class _MoreOptionsState extends State<MoreOptions> {
                                 color: const Color(0xFF3628DD),
                               ),
                             ),
-                            child: Center(
-                              child: const Text(
+                            child: const Center(
+                              child: Text(
                                 'See other people if I run out',
                                 style: TextStyle(
                                     color: Colors.white, fontSize: 16),
@@ -1313,7 +1312,7 @@ class _MoreOptionsState extends State<MoreOptions> {
                               color: const Color(0xFF3628DD),
                               borderRadius: BorderRadius.circular(20),
                             ),
-                            child: Center(
+                            child: const Center(
                               child: Text(
                                 'Apply',
                                 style: TextStyle(
@@ -1363,7 +1362,7 @@ class _MoreOptionsState extends State<MoreOptions> {
                               Navigator.pop(context);
                               showSexualityPreferencePopup(context);
                             },
-                            icon: Icon(Icons.chevron_left),
+                            icon: const Icon(Icons.chevron_left),
                           ),
                           SizedBox(width: screenSize.width * 0.15),
                           const Text(
@@ -1376,7 +1375,7 @@ class _MoreOptionsState extends State<MoreOptions> {
                             onPressed: () {
                               Navigator.pop(context);
                             },
-                            icon: Icon(Icons.close),
+                            icon: const Icon(Icons.close),
                           ),
                         ],
                       ),
@@ -1446,7 +1445,7 @@ class _MoreOptionsState extends State<MoreOptions> {
                                 width: 2,
                               ),
                             );
-                          }).toList(),
+                          }),
                           ...[
                             'Romanian',
                             'Tamil',
@@ -1508,7 +1507,7 @@ class _MoreOptionsState extends State<MoreOptions> {
                                 width: 2,
                               ),
                             );
-                          }).toList(),
+                          }),
                         ],
                       ),
                       const SizedBox(height: 30),
@@ -1529,7 +1528,7 @@ class _MoreOptionsState extends State<MoreOptions> {
                               color: isContainerTapped
                                   ? const Color(
                                       0xFF3628DD) // Container color when tapped
-                                  : Color.fromRGBO(
+                                  : const Color.fromRGBO(
                                       149, 140, 250, 1), // Default color
                               borderRadius: BorderRadius.circular(20),
                               border: Border.all(
@@ -1537,8 +1536,8 @@ class _MoreOptionsState extends State<MoreOptions> {
                                 color: const Color(0xFF3628DD),
                               ),
                             ),
-                            child: Center(
-                              child: const Text(
+                            child: const Center(
+                              child: Text(
                                 'See other people if I run out',
                                 style: TextStyle(
                                     color: Colors.white, fontSize: 16),
@@ -1564,8 +1563,8 @@ class _MoreOptionsState extends State<MoreOptions> {
                               color: const Color(0xFF3628DD),
                               borderRadius: BorderRadius.circular(20),
                             ),
-                            child: Center(
-                              child: const Text(
+                            child: const Center(
+                              child: Text(
                                 'Apply',
                                 style: TextStyle(
                                     color: Colors.white, fontSize: 16),
@@ -1614,7 +1613,7 @@ class _MoreOptionsState extends State<MoreOptions> {
                               Navigator.pop(context);
                               showLanguagePreferencePopup(context);
                             },
-                            icon: Icon(Icons.chevron_left),
+                            icon: const Icon(Icons.chevron_left),
                           ),
                           SizedBox(width: screenSize.width * 0.15),
                           const Text(
@@ -1629,7 +1628,7 @@ class _MoreOptionsState extends State<MoreOptions> {
                             onPressed: () {
                               Navigator.pop(context);
                             },
-                            icon: Icon(Icons.close),
+                            icon: const Icon(Icons.close),
                           ),
                         ],
                       ),
@@ -1734,7 +1733,7 @@ class _MoreOptionsState extends State<MoreOptions> {
                                   isContainerTapped // Change color based on state
                                       ? const Color(
                                           0xFF3628DD) // Container color when tapped
-                                      : Color.fromRGBO(
+                                      : const Color.fromRGBO(
                                           149, 140, 250, 1), // Default color
                               borderRadius: BorderRadius.circular(20),
                               border: Border.all(
@@ -1742,8 +1741,8 @@ class _MoreOptionsState extends State<MoreOptions> {
                                 color: const Color(0xFF3628DD),
                               ),
                             ),
-                            child: Center(
-                              child: const Text(
+                            child: const Center(
+                              child: Text(
                                 'See other people if I run out',
                                 style: TextStyle(
                                     color: Colors.white, fontSize: 16),
@@ -1817,7 +1816,7 @@ class _MoreOptionsState extends State<MoreOptions> {
                               Navigator.pop(context);
                               showLanguagePreferencePopup(context);
                             },
-                            icon: Icon(Icons.chevron_left),
+                            icon: const Icon(Icons.chevron_left),
                           ),
                           SizedBox(width: screenSize.width * 0.15),
                           const Text(
@@ -1832,7 +1831,7 @@ class _MoreOptionsState extends State<MoreOptions> {
                             onPressed: () {
                               Navigator.pop(context);
                             },
-                            icon: Icon(Icons.close),
+                            icon: const Icon(Icons.close),
                           ),
                         ],
                       ),
@@ -1987,7 +1986,7 @@ class _MoreOptionsState extends State<MoreOptions> {
                                   isContainerTapped // Change color based on state
                                       ? const Color(
                                           0xFF3628DD) // Container color when tapped
-                                      : Color.fromRGBO(
+                                      : const Color.fromRGBO(
                                           149, 140, 250, 1), // Default color
                               borderRadius: BorderRadius.circular(20),
                               border: Border.all(
@@ -1995,8 +1994,8 @@ class _MoreOptionsState extends State<MoreOptions> {
                                 color: const Color(0xFF3628DD),
                               ),
                             ),
-                            child: Center(
-                              child: const Text(
+                            child: const Center(
+                              child: Text(
                                 'See other people if I run out',
                                 style: TextStyle(
                                     color: Colors.white, fontSize: 16),
@@ -2069,7 +2068,7 @@ class _MoreOptionsState extends State<MoreOptions> {
                               Navigator.pop(context);
                               showLanguagePreferencePopup(context);
                             },
-                            icon: Icon(Icons.chevron_left),
+                            icon: const Icon(Icons.chevron_left),
                           ),
                           SizedBox(width: screenSize.width * 0.15),
                           const Text(
@@ -2084,7 +2083,7 @@ class _MoreOptionsState extends State<MoreOptions> {
                             onPressed: () {
                               Navigator.pop(context);
                             },
-                            icon: Icon(Icons.close),
+                            icon: const Icon(Icons.close),
                           ),
                         ],
                       ),
@@ -2165,7 +2164,7 @@ class _MoreOptionsState extends State<MoreOptions> {
                                   isContainerTapped // Change color based on state
                                       ? const Color(
                                           0xFF3628DD) // Container color when tapped
-                                      : Color.fromRGBO(
+                                      : const Color.fromRGBO(
                                           149, 140, 250, 1), // Default color
                               borderRadius: BorderRadius.circular(20),
                               border: Border.all(
@@ -2173,8 +2172,8 @@ class _MoreOptionsState extends State<MoreOptions> {
                                 color: const Color(0xFF3628DD),
                               ),
                             ),
-                            child: Center(
-                              child: const Text(
+                            child: const Center(
+                              child: Text(
                                 'See other people if I run out',
                                 style: TextStyle(
                                     color: Colors.white, fontSize: 16),
@@ -2248,7 +2247,7 @@ class _MoreOptionsState extends State<MoreOptions> {
                               Navigator.pop(context);
                               showLanguagePreferencePopup(context);
                             },
-                            icon: Icon(Icons.chevron_left),
+                            icon: const Icon(Icons.chevron_left),
                           ),
                           SizedBox(width: screenSize.width * 0.15),
                           const Text(
@@ -2263,7 +2262,7 @@ class _MoreOptionsState extends State<MoreOptions> {
                             onPressed: () {
                               Navigator.pop(context);
                             },
-                            icon: Icon(Icons.close),
+                            icon: const Icon(Icons.close),
                           ),
                         ],
                       ),
@@ -2392,7 +2391,7 @@ class _MoreOptionsState extends State<MoreOptions> {
                                   isContainerTapped // Change color based on state
                                       ? const Color(
                                           0xFF3628DD) // Container color when tapped
-                                      : Color.fromRGBO(
+                                      : const Color.fromRGBO(
                                           149, 140, 250, 1), // Default color
                               borderRadius: BorderRadius.circular(20),
                               border: Border.all(
@@ -2400,8 +2399,8 @@ class _MoreOptionsState extends State<MoreOptions> {
                                 color: const Color(0xFF3628DD),
                               ),
                             ),
-                            child: Center(
-                              child: const Text(
+                            child: const Center(
+                              child: Text(
                                 'See other people if I run out',
                                 style: TextStyle(
                                     color: Colors.white, fontSize: 16),
@@ -2477,7 +2476,7 @@ class _MoreOptionsState extends State<MoreOptions> {
                               Navigator.pop(context);
                               showLanguagePreferencePopup(context);
                             },
-                            icon: Icon(Icons.chevron_left),
+                            icon: const Icon(Icons.chevron_left),
                           ),
                           SizedBox(width: screenSize.width * 0.15),
                           const Text(
@@ -2492,7 +2491,7 @@ class _MoreOptionsState extends State<MoreOptions> {
                             onPressed: () {
                               Navigator.pop(context);
                             },
-                            icon: Icon(Icons.close),
+                            icon: const Icon(Icons.close),
                           ),
                         ],
                       ),
@@ -2645,7 +2644,7 @@ class _MoreOptionsState extends State<MoreOptions> {
                                   isContainerTapped // Change color based on state
                                       ? const Color(
                                           0xFF3628DD) // Container color when tapped
-                                      : Color.fromRGBO(
+                                      : const Color.fromRGBO(
                                           149, 140, 250, 1), // Default color
                               borderRadius: BorderRadius.circular(20),
                               border: Border.all(
@@ -2653,8 +2652,8 @@ class _MoreOptionsState extends State<MoreOptions> {
                                 color: const Color(0xFF3628DD),
                               ),
                             ),
-                            child: Center(
-                              child: const Text(
+                            child: const Center(
+                              child: Text(
                                 'See other people if I run out',
                                 style: TextStyle(
                                     color: Colors.white, fontSize: 16),
@@ -2729,7 +2728,7 @@ class _MoreOptionsState extends State<MoreOptions> {
                               Navigator.pop(context);
                               showLanguagePreferencePopup(context);
                             },
-                            icon: Icon(Icons.chevron_left),
+                            icon: const Icon(Icons.chevron_left),
                           ),
                           SizedBox(width: screenSize.width * 0.15),
                           const Text(
@@ -2744,7 +2743,7 @@ class _MoreOptionsState extends State<MoreOptions> {
                             onPressed: () {
                               Navigator.pop(context);
                             },
-                            icon: Icon(Icons.close),
+                            icon: const Icon(Icons.close),
                           ),
                         ],
                       ),
@@ -2873,7 +2872,7 @@ class _MoreOptionsState extends State<MoreOptions> {
                                   isContainerTapped // Change color based on state
                                       ? const Color(
                                           0xFF3628DD) // Container color when tapped
-                                      : Color.fromRGBO(
+                                      : const Color.fromRGBO(
                                           149, 140, 250, 1), // Default color
                               borderRadius: BorderRadius.circular(20),
                               border: Border.all(
@@ -2881,8 +2880,8 @@ class _MoreOptionsState extends State<MoreOptions> {
                                 color: const Color(0xFF3628DD),
                               ),
                             ),
-                            child: Center(
-                              child: const Text(
+                            child: const Center(
+                              child: Text(
                                 'See other people if I run out',
                                 style: TextStyle(
                                     color: Colors.white, fontSize: 16),
@@ -2957,7 +2956,7 @@ class _MoreOptionsState extends State<MoreOptions> {
                             Navigator.pop(context);
                             showLanguagePreferencePopup(context);
                           },
-                          icon: Icon(Icons.chevron_left),
+                          icon: const Icon(Icons.chevron_left),
                         ),
                         SizedBox(width: screenSize.width * 0.15),
                         const Text(
@@ -2972,7 +2971,7 @@ class _MoreOptionsState extends State<MoreOptions> {
                           onPressed: () {
                             Navigator.pop(context);
                           },
-                          icon: Icon(Icons.close),
+                          icon: const Icon(Icons.close),
                         ),
                       ],
                     ),
@@ -3101,7 +3100,7 @@ class _MoreOptionsState extends State<MoreOptions> {
                                 isContainerTapped // Change color based on state
                                     ? const Color(
                                         0xFF3628DD) // Container color when tapped
-                                    : Color.fromRGBO(
+                                    : const Color.fromRGBO(
                                         149, 140, 250, 1), // Default color
                             borderRadius: BorderRadius.circular(20),
                             border: Border.all(
@@ -3109,8 +3108,8 @@ class _MoreOptionsState extends State<MoreOptions> {
                               color: const Color(0xFF3628DD),
                             ),
                           ),
-                          child: Center(
-                            child: const Text(
+                          child: const Center(
+                            child: Text(
                               'See other people if I run out',
                               style:
                                   TextStyle(color: Colors.white, fontSize: 16),
@@ -3186,7 +3185,7 @@ class _MoreOptionsState extends State<MoreOptions> {
                             Navigator.pop(context);
                             showLanguagePreferencePopup(context);
                           },
-                          icon: Icon(Icons.chevron_left),
+                          icon: const Icon(Icons.chevron_left),
                         ),
                         SizedBox(width: screenSize.width * 0.15),
                         const Text(
@@ -3201,7 +3200,7 @@ class _MoreOptionsState extends State<MoreOptions> {
                           onPressed: () {
                             Navigator.pop(context);
                           },
-                          icon: Icon(Icons.close),
+                          icon: const Icon(Icons.close),
                         ),
                       ],
                     ),
@@ -3306,7 +3305,7 @@ class _MoreOptionsState extends State<MoreOptions> {
                                 isContainerTapped // Change color based on state
                                     ? const Color(
                                         0xFF3628DD) // Container color when tapped
-                                    : Color.fromRGBO(
+                                    : const Color.fromRGBO(
                                         149, 140, 250, 1), // Default color
                             borderRadius: BorderRadius.circular(20),
                             border: Border.all(
@@ -3314,8 +3313,8 @@ class _MoreOptionsState extends State<MoreOptions> {
                               color: const Color(0xFF3628DD),
                             ),
                           ),
-                          child: Center(
-                            child: const Text(
+                          child: const Center(
+                            child: Text(
                               'See other people if I run out',
                               style:
                                   TextStyle(color: Colors.white, fontSize: 16),
@@ -3397,7 +3396,7 @@ class _MoreOptionsState extends State<MoreOptions> {
                               context,
                             );
                           },
-                          icon: (Icon(Icons.chevron_left))),
+                          icon: (const Icon(Icons.chevron_left))),
                       SizedBox(width: screenSize.width * 0.15),
                       const Text(
                         'Interest',
@@ -3409,7 +3408,7 @@ class _MoreOptionsState extends State<MoreOptions> {
                           onPressed: () {
                             Navigator.pop(context);
                           },
-                          icon: (Icon(Icons.close))),
+                          icon: (const Icon(Icons.close))),
                     ],
                   ),
 
@@ -3438,24 +3437,24 @@ class _MoreOptionsState extends State<MoreOptions> {
                         border: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(10),
                           borderSide: const BorderSide(
-                            color: const Color(0xFF3628DD),
+                            color: Color(0xFF3628DD),
                           ),
                         ),
                         focusedBorder: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(10),
                           borderSide: const BorderSide(
-                            color: const Color(0xFF3628DD),
+                            color: Color(0xFF3628DD),
                           ),
                         ),
                       ),
                     ),
                   ),
                   const SizedBox(height: 20),
-                  Padding(
-                    padding: const EdgeInsets.only(left: 20.0),
+                  const Padding(
+                    padding: EdgeInsets.only(left: 20.0),
                     child: Align(
                       alignment: Alignment.centerLeft,
-                      child: const Text(
+                      child: Text(
                         "Popular",
                         style: TextStyle(
                           fontSize: 16,

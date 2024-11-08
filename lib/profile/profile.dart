@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
 
-import 'package:love_bird/chat/mainChat.dart';
+import 'package:love_bird/chat/main_chat.dart';
+import 'package:love_bird/config/routes.dart';
 import 'package:love_bird/edit%20profile%20screens/edit_low_profile_screen.dart';
-import 'package:love_bird/homeScreen/homeScreen2.dart';
+import 'package:love_bird/homeScreen/homeScreen.dart';
 import 'package:love_bird/homeScreen/notification.dart';
 import 'package:love_bird/matches/likes.dart';
-import 'package:love_bird/matches/peopleNearby.dart';
+import 'package:love_bird/matches/people_nearby.dart';
 import 'package:love_bird/setting_screen/setting_screen.dart';
 import 'package:love_bird/safety_privacy_screens/safety_screen.dart';
 import 'package:love_bird/subscription%20plan/standard_plan.dart';
@@ -18,6 +19,25 @@ class ProfilePage extends StatefulWidget {
 }
 
 class _ProfilePageState extends State<ProfilePage> {
+  PageController _pageController = PageController();
+  int _currentPage = 0;
+
+  @override
+  void initState() {
+    super.initState();
+    _pageController.addListener(() {
+      setState(() {
+        _currentPage = _pageController.page!.round();
+      });
+    });
+  }
+
+  @override
+  void dispose() {
+    _pageController.dispose();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     final screenHeight = MediaQuery.of(context).size.height;
@@ -95,8 +115,7 @@ class _ProfilePageState extends State<ProfilePage> {
                   ),
                   GestureDetector(
                     onTap: () {
-                      showLibbyChatbot(
-                          context); // Call the separate function to show the popup
+                      Navigator.pushNamed(context, chatbotWelcomeScreen);
                     },
                     child: Image.asset('assets/images/robot.png', width: 40),
                   ),
@@ -137,16 +156,60 @@ class _ProfilePageState extends State<ProfilePage> {
               ),
             ),
             Stack(
-              alignment: Alignment
-                  .bottomRight, // Aligns child widgets to the bottom right
+              alignment: Alignment.bottomCenter,
               children: [
-                ClipRRect(
-                  borderRadius: BorderRadius.circular(12.0),
-                  child: Image.asset(
-                    'assets/images/homeImage.png', // Path to the main image
-                    width: screenWidth * 0.9,
-                    height: screenHeight * 0.5,
-                    fit: BoxFit.cover,
+                SizedBox(
+                  height: screenHeight * 0.5,
+                  child: PageView(
+                    controller: _pageController,
+                    children: [
+                      ClipRRect(
+                        borderRadius: BorderRadius.circular(12.0),
+                        child: Image.asset(
+                          'assets/images/homeImage.png',
+                          width: screenWidth * 0.9,
+                          height: screenHeight * 0.5,
+                          fit: BoxFit.cover,
+                        ),
+                      ),
+                      ClipRRect(
+                        borderRadius: BorderRadius.circular(12.0),
+                        child: Image.asset(
+                          'assets/images/homeImage.png',
+                          width: screenWidth * 0.9,
+                          height: screenHeight * 0.5,
+                          fit: BoxFit.cover,
+                        ),
+                      ),
+                      ClipRRect(
+                        borderRadius: BorderRadius.circular(12.0),
+                        child: Image.asset(
+                          'assets/images/homeImage.png',
+                          width: screenWidth * 0.9,
+                          height: screenHeight * 0.5,
+                          fit: BoxFit.cover,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                Positioned(
+                  top: 10,
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: List.generate(3, (index) {
+                      return Container(
+                        margin: const EdgeInsets.symmetric(horizontal: 4),
+                        width: 8,
+                        height: 8,
+                        decoration: BoxDecoration(
+                          color: _currentPage == index
+                              ? Color.fromRGBO(54, 40, 221, 1)
+                              : Color.fromRGBO(255, 255, 255, 0.54),
+                          shape: BoxShape.circle,
+                        ),
+                      );
+                    }),
                   ),
                 ),
               ],
@@ -269,39 +332,47 @@ class _ProfilePageState extends State<ProfilePage> {
             const EdgeInsets.only(left: 12.0, right: 12, top: 12, bottom: 22),
         child: Container(
           decoration: BoxDecoration(
-            color: Colors.grey[800],
+            color: const Color(0xFF3628DD).withOpacity(0.19),
             borderRadius: BorderRadius.circular(50),
           ),
           child: ClipRRect(
             borderRadius: BorderRadius.circular(50),
             child: BottomNavigationBar(
               type: BottomNavigationBarType.fixed,
+              backgroundColor:
+                  Colors.transparent, // Transparent to show container color
+              elevation: 0,
+              // Ensure all items are shown
               items: [
                 BottomNavigationBarItem(
-                  icon: Image.asset('assets/images/icons/home.png', width: 30),
+                  icon: Image.asset('assets/images/icons/homeBlack.png',
+                      width: 30, height: 30),
                   label: 'Home',
                 ),
                 BottomNavigationBarItem(
                   icon: Image.asset('assets/images/icons/localcon.png',
-                      width: 30),
-                  label: 'Location',
+                      width: 30, height: 30),
+                  label: 'People Nearby',
                 ),
                 BottomNavigationBarItem(
                   icon: Image.asset('assets/images/icons/chatIcon.png',
-                      width: 30),
+                      width: 30, height: 30),
                   label: 'Chats',
                 ),
                 BottomNavigationBarItem(
-                  icon:
-                      Image.asset('assets/images/icons/matches.png', width: 30),
+                  icon: Image.asset('assets/images/icons/matches.png',
+                      width: 30, height: 30),
                   label: 'Matches',
                 ),
                 BottomNavigationBarItem(
                   icon: Image.asset('assets/images/icons/blueProfile.png',
-                      width: 30),
+                      width: 30, height: 30),
                   label: 'Profile',
                 ),
               ],
+              selectedLabelStyle: const TextStyle(
+                  fontSize: 11), // Change the font size for the selected label
+              unselectedLabelStyle: const TextStyle(fontSize: 11),
               onTap: (index) {
                 // Handle navigation based on the index
                 switch (index) {
@@ -309,7 +380,7 @@ class _ProfilePageState extends State<ProfilePage> {
                     Navigator.push(
                       context,
                       MaterialPageRoute(
-                          builder: (context) => const DatingProfilePage()),
+                          builder: (context) => const HomeScreen()),
                     );
                     break;
                   case 1:
@@ -337,8 +408,9 @@ class _ProfilePageState extends State<ProfilePage> {
                     Navigator.push(
                       context,
                       MaterialPageRoute(
-                          builder: (context) => const EditLowProfileScreen()),
+                          builder: (context) => const ProfilePage()),
                     );
+                    break;
                 }
               },
             ),

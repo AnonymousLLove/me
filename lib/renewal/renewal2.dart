@@ -2,19 +2,19 @@ import 'package:flutter/material.dart';
 import 'package:love_bird/renewal/renewal3.dart';
 
 class SafetyScreen extends StatelessWidget {
-  const SafetyScreen({Key? key}) : super(key: key);
+  const SafetyScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
     double screenHeight = MediaQuery.of(context).size.height;
-    Color blue = Color.fromRGBO(54, 40, 221, 1.0);
+    Color blue = const Color.fromRGBO(54, 40, 221, 1.0);
 
     return Scaffold(
       backgroundColor: Colors.white,
       body: SafeArea(
         child: Column(
           children: [
-            Container(
+            SizedBox(
               height: screenHeight * 0.4,
               width: double.infinity,
               child: Image.asset(
@@ -116,10 +116,10 @@ class SafetyFeature extends StatelessWidget {
   final String text;
 
   const SafetyFeature({
-    Key? key,
+    super.key,
     required this.icon,
     required this.text,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -127,7 +127,7 @@ class SafetyFeature extends StatelessWidget {
       children: [
         Icon(
           icon,
-          color: Color.fromRGBO(54, 40, 221, 1.0),
+          color: const Color.fromRGBO(54, 40, 221, 1.0),
           size: 28,
         ),
         const SizedBox(width: 16),

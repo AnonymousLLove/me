@@ -32,7 +32,8 @@ class _OnboardingScreenOneState extends State<OnboardingScreenOne> {
                   children: [
                     // Content for the first container
                     SizedBox(
-                        width: 300,
+                        // width: 300,
+                        width: MediaQuery.of(context).size.width * 0.8,
                         height: 450,
                         child: DecoratedBox(
                           decoration: BoxDecoration(
@@ -52,8 +53,9 @@ class _OnboardingScreenOneState extends State<OnboardingScreenOne> {
                                 children: [
                                   Padding(
                                     padding: const EdgeInsets.all(8.0),
-                                    child:
-                                        Image.asset("images/Rectangle 2.png"),
+                                    child: SizedBox(
+                                        child: Image.asset(
+                                            "images/Rectangle 2.png")),
                                   ),
                                   Row(
                                     mainAxisAlignment:
@@ -76,68 +78,77 @@ class _OnboardingScreenOneState extends State<OnboardingScreenOne> {
                                   ),
                                   Padding(
                                     padding: const EdgeInsets.all(8.0),
-                                    child: Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.spaceEvenly,
-                                      children: [
-                                        SizedBox(
-                                          width: 110,
-                                          height: 30,
-                                          child: ElevatedButton(
-                                            onPressed: () {
-                                              // Action when button is pressed
-                                            },
-                                            style: ElevatedButton.styleFrom(
-                                              foregroundColor: Colors.white,
-                                              backgroundColor: const Color(
-                                                  0xFF3628DD), // Text color
-                                              elevation: 3,
-                                              shape: RoundedRectangleBorder(
-                                                borderRadius:
-                                                    BorderRadius.circular(12),
+                                    child: SingleChildScrollView(
+                                      scrollDirection: Axis.horizontal,
+                                      child: Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceEvenly,
+                                        children: [
+                                          SizedBox(
+                                            width: 110,
+                                            height: 30,
+                                            child: ElevatedButton(
+                                              onPressed: () {
+                                                // Action when button is pressed
+                                              },
+                                              style: ElevatedButton.styleFrom(
+                                                foregroundColor: Colors.white,
+                                                backgroundColor: const Color(
+                                                    0xFF3628DD), // Text color
+                                                elevation: 3,
+                                                shape: RoundedRectangleBorder(
+                                                  borderRadius:
+                                                      BorderRadius.circular(12),
+                                                ),
                                               ),
-                                            ),
-                                            child: const Text(
-                                              'Likes',
-                                              style: TextStyle(
-                                                fontSize: 12,
-                                                fontWeight: FontWeight.w500,
-                                              ),
-                                            ),
-                                          ),
-                                        ),
-                                        SizedBox(
-                                          width: 110,
-                                          height: 30,
-                                          child: ElevatedButton(
-                                            onPressed: () {
-                                              // Action when button is pressed
-                                            },
-                                            style: ElevatedButton.styleFrom(
-                                              foregroundColor: Colors.white,
-                                              backgroundColor: const Color(
-                                                  0xFFD2CFFB), // Text color
-                                              elevation: 3,
-                                              shape: RoundedRectangleBorder(
-                                                borderRadius:
-                                                    BorderRadius.circular(10),
-                                              ),
-                                            ),
-                                            child: const Text(
-                                              'SuperLikes',
-                                              style: TextStyle(
-                                                fontSize: 12,
-                                                fontWeight: FontWeight.w500,
+                                              child: const Text(
+                                                'Likes',
+                                                style: TextStyle(
+                                                  fontSize: 12,
+                                                  fontWeight: FontWeight.w500,
+                                                ),
                                               ),
                                             ),
                                           ),
-                                        ),
-                                      ],
+                                          Padding(
+                                            padding: const EdgeInsets.symmetric(
+                                                horizontal: 10.0),
+                                            child: SizedBox(
+                                              width: 110,
+                                              height: 30,
+                                              child: ElevatedButton(
+                                                onPressed: () {
+                                                  // Action when button is pressed
+                                                },
+                                                style: ElevatedButton.styleFrom(
+                                                  foregroundColor: Colors.white,
+                                                  backgroundColor: const Color(
+                                                      0xFFD2CFFB), // Text color
+                                                  elevation: 3,
+                                                  shape: RoundedRectangleBorder(
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            10),
+                                                  ),
+                                                ),
+                                                child: const Text(
+                                                  'SuperLikes',
+                                                  style: TextStyle(
+                                                    fontSize: 12,
+                                                    fontWeight: FontWeight.w500,
+                                                  ),
+                                                ),
+                                              ),
+                                            ),
+                                          ),
+                                        ],
+                                      ),
                                     ),
                                   ),
                                   Padding(
                                     padding: const EdgeInsets.all(10.0),
-                                    child: Flexible(
+                                    child: SingleChildScrollView(
+                                      scrollDirection: Axis.horizontal,
                                       child: Row(
                                         mainAxisAlignment:
                                             MainAxisAlignment.center,
@@ -147,14 +158,26 @@ class _OnboardingScreenOneState extends State<OnboardingScreenOne> {
                                           Padding(
                                             padding: const EdgeInsets.only(
                                                 right: 10.0),
-                                            child: Image.asset(
-                                                "images/Group 2.png"),
+                                            child: SizedBox(
+                                              width: MediaQuery.of(context)
+                                                      .size
+                                                      .width *
+                                                  0.32,
+                                              child: Image.asset(
+                                                  "images/Group 2.png"),
+                                            ),
                                           ),
                                           Padding(
                                             padding: const EdgeInsets.only(
                                                 left: 10.0),
-                                            child: Image.asset(
-                                                "images/Group 1.png"),
+                                            child: SizedBox(
+                                              width: MediaQuery.of(context)
+                                                      .size
+                                                      .width *
+                                                  0.32,
+                                              child: Image.asset(
+                                                  "images/Group 2.png"),
+                                            ),
                                           ),
                                         ],
                                       ),
@@ -162,25 +185,38 @@ class _OnboardingScreenOneState extends State<OnboardingScreenOne> {
                                   ),
                                   Padding(
                                     padding: const EdgeInsets.all(10.0),
-                                    child: Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.center,
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      children: [
-                                        Padding(
-                                          padding: const EdgeInsets.only(
-                                              right: 10.0),
-                                          child:
-                                              Image.asset("images/Group 3.png"),
-                                        ),
-                                        Padding(
-                                          padding:
-                                              const EdgeInsets.only(left: 10.0),
-                                          child:
-                                              Image.asset("images/Group 4.png"),
-                                        ),
-                                      ],
+                                    child: SingleChildScrollView(
+                                      scrollDirection: Axis.horizontal,
+                                      child: Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.center,
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        children: [
+                                          Padding(
+                                            padding: const EdgeInsets.only(
+                                                right: 10.0),
+                                            child: SizedBox(
+                                                width: MediaQuery.of(context)
+                                                        .size
+                                                        .width *
+                                                    0.32,
+                                                child: Image.asset(
+                                                    "images/Group 3.png")),
+                                          ),
+                                          Padding(
+                                            padding: const EdgeInsets.only(
+                                                left: 10.0),
+                                            child: SizedBox(
+                                                width: MediaQuery.of(context)
+                                                        .size
+                                                        .width *
+                                                    0.32,
+                                                child: Image.asset(
+                                                    "images/Group 4.png")),
+                                          ),
+                                        ],
+                                      ),
                                     ),
                                   ),
                                 ],
@@ -208,7 +244,7 @@ class _OnboardingScreenOneState extends State<OnboardingScreenOne> {
                       topRight: Radius.circular(30)),
                 ),
                 height: MediaQuery.of(context).size.height *
-                    0.6, // Half of the screen height
+                    0.5, // Half of the screen height
                 width: MediaQuery.of(context).size.width,
                 child: Padding(
                   padding: const EdgeInsets.all(20.0),

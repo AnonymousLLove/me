@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:love_bird/chat/mainChat.dart';
+import 'package:love_bird/chat/main_chat.dart';
+import 'package:love_bird/config/routes.dart';
 
-import 'package:love_bird/homeScreen/homeScreen2.dart';
+import 'package:love_bird/homeScreen/homescreen.dart';
 import 'package:love_bird/homeScreen/preference.dart';
 import 'package:love_bird/matches/likes.dart';
-import 'package:love_bird/matches/profileVisits.dart';
+import 'package:love_bird/matches/profile_visits.dart';
 import 'package:love_bird/profile/profile.dart';
 
 class PeopleNearbyPage extends StatelessWidget {
@@ -29,7 +30,8 @@ class PeopleNearbyPage extends StatelessWidget {
               ),
               GestureDetector(
                 onTap: () {
-                  // Call the separate function to show the popup
+                  Navigator.pushNamed(context,
+                      chatbotWelcomeScreen); // Call the separate function to show the popup
                 },
                 child: Image.asset('assets/images/robot.png', width: 40),
               ),
@@ -52,7 +54,7 @@ class PeopleNearbyPage extends StatelessWidget {
                 },
                 child: Image.asset('assets/images/message.png', width: 30),
               ),
-              SizedBox(width: 5),
+              const SizedBox(width: 5),
               InkWell(
                 onTap: () {
                   showFilterOptions(context, (int startAge, int endAge) {
@@ -65,7 +67,7 @@ class PeopleNearbyPage extends StatelessWidget {
             ],
           ),
         ),
-        SizedBox(height: 20),
+        const SizedBox(height: 20),
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
@@ -85,17 +87,17 @@ class PeopleNearbyPage extends StatelessWidget {
                   color: const Color.fromRGBO(149, 140, 250, 1),
                   borderRadius: BorderRadius.circular(10),
                 ),
-                child: Center(
+                child: const Center(
                   child: Text(
                     'Profile Visitors',
-                    style: const TextStyle(color: Colors.white, fontSize: 18),
+                    style: TextStyle(color: Colors.white, fontSize: 18),
                   ),
                 ),
               ),
             ),
           ],
         ),
-        SizedBox(height: 20),
+        const SizedBox(height: 20),
         // Use a SizedBox for fixed height
         Expanded(
           // Adjust height as needed
@@ -144,9 +146,9 @@ class PeopleNearbyPage extends StatelessWidget {
                   label: 'Profile',
                 ),
               ],
-              selectedLabelStyle: TextStyle(
+              selectedLabelStyle: const TextStyle(
                   fontSize: 11), // Change the font size for the selected label
-              unselectedLabelStyle: TextStyle(fontSize: 11),
+              unselectedLabelStyle: const TextStyle(fontSize: 11),
               onTap: (index) {
                 // Handle navigation based on the index
                 switch (index) {
@@ -154,7 +156,7 @@ class PeopleNearbyPage extends StatelessWidget {
                     Navigator.push(
                       context,
                       MaterialPageRoute(
-                          builder: (context) => const DatingProfilePage()),
+                          builder: (context) => const HomeScreen()),
                     );
                     break;
                   case 1:
@@ -269,6 +271,8 @@ class PeopleNearbyGrid extends StatelessWidget {
         isOnline: true),
   ];
 
+  PeopleNearbyGrid({super.key});
+
   @override
   Widget build(BuildContext context) {
     return GridView.builder(
@@ -306,7 +310,7 @@ class User {
 class UserCard extends StatelessWidget {
   final User user;
 
-  const UserCard({required this.user, Key? key}) : super(key: key);
+  const UserCard({required this.user, super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -367,7 +371,7 @@ class UserCard extends StatelessWidget {
             child: Container(
               width: 12,
               height: 12,
-              decoration: BoxDecoration(
+              decoration: const BoxDecoration(
                 color: Colors.green,
                 shape: BoxShape.circle,
               ),

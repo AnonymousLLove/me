@@ -2,16 +2,16 @@ import 'dart:io';
 import 'package:love_bird/profile/profile.dart';
 import 'package:open_file/open_file.dart';
 import 'package:flutter/material.dart';
-import 'package:love_bird/chat/mainChat.dart';
-import 'package:love_bird/chat/videoCall.dart';
+import 'package:love_bird/chat/main_chat.dart';
+import 'package:love_bird/chat/video_call.dart';
 import 'package:love_bird/chat/voiceCall.dart';
 
-import 'package:love_bird/homeScreen/homeScreen2.dart';
+import 'package:love_bird/homeScreen/homeScreen.dart';
 import 'package:love_bird/homeScreen/notification.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:love_bird/matches/likes.dart';
-import 'package:love_bird/matches/peopleNearby.dart';
+import 'package:love_bird/matches/people_nearby.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:just_audio/just_audio.dart';
 
@@ -22,12 +22,12 @@ class ChatDetailScreen extends StatefulWidget {
   final String lastMessage;
 
   const ChatDetailScreen({
-    Key? key,
+    super.key,
     required this.name,
     required this.profileImage,
     this.isOnline = false,
     required this.lastMessage,
-  }) : super(key: key);
+  });
 
   @override
   _ChatDetailScreenState createState() => _ChatDetailScreenState();
@@ -303,8 +303,8 @@ class _ChatDetailScreenState extends State<ChatDetailScreen> {
                   decoration: BoxDecoration(
                     color: Colors.white,
                     borderRadius: BorderRadius.circular(10),
-                    boxShadow: [
-                      const BoxShadow(
+                    boxShadow: const [
+                      BoxShadow(
                         color: Colors.black12,
                         blurRadius: 10,
                         spreadRadius: 5,
@@ -530,7 +530,7 @@ class _ChatDetailScreenState extends State<ChatDetailScreen> {
                     Navigator.push(
                       context,
                       MaterialPageRoute(
-                          builder: (context) => const DatingProfilePage()),
+                          builder: (context) => const HomeScreen()),
                     );
                     break;
                   case 1:
@@ -905,7 +905,7 @@ void showFontPopup(BuildContext context) {
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(0.0),
         ),
-        child: Container(
+        child: SizedBox(
           width: screenSize.width * 0.9,
           height: screenSize.height * 0.4,
           child: Column(
@@ -1035,6 +1035,8 @@ void showVoiceNote(BuildContext context) {
 }
 
 class VoiceNoteDialog extends StatefulWidget {
+  const VoiceNoteDialog({super.key});
+
   @override
   _VoiceNoteDialogState createState() => _VoiceNoteDialogState();
 }
@@ -1120,7 +1122,8 @@ class AttachmentOption extends StatelessWidget {
   final String label;
   final VoidCallback onPressed;
 
-  AttachmentOption({
+  const AttachmentOption({
+    super.key,
     required this.icon,
     required this.color,
     required this.label,
@@ -1232,7 +1235,8 @@ class AudioBubble extends StatefulWidget {
   final String time;
   final bool isMe;
 
-  AudioBubble({
+  const AudioBubble({
+    super.key,
     required this.audioPath,
     required this.time,
     required this.isMe,

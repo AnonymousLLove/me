@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:love_bird/renewal/renewal2.dart';
 
 class UpgradePremium extends StatelessWidget {
-  const UpgradePremium({Key? key}) : super(key: key);
+  const UpgradePremium({super.key});
 
   @override
   Widget build(BuildContext context) {

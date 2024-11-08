@@ -3,17 +3,17 @@ import 'dart:async';
 import 'dart:ui' as ui;
 import 'package:flutter/services.dart';
 import 'dart:io';
-import 'package:love_bird/homeScreen/homeScreen2.dart';
+import 'package:love_bird/homeScreen/homeScreen.dart';
 
-class FindingPeople extends StatefulWidget {
+class FindingPeopleNearBy extends StatefulWidget {
   final List<File?> images;
-  const FindingPeople({super.key, required this.images});
+  const FindingPeopleNearBy({super.key, required this.images});
 
   @override
-  _FindingPeopleState createState() => _FindingPeopleState();
+  _FindingPeopleNearByState createState() => _FindingPeopleNearByState();
 }
 
-class _FindingPeopleState extends State<FindingPeople>
+class _FindingPeopleNearByState extends State<FindingPeopleNearBy>
     with SingleTickerProviderStateMixin {
   late AnimationController _animationController;
   late Timer _dotTimer;
@@ -39,7 +39,7 @@ class _FindingPeopleState extends State<FindingPeople>
     Future.delayed(const Duration(seconds: 5), () {
       Navigator.pushReplacement(
         context,
-        MaterialPageRoute(builder: (context) => DatingProfilePage()),
+        MaterialPageRoute(builder: (context) => const HomeScreen()),
       );
     });
   }

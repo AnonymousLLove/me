@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 class ImageDisplay extends StatelessWidget {
   final List<File?> images;
 
-  const ImageDisplay({Key? key, required this.images}) : super(key: key);
+  const ImageDisplay({super.key, required this.images});
 
   @override
   Widget build(BuildContext context) {

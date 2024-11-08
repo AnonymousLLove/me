@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:love_bird/chat/mainChat.dart';
+import 'package:love_bird/chat/main_chat.dart';
 import 'package:love_bird/edit%20profile%20screens/edit_low_profile_screen.dart';
-import 'package:love_bird/homeScreen/homeScreen2.dart';
+import 'package:love_bird/homeScreen/homeScreen.dart';
 import 'package:love_bird/matches/likes.dart';
-import 'package:love_bird/matches/peopleNearby.dart';
+import 'package:love_bird/matches/people_nearby.dart';
 
 class VideoCallScreen extends StatelessWidget {
   final String name;
@@ -12,12 +12,12 @@ class VideoCallScreen extends StatelessWidget {
   final String backgroundImage;
 
   const VideoCallScreen({
-    Key? key,
+    super.key,
     required this.name,
     required this.profileImage,
     required this.callDuration,
     this.backgroundImage = 'assets/images/homeImage.png', // Default background
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -43,13 +43,13 @@ class VideoCallScreen extends StatelessWidget {
               child: Column(children: [
                 Text(
                   name,
-                  style: TextStyle(
+                  style: const TextStyle(
                     color: Colors.white,
                     fontSize: 22,
                     fontWeight: FontWeight.bold,
                   ),
                 ),
-                SizedBox(height: 5),
+                const SizedBox(height: 5),
                 Text(
                   callDuration,
                   style: TextStyle(
@@ -66,12 +66,12 @@ class VideoCallScreen extends StatelessWidget {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.end,
               children: [
-                Container(
+                SizedBox(
                   height: 180,
                   width: 180,
                   child: Image.asset(profileImage),
                 ),
-                SizedBox(height: 20),
+                const SizedBox(height: 20),
               ],
             ),
           ),
@@ -86,21 +86,21 @@ class VideoCallScreen extends StatelessWidget {
               children: [
                 _buildControlButton(
                   icon: Icons.volume_up,
-                  color: Color.fromRGBO(149, 140, 250, 1),
+                  color: const Color.fromRGBO(149, 140, 250, 1),
                   onPressed: () {
                     // Handle speaker action
                   },
                 ),
                 _buildControlButton(
                   icon: Icons.video_call,
-                  color: Color.fromRGBO(149, 140, 250, 1),
+                  color: const Color.fromRGBO(149, 140, 250, 1),
                   onPressed: () {
                     // Handle video call action
                   },
                 ),
                 _buildControlButton(
                   icon: Icons.mic,
-                  color: Color.fromRGBO(149, 140, 250, 1),
+                  color: const Color.fromRGBO(149, 140, 250, 1),
                   onPressed: () {
                     // Handle mute action
                   },
@@ -122,7 +122,7 @@ class VideoCallScreen extends StatelessWidget {
             top: 10,
             left: 10,
             child: IconButton(
-              icon: Icon(Icons.arrow_left, color: Colors.white, size: 28),
+              icon: const Icon(Icons.arrow_left, color: Colors.white, size: 28),
               onPressed: () {
                 Navigator.pop(context);
               },
@@ -132,7 +132,7 @@ class VideoCallScreen extends StatelessWidget {
             top: 10,
             right: 20,
             child: IconButton(
-              icon: Icon(Icons.more_vert, color: Colors.white, size: 28),
+              icon: const Icon(Icons.more_vert, color: Colors.white, size: 28),
               onPressed: () {
                 _showVideoPopup(context);
               },
@@ -166,14 +166,14 @@ void _showVideoPopup(BuildContext context) {
     barrierDismissible: true, // Dismiss when tapped outside
     barrierLabel: 'Dismiss',
     barrierColor: Colors.black54, // Add a background overlay
-    transitionDuration: Duration(milliseconds: 300),
+    transitionDuration: const Duration(milliseconds: 300),
     pageBuilder: (context, animation1, animation2) {
       return Align(
         alignment: Alignment.topRight,
         child: Material(
           color: Colors.transparent,
           child: Padding(
-            padding: EdgeInsets.symmetric(vertical: 60, horizontal: 20),
+            padding: const EdgeInsets.symmetric(vertical: 60, horizontal: 20),
             child: Container(
               width: 150,
               // Use a flexible height to allow more content
@@ -182,7 +182,7 @@ void _showVideoPopup(BuildContext context) {
                 borderRadius:
                     BorderRadius.circular(8), // Optional: add rounded corners
               ),
-              padding: EdgeInsets.all(16),
+              padding: const EdgeInsets.all(16),
               child: SingleChildScrollView(
                 // Make the content scrollable
                 child: Column(
@@ -196,7 +196,8 @@ void _showVideoPopup(BuildContext context) {
                               builder: (context) => const Avatar()),
                         );
                       },
-                      child: Text('Add Avatar', style: TextStyle(fontSize: 14)),
+                      child: const Text('Add Avatar',
+                          style: TextStyle(fontSize: 14)),
                     ),
                     const Divider(thickness: 2),
                     InkWell(
@@ -207,7 +208,7 @@ void _showVideoPopup(BuildContext context) {
                               builder: (context) => const Background()),
                         );
                       },
-                      child: Text('Add Background',
+                      child: const Text('Add Background',
                           style: TextStyle(fontSize: 14)),
                     ),
                     // Add more items here to test scrolling
@@ -222,8 +223,8 @@ void _showVideoPopup(BuildContext context) {
     transitionBuilder: (context, animation1, animation2, child) {
       return SlideTransition(
         position: Tween<Offset>(
-          begin: Offset(1, 0), // Slide in from the right
-          end: Offset(0, 0),
+          begin: const Offset(1, 0), // Slide in from the right
+          end: const Offset(0, 0),
         ).animate(animation1),
         child: child,
       );
@@ -248,8 +249,8 @@ class _AvatarState extends State<Avatar> {
         padding: const EdgeInsets.symmetric(horizontal: 10),
         child: Column(
           children: [
-            Text('Avatar', style: TextStyle(fontWeight: FontWeight.bold)),
-            SizedBox(height: 10),
+            const Text('Avatar', style: TextStyle(fontWeight: FontWeight.bold)),
+            const SizedBox(height: 10),
             Expanded(child: AvatarGrid()),
             SizedBox(
               width: screenSize.width * 0.7,
@@ -280,7 +281,7 @@ class _AvatarState extends State<Avatar> {
             const EdgeInsets.only(left: 12.0, right: 12, top: 12, bottom: 22),
         child: Container(
           decoration: BoxDecoration(
-            color: Color.fromRGBO(97, 86, 234, 0.19),
+            color: const Color.fromRGBO(97, 86, 234, 0.19),
             borderRadius: BorderRadius.circular(50),
           ),
           child: ClipRRect(
@@ -321,14 +322,14 @@ class _AvatarState extends State<Avatar> {
                     Navigator.push(
                       context,
                       MaterialPageRoute(
-                          builder: (context) => const DatingProfilePage()),
+                          builder: (context) => const HomeScreen()),
                     );
                     break;
                   case 1:
                     Navigator.push(
                       context,
                       MaterialPageRoute(
-                          builder: (context) => PeopleNearbyPage()),
+                          builder: (context) => const PeopleNearbyPage()),
                     );
                     break;
                   case 2:
@@ -357,7 +358,7 @@ class _AvatarState extends State<Avatar> {
 }
 
 class AvatarGrid extends StatelessWidget {
-  AvatarGrid({Key? key}) : super(key: key);
+  AvatarGrid({super.key});
 
   final List<String> users = [
     'assets/images/avatar1.png',
@@ -392,7 +393,7 @@ class AvatarGrid extends StatelessWidget {
                 color: Colors.grey.withOpacity(0.5),
                 spreadRadius: 2,
                 blurRadius: 5,
-                offset: Offset(0, 3), // changes position of shadow
+                offset: const Offset(0, 3), // changes position of shadow
               ),
             ],
           ),
@@ -440,8 +441,9 @@ class _BackgroundState extends State<Background> {
         padding: const EdgeInsets.symmetric(horizontal: 10),
         child: Column(
           children: [
-            Text('Background', style: TextStyle(fontWeight: FontWeight.bold)),
-            SizedBox(height: 10),
+            const Text('Background',
+                style: TextStyle(fontWeight: FontWeight.bold)),
+            const SizedBox(height: 10),
             Expanded(
               child: GridView.builder(
                 padding: const EdgeInsets.all(8.0),
@@ -485,7 +487,7 @@ class _BackgroundState extends State<Background> {
               ),
             ),
             Padding(
-              padding: EdgeInsets.all(10),
+              padding: const EdgeInsets.all(10),
               child: SizedBox(
                 width: screenSize.width * 0.7,
                 height: 50,
@@ -528,7 +530,7 @@ class _BackgroundState extends State<Background> {
             const EdgeInsets.only(left: 12.0, right: 12, top: 12, bottom: 22),
         child: Container(
           decoration: BoxDecoration(
-            color: Color.fromRGBO(97, 86, 234, 0.19),
+            color: const Color.fromRGBO(97, 86, 234, 0.19),
             borderRadius: BorderRadius.circular(50),
           ),
           child: ClipRRect(
@@ -568,20 +570,20 @@ class _BackgroundState extends State<Background> {
                     Navigator.push(
                       context,
                       MaterialPageRoute(
-                          builder: (context) => const DatingProfilePage()),
+                          builder: (context) => const HomeScreen()),
                     );
                     break;
                   case 1:
                     Navigator.push(
                       context,
                       MaterialPageRoute(
-                          builder: (context) => PeopleNearbyPage()),
+                          builder: (context) => const PeopleNearbyPage()),
                     );
                     break;
                   case 2:
                     Navigator.push(
                       context,
-                      MaterialPageRoute(builder: (context) => Mainchat()),
+                      MaterialPageRoute(builder: (context) => const Mainchat()),
                     );
                     break;
                   case 3:

@@ -138,7 +138,7 @@ void showMatchPopup(BuildContext context) {
     context: context,
     builder: (BuildContext context) {
       return AlertDialog(
-        contentPadding: EdgeInsets.all(20),
+        contentPadding: const EdgeInsets.all(20),
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(15),
         ),
@@ -176,7 +176,7 @@ void showMatchPopup(BuildContext context) {
               ),
 
               // Title message
-              Text(
+              const Text(
                 "You've got lots of matches!",
                 style: TextStyle(
                   fontWeight: FontWeight.bold,
@@ -185,13 +185,13 @@ void showMatchPopup(BuildContext context) {
               ),
 
               // Subtitle message
-              Text(
+              const Text(
                 "You have got 14 matches already - why not start a conversation?",
                 style: TextStyle(
                   fontSize: 12,
                 ),
               ),
-              SizedBox(height: 20),
+              const SizedBox(height: 20),
 
               // Buttons
               ElevatedButton(
@@ -200,14 +200,15 @@ void showMatchPopup(BuildContext context) {
                   // Handle "Chat with a match" action
                 },
                 style: ElevatedButton.styleFrom(
-                  padding: EdgeInsets.symmetric(vertical: 15, horizontal: 25),
+                  padding:
+                      const EdgeInsets.symmetric(vertical: 15, horizontal: 25),
                   backgroundColor:
-                      Color.fromRGBO(54, 40, 221, 1.0), // Button color
+                      const Color.fromRGBO(54, 40, 221, 1.0), // Button color
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(25),
                   ),
                 ),
-                child: Text(
+                child: const Text(
                   "Chat with a match",
                   style: TextStyle(
                     color: Colors.white,
@@ -215,13 +216,13 @@ void showMatchPopup(BuildContext context) {
                   ),
                 ),
               ),
-              SizedBox(height: 10),
+              const SizedBox(height: 10),
               TextButton(
                 onPressed: () {
                   Navigator.of(context).pop();
                   // Handle "Maybe later" action
                 },
-                child: Text(
+                child: const Text(
                   "Maybe later",
                   style: TextStyle(
                     color: Colors.black,
@@ -243,7 +244,7 @@ Widget _buildProfileAvatar(String i) {
       Column(
         children: [
           Padding(
-            padding: EdgeInsets.all(10),
+            padding: const EdgeInsets.all(10),
             child: CircleAvatar(
               radius: 30,
               backgroundColor: Colors.grey[300],
@@ -257,7 +258,7 @@ Widget _buildProfileAvatar(String i) {
               ),
             ),
           ),
-          SizedBox(height: 10),
+          const SizedBox(height: 10),
         ],
       ),
       Positioned(
@@ -266,7 +267,7 @@ Widget _buildProfileAvatar(String i) {
         child: Container(
           height: 12,
           width: 12,
-          decoration: BoxDecoration(
+          decoration: const BoxDecoration(
             color: Colors.green,
             shape: BoxShape.circle,
           ),
@@ -281,7 +282,7 @@ void showChatPopup(BuildContext context, String name) {
     context: context,
     builder: (BuildContext context) {
       return AlertDialog(
-        contentPadding: EdgeInsets.all(20),
+        contentPadding: const EdgeInsets.all(20),
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(15),
         ),
@@ -291,13 +292,13 @@ void showChatPopup(BuildContext context, String name) {
             // Title
             Text(
               "Want to chat with $name?",
-              style: TextStyle(
+              style: const TextStyle(
                 fontWeight: FontWeight.bold,
                 fontSize: 18,
               ),
               textAlign: TextAlign.center,
             ),
-            SizedBox(height: 10),
+            const SizedBox(height: 10),
 
             // Subtitle
             Text(
@@ -308,7 +309,7 @@ void showChatPopup(BuildContext context, String name) {
                 fontSize: 14,
               ),
             ),
-            SizedBox(height: 20),
+            const SizedBox(height: 20),
 
             // Keep Chatting button
             ElevatedButton(
@@ -317,15 +318,16 @@ void showChatPopup(BuildContext context, String name) {
                 // Handle "Keep Chatting" action
               },
               style: ElevatedButton.styleFrom(
-                padding: EdgeInsets.symmetric(vertical: 15, horizontal: 25),
+                padding:
+                    const EdgeInsets.symmetric(vertical: 15, horizontal: 25),
                 backgroundColor: Colors.blue, // Button color
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(25),
                 ),
               ),
-              child: Text("Keep Chatting"),
+              child: const Text("Keep Chatting"),
             ),
-            SizedBox(height: 10),
+            const SizedBox(height: 10),
 
             // End The Chat button
             TextButton(

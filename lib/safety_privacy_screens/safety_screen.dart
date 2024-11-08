@@ -1,7 +1,7 @@
-import 'package:love_bird/chat/mainChat.dart';
-import 'package:love_bird/homeScreen/homeScreen2.dart';
+import 'package:love_bird/chat/main_chat.dart';
+import 'package:love_bird/homeScreen/homeScreen.dart';
 import 'package:love_bird/matches/likes.dart';
-import 'package:love_bird/matches/peopleNearby.dart';
+import 'package:love_bird/matches/people_nearby.dart';
 import 'package:love_bird/safety_privacy_screens/get_help_screen.dart';
 import 'package:love_bird/safety_privacy_screens/incognito_mode.dart';
 import 'package:love_bird/safety_privacy_screens/privacy_screen.dart';
@@ -148,7 +148,7 @@ class _SafetyScreenState extends State<SafetyScreen> {
                       Navigator.push(
                         context,
                         MaterialPageRoute(
-                            builder: (context) => const DatingProfilePage()),
+                            builder: (context) => const HomeScreen()),
                       );
                       break;
                     case 1:
@@ -637,7 +637,7 @@ class _SafetyScreenState extends State<SafetyScreen> {
                       Navigator.push(
                         context,
                         MaterialPageRoute(
-                            builder: (context) => const DatingProfilePage()),
+                            builder: (context) => const HomeScreen()),
                       );
                     },
                     style: ElevatedButton.styleFrom(
@@ -663,7 +663,7 @@ class _SafetyScreenState extends State<SafetyScreen> {
                       Navigator.push(
                         context,
                         MaterialPageRoute(
-                            builder: (context) => const DatingProfilePage()),
+                            builder: (context) => const HomeScreen()),
                       );
                     },
                     child: const Text(

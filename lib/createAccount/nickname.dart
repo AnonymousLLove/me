@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:love_bird/createAccount/partner.dart';
+import 'package:love_bird/config/routes.dart';
+import 'package:love_bird/providers/birthday_provider.dart';
+import 'package:love_bird/providers/nickname_provider.dart';
+import 'package:provider/provider.dart';
 
-class LoveBirdIdentityScreen extends StatelessWidget {
-  const LoveBirdIdentityScreen({super.key});
+class CreateNickname extends StatelessWidget {
+  const CreateNickname({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -10,29 +13,44 @@ class LoveBirdIdentityScreen extends StatelessWidget {
 
     return Scaffold(
       resizeToAvoidBottomInset: true,
-      body: SingleChildScrollView(
-        child: Padding(
-          padding: const EdgeInsets.only(left: 20, right: 20.0, top: 50.0),
+      body: SafeArea(
+        child: SingleChildScrollView(
+          padding: EdgeInsets.only(
+            right: MediaQuery.of(context).size.width * 0.05,
+            left:
+                MediaQuery.of(context).size.width * 0.05, // 5% of screen width
+            top: MediaQuery.of(context).size.height *
+                0.02, // 5% of screen height
+          ),
           child: Column(
             children: [
               // Progress bar at the top
               SizedBox(
-                //  width: 400,
-                height: 25, // Set this to whatever width you want
-                child: ClipRRect(
-                  borderRadius:
-                      BorderRadius.circular(20), // Set the corner radius here
-                  child: LinearProgressIndicator(
-                    value: 0.15, // Simulating progress
-                    backgroundColor: Colors.grey[300],
-                    valueColor: const AlwaysStoppedAnimation<Color>(
-                      Color.fromRGBO(54, 40, 221, 1),
+                width: MediaQuery.of(context).size.width,
+                height: 15,
+                child: Stack(
+                  children: [
+                    ClipRRect(
+                      borderRadius:
+                          BorderRadius.circular(10.0), // Outer rounded corners
+                      child: Container(
+                        color: const Color(0xFF3628DD)
+                            .withOpacity(0.19), // Background color
+                      ),
                     ),
-                    minHeight: 8, // Set the height of the progress bar
-                  ),
+                    // Inner progress bar
+                    ClipRRect(
+                      borderRadius:
+                          BorderRadius.circular(10.0), // Inner rounded corners
+                      child: Container(
+                        width: MediaQuery.of(context).size.width *
+                            0.2, // Set width to represent progress
+                        color: const Color(0xFF3628DD), // Progress color
+                      ),
+                    ),
+                  ],
                 ),
               ),
-
               const SizedBox(height: 40),
               // Title
               Row(children: [
@@ -58,45 +76,47 @@ class LoveBirdIdentityScreen extends StatelessWidget {
               ),
               const SizedBox(height: 40),
               // Nickname Text Field
-              Container(
-                width: screenSize.width * 0.9,
-                height: screenSize.width * 0.3,
-                padding: const EdgeInsets.symmetric(
-                    horizontal: 20.0, vertical: 10.0),
-                decoration: BoxDecoration(
-                  color: Colors.blue[50],
-                  borderRadius: BorderRadius.circular(6),
-                  border: Border.all(
-                      color: const Color.fromRGBO(54, 40, 221, 1), width: 1),
-                ),
-                child: const Center(
-                  child: TextField(
-                    textAlign: TextAlign.center,
-                    style: TextStyle(
-                      fontSize: 25,
-                      color: Colors.black, // Blue color for input text
-                      fontWeight: FontWeight.bold, // Bold input text
-                    ),
-                    decoration: InputDecoration(
-                      hintText: 'Nickname',
-                      border: InputBorder.none,
-                      hintStyle: TextStyle(
-                        fontSize: 25,
-                        color: Color.fromRGBO(56, 53, 53, 1),
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
+
+              Consumer<NicknameProvider>(
+                  builder: (context, nicknameProvider, child) {
+                return Container(
+                  width: screenSize.width * 0.9,
+                  height: screenSize.width * 0.3,
+                  padding: const EdgeInsets.symmetric(
+                      horizontal: 20.0, vertical: 10.0),
+                  decoration: BoxDecoration(
+                    color: Color.fromRGBO(54, 40, 221, 0.19),
+                    borderRadius: BorderRadius.circular(6),
+                    border: Border.all(
+                        color: const Color.fromRGBO(54, 40, 221, 1), width: 1),
                   ),
-                ),
-              ),
+                  child: Center(
+                    child: TextField(
+                        textAlign: TextAlign.center,
+                        style: const TextStyle(
+                          fontSize: 25,
+                          color: Colors.black, // Blue color for input text
+                          fontWeight: FontWeight.bold, // Bold input text
+                        ),
+                        decoration: const InputDecoration(
+                          hintText: 'Nickname',
+                          border: InputBorder.none,
+                          hintStyle: TextStyle(
+                            fontSize: 25,
+                            color: Color.fromRGBO(23, 14, 121, 0.173),
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                        onChanged: (value) {
+                          nicknameProvider.setNickname(value);
+                        }),
+                  ),
+                );
+              }),
               const SizedBox(height: 400),
               InkWell(
                 onTap: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) => const CelebrateYouScreen()),
-                  );
+                  Navigator.pushNamed(context, celebrateYouScreen);
                 },
                 child: Container(
                   width: screenSize.width * 0.8,
@@ -128,29 +148,43 @@ class CelebrateYouScreen extends StatelessWidget {
 
     return Scaffold(
       resizeToAvoidBottomInset: true,
-      body: SingleChildScrollView(
-        child: Padding(
-          padding: const EdgeInsets.only(
-            right: 20.0,
-            left: 20,
-            top: 50.0,
+      body: SafeArea(
+        child: SingleChildScrollView(
+          padding: EdgeInsets.only(
+            right: MediaQuery.of(context).size.width * 0.05,
+            left:
+                MediaQuery.of(context).size.width * 0.05, // 5% of screen width
+            top: MediaQuery.of(context).size.height *
+                0.02, // 5% of screen height
           ),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               // Progress bar at the top
               SizedBox(
-                height: 25,
-                child: ClipRRect(
-                  borderRadius: BorderRadius.circular(20),
-                  child: LinearProgressIndicator(
-                    value: 0.2, // Simulating progress
-                    backgroundColor: Colors.grey[300],
-                    valueColor: const AlwaysStoppedAnimation<Color>(
-                      Color.fromRGBO(54, 40, 221, 1),
+                width: MediaQuery.of(context).size.width,
+                height: 15,
+                child: Stack(
+                  children: [
+                    ClipRRect(
+                      borderRadius:
+                          BorderRadius.circular(10.0), // Outer rounded corners
+                      child: Container(
+                        color: const Color(0xFF3628DD)
+                            .withOpacity(0.19), // Background color
+                      ),
                     ),
-                    minHeight: 8,
-                  ),
+                    // Inner progress bar
+                    ClipRRect(
+                      borderRadius:
+                          BorderRadius.circular(10.0), // Inner rounded corners
+                      child: Container(
+                        width: MediaQuery.of(context).size.width *
+                            0.25, // Set width to represent progress
+                        color: const Color(0xFF3628DD), // Progress color
+                      ),
+                    ),
+                  ],
                 ),
               ),
 
@@ -187,22 +221,28 @@ class CelebrateYouScreen extends StatelessWidget {
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
-                  // Month field
-                  _buildDateField(context, 'MM'),
-                  // Day field
-                  _buildDateField(context, 'DD'),
-                  // Year field
-                  _buildDateField(context, 'YYYY'),
+                  _buildDateField(
+                      context,
+                      'MM',
+                      (value) =>
+                          context.read<CelebrateYouProvider>().setMonth(value)),
+                  _buildDateField(
+                      context,
+                      'DD',
+                      (value) =>
+                          context.read<CelebrateYouProvider>().setDay(value)),
+                  _buildDateField(
+                      context,
+                      'YYYY',
+                      (value) =>
+                          context.read<CelebrateYouProvider>().setYear(value)),
                 ],
               ),
               const SizedBox(height: 300),
               // Continue Button
               InkWell(
                 onTap: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (context) => const Gender()),
-                  );
+                  Navigator.pushNamed(context, gender);
                 },
                 child: Container(
                   width: screenSize.width * 0.8,
@@ -226,8 +266,8 @@ class CelebrateYouScreen extends StatelessWidget {
     );
   }
 
-  // Method to build date fields (MM, DD, YYYY)
-  Widget _buildDateField(BuildContext context, String hint) {
+  Widget _buildDateField(
+      BuildContext context, String hint, Function(String) onChanged) {
     return Container(
       width: 80,
       height: 50,
@@ -249,6 +289,7 @@ class CelebrateYouScreen extends StatelessWidget {
             ),
           ),
           keyboardType: TextInputType.number,
+          onChanged: onChanged,
         ),
       ),
     );

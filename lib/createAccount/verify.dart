@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-
-import 'package:love_bird/createAccount/nickname.dart';
+import 'package:love_bird/config/routes.dart';
 
 class EmailVerificationPage extends StatelessWidget {
   const EmailVerificationPage({super.key});
@@ -112,11 +111,7 @@ class EmailVerificationPage extends StatelessWidget {
                   ),
                 ),
                 onPressed: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) => CaptchaVerificationPage()),
-                  );
+                  Navigator.pushNamed(context, captchaVerificationPage);
                 },
                 child: const Padding(
                   padding: EdgeInsets.all(12.0),
@@ -146,7 +141,7 @@ class CaptchaVerificationPage extends StatefulWidget {
 }
 
 class _CaptchaVerificationPageState extends State<CaptchaVerificationPage> {
-  bool _isChecked = false; // Checkbox state
+  final bool _isChecked = false; // Checkbox state
   bool _isLoading = false; // Loading state
 
   void _onCheckboxTapped() {
@@ -160,7 +155,8 @@ class _CaptchaVerificationPageState extends State<CaptchaVerificationPage> {
         // Navigate to the next screen after 3 seconds
         Navigator.push(
           context,
-          MaterialPageRoute(builder: (context) => CaptchaVerificationPage2()),
+          MaterialPageRoute(
+              builder: (context) => const CaptchaVerificationPage2()),
         );
       });
     }
@@ -178,15 +174,30 @@ class _CaptchaVerificationPageState extends State<CaptchaVerificationPage> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             SizedBox(
-              height: 25,
-              child: ClipRRect(
-                borderRadius: BorderRadius.circular(20),
-                child: LinearProgressIndicator(
-                  value: 0.1, // Simulating progress
-                  backgroundColor: Colors.grey[300],
-                  valueColor: const AlwaysStoppedAnimation<Color>(blue),
-                  minHeight: 8,
-                ),
+              width: MediaQuery.of(context).size.width,
+              height: 15,
+              child: Stack(
+                children: [
+                  // Background bar
+                  ClipRRect(
+                    borderRadius:
+                        BorderRadius.circular(10.0), // Outer rounded corners
+                    child: Container(
+                      color: const Color(0xFF3628DD)
+                          .withOpacity(0.19), // Background color
+                    ),
+                  ),
+                  // Inner progress bar
+                  ClipRRect(
+                    borderRadius:
+                        BorderRadius.circular(10.0), // Inner rounded corners
+                    child: Container(
+                      width: MediaQuery.of(context).size.width *
+                          0.1, // Set width to represent progress
+                      color: const Color(0xFF3628DD), // Progress color
+                    ),
+                  ),
+                ],
               ),
             ),
 
@@ -242,10 +253,10 @@ class _CaptchaVerificationPageState extends State<CaptchaVerificationPage> {
                   GestureDetector(
                     onTap: _onCheckboxTapped,
                     child: _isLoading
-                        ? Container(
+                        ? SizedBox(
                             width: 26,
                             height: 26,
-                            child: Center(
+                            child: const Center(
                               child: CircularProgressIndicator(
                                 strokeWidth: 2,
                                 valueColor: AlwaysStoppedAnimation<Color>(blue),
@@ -256,7 +267,7 @@ class _CaptchaVerificationPageState extends State<CaptchaVerificationPage> {
                             width: 26,
                             height: 26,
                             decoration: BoxDecoration(
-                              color: Color.fromRGBO(210, 207, 251, 0.56),
+                              color: const Color.fromRGBO(210, 207, 251, 0.56),
                               borderRadius: BorderRadius.circular(6),
                               border: Border.all(
                                 color: blue,
@@ -264,7 +275,7 @@ class _CaptchaVerificationPageState extends State<CaptchaVerificationPage> {
                               ),
                             ),
                             child: _isChecked
-                                ? Icon(
+                                ? const Icon(
                                     Icons.check,
                                     color: blue,
                                     size: 20,
@@ -289,7 +300,8 @@ class _CaptchaVerificationPageState extends State<CaptchaVerificationPage> {
                       Navigator.push(
                         context,
                         MaterialPageRoute(
-                            builder: (context) => CaptchaVerificationPage2()),
+                            builder: (context) =>
+                                const CaptchaVerificationPage2()),
                       );
                     },
                     child: Image.asset(
@@ -331,19 +343,30 @@ class _CaptchaVerificationPage2State extends State<CaptchaVerificationPage2> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               SizedBox(
-                //  width: 400,
-                height: 25, // Set this to whatever width you want
-                child: ClipRRect(
-                  borderRadius:
-                      BorderRadius.circular(20), // Set the corner radius here
-                  child: LinearProgressIndicator(
-                    value: 0.1, // Simulating progress
-                    backgroundColor: Colors.grey[300],
-                    valueColor: const AlwaysStoppedAnimation<Color>(
-                      Color.fromRGBO(54, 40, 221, 1),
+                width: MediaQuery.of(context).size.width,
+                height: 15,
+                child: Stack(
+                  children: [
+                    // Background bar
+                    ClipRRect(
+                      borderRadius:
+                          BorderRadius.circular(10.0), // Outer rounded corners
+                      child: Container(
+                        color: const Color(0xFF3628DD)
+                            .withOpacity(0.19), // Background color
+                      ),
                     ),
-                    minHeight: 8, // Set the height of the progress bar
-                  ),
+                    // Inner progress bar
+                    ClipRRect(
+                      borderRadius:
+                          BorderRadius.circular(10.0), // Inner rounded corners
+                      child: Container(
+                        width: MediaQuery.of(context).size.width *
+                            0.1, // Set width to represent progress
+                        color: const Color(0xFF3628DD), // Progress color
+                      ),
+                    ),
+                  ],
                 ),
               ),
 
@@ -361,7 +384,7 @@ class _CaptchaVerificationPage2State extends State<CaptchaVerificationPage2> {
                     ),
                     textAlign: TextAlign.start,
                   ),
-                  SizedBox(width: 5),
+                  const SizedBox(width: 5),
                   Image.asset('assets/images/two.png')
                 ],
               ),
@@ -385,7 +408,7 @@ class _CaptchaVerificationPage2State extends State<CaptchaVerificationPage2> {
                   onTap: () {
                     Navigator.push(
                       context,
-                      MaterialPageRoute(builder: (context) => Captcha3()),
+                      MaterialPageRoute(builder: (context) => const Captcha3()),
                     );
                   },
                   child: Image.asset('assets/images/captcha.png'),
@@ -421,15 +444,29 @@ class _Captcha3State extends State<Captcha3> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             SizedBox(
-              height: 25,
-              child: ClipRRect(
-                borderRadius: BorderRadius.circular(20),
-                child: LinearProgressIndicator(
-                  value: 0.1, // Simulating progress
-                  backgroundColor: Colors.grey[300],
-                  valueColor: const AlwaysStoppedAnimation<Color>(blue),
-                  minHeight: 8,
-                ),
+              width: MediaQuery.of(context).size.width,
+              height: 15,
+              child: Stack(
+                children: [
+                  ClipRRect(
+                    borderRadius:
+                        BorderRadius.circular(10.0), // Outer rounded corners
+                    child: Container(
+                      color: const Color(0xFF3628DD)
+                          .withOpacity(0.19), // Background color
+                    ),
+                  ),
+                  // Inner progress bar
+                  ClipRRect(
+                    borderRadius:
+                        BorderRadius.circular(10.0), // Inner rounded corners
+                    child: Container(
+                      width: MediaQuery.of(context).size.width *
+                          0.1, // Set width to represent progress
+                      color: const Color(0xFF3628DD), // Progress color
+                    ),
+                  ),
+                ],
               ),
             ),
 
@@ -475,7 +512,7 @@ class _Captcha3State extends State<Captcha3> {
               child: Row(
                 children: [
                   // Checkbox
-                  Icon(Icons.check, color: Colors.green, size: 30),
+                  const Icon(Icons.check, color: Colors.green, size: 30),
 
                   const SizedBox(width: 10),
 
@@ -489,11 +526,7 @@ class _Captcha3State extends State<Captcha3> {
 
                   InkWell(
                     onTap: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => CaptchaVerificationPage2()),
-                      );
+                      Navigator.pushNamed(context, createNickname);
                     },
                     child: Image.asset(
                       'assets/images/logos_recaptcha.png',
@@ -503,16 +536,12 @@ class _Captcha3State extends State<Captcha3> {
                 ],
               ),
             ),
-            Spacer(),
+            const Spacer(),
             Padding(
               padding: const EdgeInsets.symmetric(vertical: 2.0),
               child: ElevatedButton(
                 onPressed: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) => const LoveBirdIdentityScreen()),
-                  );
+                  Navigator.pushNamed(context, createNickname);
                 },
                 style: ElevatedButton.styleFrom(
                   backgroundColor: const Color.fromRGBO(

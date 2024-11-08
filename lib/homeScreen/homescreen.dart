@@ -1,23 +1,27 @@
 import 'package:flutter/material.dart';
-import 'package:love_bird/chat/chatScreen.dart';
-import 'package:love_bird/chat/mainChat.dart';
+import 'package:love_bird/chat/chat_screen.dart';
+import 'package:love_bird/chat/main_chat.dart';
+import 'package:love_bird/config/routes.dart';
+import 'package:love_bird/creditPages/purchase_credits_page.dart';
 
 import 'package:love_bird/homeScreen/notification.dart';
 import 'package:love_bird/homeScreen/preference.dart';
 import 'package:love_bird/matches/likes.dart';
-import 'package:love_bird/matches/peopleNearby.dart';
+import 'package:love_bird/matches/people_nearby.dart';
+
 import 'dart:async';
 
 import 'package:love_bird/profile/profile.dart';
+import 'package:love_bird/profile/users_profile.dart';
 
-class DatingProfilePage extends StatefulWidget {
-  const DatingProfilePage({super.key});
+class HomeScreen extends StatefulWidget {
+  const HomeScreen({super.key});
 
   @override
-  State<DatingProfilePage> createState() => _DatingProfilePageState();
+  State<HomeScreen> createState() => _HomeScreenState();
 }
 
-class _DatingProfilePageState extends State<DatingProfilePage> {
+class _HomeScreenState extends State<HomeScreen> {
   List<String> messages = [
     "You've got this! The right person will appreciate everything you bring to the table.",
     "You are more than enough. The right person will see and cherish that.",
@@ -117,12 +121,12 @@ class _DatingProfilePageState extends State<DatingProfilePage> {
                       const EdgeInsets.only(bottom: 20, left: 20, right: 25),
                   child: Container(
                     decoration: BoxDecoration(
-                      color: Color(0xff6156EA).withOpacity(0.4),
+                      color: const Color(0xff6156EA).withOpacity(0.4),
 
                       //    color: Color.fromRGBO(97, 86, 234, 0.19),
 
                       // Match the dialog's border radius
-                      boxShadow: [
+                      boxShadow: const [
                         BoxShadow(
                           color: Color.fromRGBO(0, 0, 0, 0.25),
                           offset: Offset(10, 10),
@@ -160,32 +164,30 @@ class _DatingProfilePageState extends State<DatingProfilePage> {
 
   @override
   Widget build(BuildContext context) {
-    final screenHeight = MediaQuery.of(context).size.height;
+    // final screenHeight = MediaQuery.of(context).size.height;
     // FilterOptionss filterOptions = const FilterOptionss();
 
     return Scaffold(
       backgroundColor: Colors.white,
-      body: Padding(
-        padding: const EdgeInsets.all(10),
-        child: Column(
-          children: [
-            Padding(
-              padding: EdgeInsets.symmetric(
-                vertical: screenHeight * 0.01,
-              ), // Responsive vertical padding
-              // horizontal: screenWidth * 0.001),
-              child: Row(
+      body: SafeArea(
+        child: Padding(
+          padding: EdgeInsets.symmetric(
+            horizontal: MediaQuery.of(context).size.width *
+                0.02, // 3% of the screen width
+          ),
+          child: Column(
+            children: [
+              Row(
                 children: [
                   IconButton(
-                    icon: const Icon(Icons.arrow_back_outlined),
+                    icon: const Icon(Icons.arrow_back_outlined, size: 30),
                     onPressed: () {
                       Navigator.pop(context);
                     },
                   ),
                   GestureDetector(
                     onTap: () {
-                      showLibbyChatbot(
-                          context); // Call the separate function to show the popup
+                      Navigator.pushNamed(context, chatbotWelcomeScreen);
                     },
                     child: Image.asset('assets/images/robot.png', width: 30),
                   ),
@@ -194,7 +196,7 @@ class _DatingProfilePageState extends State<DatingProfilePage> {
                         child: Text(
                       'Love Bird',
                       style:
-                          TextStyle(fontWeight: FontWeight.bold, fontSize: 25),
+                          TextStyle(fontWeight: FontWeight.w700, fontSize: 20),
                       textAlign: TextAlign.center,
                     )),
                   ),
@@ -204,7 +206,7 @@ class _DatingProfilePageState extends State<DatingProfilePage> {
                     },
                     child: Image.asset('assets/images/message.png', width: 30),
                   ),
-                  SizedBox(width: 5),
+                  const SizedBox(width: 5),
                   IconButton(
                     icon: const Icon(Icons.notifications,
                         color: Colors.black, size: 30),
@@ -216,7 +218,7 @@ class _DatingProfilePageState extends State<DatingProfilePage> {
                       );
                     },
                   ),
-                  SizedBox(width: 5),
+                  const SizedBox(width: 5),
                   InkWell(
                     onTap: () {
                       showFilterOptions(context, (int startAge, int endAge) {
@@ -228,30 +230,49 @@ class _DatingProfilePageState extends State<DatingProfilePage> {
                   ),
                 ],
               ),
-            ),
-            const Expanded(
-              child: SingleChildScrollView(
-                child: Center(
-                  child: Column(
-                    children: [
-                      // SizedBox(height: 20),
-                      // Replace this part with the ProfileInfo widget
-                      ProfileInfo(
-                        imageUrl: 'assets/images/homeImage.png',
-                        name: 'Daniel, 31',
-                        location: '26km away',
-                      ),
-                    ],
+              const Expanded(
+                child: SingleChildScrollView(
+                  child: Center(
+                    child: Column(
+                      children: [
+                        // SizedBox(height: 20),
+                        // Replace this part with the ProfileInfo widget
+                        ProfileInfo(
+                          profiles: [
+                            {
+                              'imageUrl': 'assets/images/homeImage.png',
+                              'name': 'John Doe, 25',
+                              'location': 'New York, USA',
+                            },
+                            {
+                              'imageUrl': 'assets/images/homeImage.png',
+                              'name': 'Jane Smith, 22',
+                              'location': 'Los Angeles, USA',
+                            },
+                            {
+                              'imageUrl': 'assets/images/homeImage.png',
+                              'name': 'Chris Johnson, 30',
+                              'location': 'Chicago, USA',
+                            },
+                          ],
+                        ),
+                      ],
+                    ),
                   ),
                 ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
       bottomNavigationBar: Padding(
-        padding:
-            const EdgeInsets.only(left: 12.0, right: 12, top: 12, bottom: 22),
+        padding: EdgeInsets.only(
+          left: MediaQuery.of(context).size.width * 0.03, // 3% of screen width
+          right: MediaQuery.of(context).size.width * 0.03,
+          top: MediaQuery.of(context).size.height * 0.01, // 1% of screen height
+          bottom:
+              MediaQuery.of(context).size.height * 0.03, // 3% of screen height
+        ),
         child: Container(
           decoration: BoxDecoration(
             color: const Color.fromRGBO(97, 86, 234, 0.19),
@@ -261,39 +282,58 @@ class _DatingProfilePageState extends State<DatingProfilePage> {
             borderRadius: BorderRadius.circular(50),
             child: BottomNavigationBar(
               type: BottomNavigationBarType.fixed,
-              backgroundColor:
-                  Colors.transparent, // Transparent to show container color
-              elevation: 0, // Ensure all items are shown
+              backgroundColor: Colors.transparent,
+              elevation: 0,
               items: [
                 BottomNavigationBarItem(
-                  icon: Image.asset('assets/images/icons/home.png',
-                      width: 30, height: 30),
+                  icon: Image.asset(
+                    'assets/images/icons/home.png',
+                    width:
+                        MediaQuery.of(context).size.width * 0.07, // 7% of width
+                    height: MediaQuery.of(context).size.width * 0.07,
+                  ),
                   label: 'Home',
                 ),
                 BottomNavigationBarItem(
-                  icon: Image.asset('assets/images/icons/localcon.png',
-                      width: 30, height: 30),
+                  icon: Image.asset(
+                    'assets/images/icons/localcon.png',
+                    width: MediaQuery.of(context).size.width * 0.07,
+                    height: MediaQuery.of(context).size.width * 0.07,
+                  ),
                   label: 'People Nearby',
                 ),
                 BottomNavigationBarItem(
-                  icon: Image.asset('assets/images/icons/chatIcon.png',
-                      width: 30, height: 30),
+                  icon: Image.asset(
+                    'assets/images/icons/chatIcon.png',
+                    width: MediaQuery.of(context).size.width * 0.07,
+                    height: MediaQuery.of(context).size.width * 0.07,
+                  ),
                   label: 'Chats',
                 ),
                 BottomNavigationBarItem(
-                  icon: Image.asset('assets/images/icons/matches.png',
-                      width: 30, height: 30),
+                  icon: Image.asset(
+                    'assets/images/icons/matches.png',
+                    width: MediaQuery.of(context).size.width * 0.07,
+                    height: MediaQuery.of(context).size.width * 0.07,
+                  ),
                   label: 'Matches',
                 ),
                 BottomNavigationBarItem(
-                  icon: Image.asset('assets/images/icons/personIcon.png',
-                      width: 30, height: 30),
+                  icon: Image.asset(
+                    'assets/images/icons/personIcon.png',
+                    width: MediaQuery.of(context).size.width * 0.07,
+                    height: MediaQuery.of(context).size.width * 0.07,
+                  ),
                   label: 'Profile',
                 ),
               ],
-              selectedLabelStyle: const TextStyle(
-                  fontSize: 11), // Change the font size for the selected label
-              unselectedLabelStyle: const TextStyle(fontSize: 11),
+              selectedLabelStyle: TextStyle(
+                fontSize:
+                    MediaQuery.of(context).size.width * 0.03, // 3% of width
+              ),
+              unselectedLabelStyle: TextStyle(
+                fontSize: MediaQuery.of(context).size.width * 0.03,
+              ),
               onTap: (index) {
                 // Handle navigation based on the index
                 switch (index) {
@@ -301,7 +341,7 @@ class _DatingProfilePageState extends State<DatingProfilePage> {
                     Navigator.push(
                       context,
                       MaterialPageRoute(
-                          builder: (context) => const DatingProfilePage()),
+                          builder: (context) => const HomeScreen()),
                     );
                     break;
                   case 1:
@@ -310,14 +350,12 @@ class _DatingProfilePageState extends State<DatingProfilePage> {
                       MaterialPageRoute(
                           builder: (context) => const PeopleNearbyPage()),
                     );
-
                     break;
                   case 2:
                     Navigator.push(
                       context,
                       MaterialPageRoute(builder: (context) => const Mainchat()),
                     );
-
                     break;
                   case 3:
                     Navigator.push(
@@ -342,404 +380,128 @@ class _DatingProfilePageState extends State<DatingProfilePage> {
   }
 }
 
-void showLibbyChatbot(BuildContext context) {
-  showDialog(
-    context: context,
-    builder: (BuildContext context) {
-      return Align(
-        alignment:
-            Alignment.bottomCenter, // Aligns the dialog at the bottom center
-        child: Padding(
-          padding: const EdgeInsets.only(
-              bottom: 20), // Adds some space at the bottom
-          child: AlertDialog(
-            contentPadding: EdgeInsets.zero,
-            shape: RoundedRectangleBorder(
-              borderRadius:
-                  BorderRadius.circular(0), // Rounded corners for the dialog
-            ),
-            content: SizedBox(
-              height: 350,
-              width: 300, // Adjust dimensions based on your design
-              child: Stack(
-                children: [
-                  Positioned.fill(
-                    child: Column(
-                      children: [
-                        Expanded(
-                          flex: 2, // Occupies 2/3 of the total height
-                          child: Container(
-                            color: const Color.fromRGBO(54, 40, 221, 1),
-                            child: Padding(
-                              padding: const EdgeInsets.only(
-                                  top: 20, left: 5, right: 5),
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Row(
-                                    children: [
-                                      const Text(
-                                        "Hello there",
-                                        style: TextStyle(
-                                          fontSize: 16,
-                                          fontWeight: FontWeight.bold,
-                                          color: Colors.white,
-                                        ),
-                                      ),
-                                      Image.asset('assets/images/wave.png',
-                                          height: 18), // Adjust wave icon size
-                                    ],
-                                  ),
-                                  const SizedBox(height: 5),
-                                  const Text(
-                                    "I am Libby!",
-                                    style: TextStyle(
-                                      fontSize: 14,
-                                      color: Colors.white,
-                                    ),
-                                  ),
-                                  const SizedBox(height: 3),
-                                  const Text(
-                                    "You can ask me anything on dating, relationship advice, event & activity suggestions, conversation advice, real-life tips, etc.",
-                                    style: TextStyle(
-                                      fontSize: 13,
-                                      color: Colors.white,
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ),
-                          ),
-                        ),
-                        Expanded(
-                          flex: 1, // Occupies 1/3 of the total height
-                          child: Column(
-                            children: [
-                              const Spacer(),
-                              Image.asset('assets/images/image2.png')
-                            ],
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-
-                  // Floating "Ask me Anything" container
-                  Positioned(
-                    top: 200,
-                    left: 50,
-                    right: 50,
-                    child: GestureDetector(
-                      onTap: () {
-                        Navigator.pop(context);
-                        showChatPopup(context);
-                      },
-                      child: Container(
-                        decoration: const BoxDecoration(
-                          color: Colors.white,
-                          boxShadow: [
-                            BoxShadow(
-                              color: Color.fromRGBO(0, 0, 0, 0.25),
-                              offset: Offset(10, 10),
-                              blurRadius: 5,
-                            ),
-                          ],
-                        ),
-                        child: Padding(
-                          padding: const EdgeInsets.all(14),
-                          child: Container(
-                            decoration: BoxDecoration(
-                              color: const Color.fromRGBO(54, 40, 221, 1),
-                              borderRadius: BorderRadius.circular(10),
-                            ),
-                            // padding: const EdgeInsets.symmetric(horizontal: 10),
-                            child: Padding(
-                              padding: const EdgeInsets.symmetric(
-                                  vertical: 10, horizontal: 10),
-                              child: Row(
-                                children: [
-                                  Image.asset('assets/images/icons/sendAi.png'),
-                                  const SizedBox(width: 5),
-                                  const Text(
-                                    'Ask me Anything',
-                                    style: TextStyle(
-                                      fontSize: 12,
-                                      color: Colors.white,
-                                      fontWeight: FontWeight.bold,
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ),
-                          ),
-                        ),
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-            ),
-          ),
-        ),
-      );
-    },
-  );
-}
-
-void showChatPopup(BuildContext context) {
-  showDialog(
-    context: context,
-    barrierDismissible: true,
-    builder: (context) {
-      return ChatDialog();
-    },
-  );
-}
-
-class ChatDialog extends StatefulWidget {
-  @override
-  _ChatDialogState createState() => _ChatDialogState();
-}
-
-class _ChatDialogState extends State<ChatDialog> {
-  final List<Map<String, String>> _messages = [
-    {
-      'text': 'Hi, I need help on event suggestions for a first-time date.',
-      'user': 'me',
-    },
-    {
-      'text': 'Sure! How about a picnic in the park?',
-      'user': 'ai',
-    },
-  ];
-
-  final TextEditingController _controller = TextEditingController();
-
-  void _sendMessage() {
-    if (_controller.text.isNotEmpty) {
-      setState(() {
-        _messages.add({
-          'text': _controller.text,
-          'user': 'me',
-        });
-      });
-      _controller.clear(); // Clear the input field
-    }
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return Dialog(
-      child: Container(
-        height: 400,
-        color: Colors.white,
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            Container(
-              color: const Color.fromRGBO(54, 40, 221, 1),
-              padding: const EdgeInsets.all(10),
-              child: Align(
-                alignment: Alignment.centerRight,
-                child: IconButton(
-                  icon: const Icon(Icons.close, color: Colors.white),
-                  onPressed: () {
-                    Navigator.of(context).pop();
-                  },
-                ),
-              ),
-            ),
-            const SizedBox(height: 5),
-            Image.asset('assets/images/image1.png', width: 40),
-            // Chat Messages
-            Expanded(
-              child: ListView.builder(
-                padding: const EdgeInsets.all(10),
-                itemCount: _messages.length,
-                itemBuilder: (context, index) {
-                  return messageField(
-                    text: _messages[index]['text']!,
-                    user: _messages[index]['user']!,
-                  );
-                },
-              ),
-            ),
-            // Text input field for message
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 15),
-              child: Row(
-                children: [
-                  Expanded(
-                    child: TextField(
-                      controller: _controller,
-                      decoration: const InputDecoration(
-                        hintText: "Type here and press enter...",
-                        border: OutlineInputBorder(),
-                      ),
-                      onSubmitted: (_) =>
-                          _sendMessage(), // Send message on enter
-                    ),
-                  ),
-                  const SizedBox(width: 10),
-                  IconButton(
-                    icon: const Icon(Icons.send,
-                        color: Color.fromRGBO(54, 40, 221, 1)),
-                    onPressed: _sendMessage,
-                  ),
-                  const SizedBox(width: 5),
-                  const Icon(Icons.attachment_sharp, color: Colors.grey),
-                  const SizedBox(width: 5),
-                  const Icon(Icons.sentiment_satisfied_outlined,
-                      color: Colors.grey),
-                ],
-              ),
-            ),
-          ],
-        ),
-      ),
-    );
-  }
-}
-
-Widget messageField({
-  required String text,
-  required String user, // Can be "me" or "ai"
-  String? image, // Optional image parameter
-}) {
-  // Set default image if none provided
-  String avatarImage =
-      user == 'me' ? 'assets/images/homeImage.png' : 'assets/images/robot.png';
-
-  // Define alignment based on user
-  Alignment alignment =
-      user == 'me' ? Alignment.centerRight : Alignment.centerLeft;
-
-  return Align(
-    alignment: alignment,
-    child: Row(
-      mainAxisAlignment:
-          user == 'me' ? MainAxisAlignment.end : MainAxisAlignment.start,
-      children: [
-        if (user != 'me')
-          CircleAvatar(
-            backgroundImage: AssetImage(avatarImage),
-            radius: 20,
-          ),
-        const SizedBox(width: 10),
-        Container(
-          width: 200,
-          padding: const EdgeInsets.all(10),
-          margin: const EdgeInsets.symmetric(vertical: 5),
-          color: const Color.fromRGBO(210, 207, 251, 1),
-          child: Text(
-            text,
-            style: const TextStyle(
-                color: Colors.black, fontWeight: FontWeight.bold),
-          ),
-        ),
-        if (user == 'me') // Show avatar for user only
-          const SizedBox(width: 10),
-        if (user == 'me')
-          CircleAvatar(
-            backgroundImage: AssetImage(avatarImage),
-            radius: 20,
-          ),
-      ],
-    ),
-  );
-}
-
 void showExtraViewsPopup(BuildContext context) {
   const Color blue = Color.fromRGBO(54, 40, 221, 1.0);
+
   showModalBottomSheet(
     context: context,
     shape: const RoundedRectangleBorder(
-      borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
+      borderRadius: BorderRadius.vertical(top: Radius.circular(15)),
     ),
     builder: (BuildContext context) {
+      final screenHeight = MediaQuery.of(context).size.height;
+      final screenWidth = MediaQuery.of(context).size.width;
+
       return Container(
-        padding: const EdgeInsets.only(top: 20.0, left: 20, right: 20),
-        height: MediaQuery.of(context).size.height * 0.4,
+        padding: EdgeInsets.only(
+          top: screenHeight * 0.02, // 2% of screen height
+          left: screenWidth * 0.05, // 5% of screen width
+          right: screenWidth * 0.05,
+        ),
+        height: screenHeight * 0.4, // 40% of screen height
         child: SingleChildScrollView(
-          // Add scroll view
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
               Align(
                 alignment: Alignment.centerLeft,
-                child: Image.asset('assets/images/credit.png',
-                    width: 70, height: 50),
+                child: Image.asset(
+                  'assets/images/credit.png',
+                  width: screenWidth * 0.15, // 15% of screen width
+                  height: screenHeight * 0.06, // 6% of screen height
+                ),
               ),
-              const SizedBox(height: 2),
-              const Text(
+              SizedBox(height: screenHeight * 0.01), // 1% of screen height
+              Text(
                 'Extra Views',
                 style: TextStyle(
-                  fontSize: 22,
+                  fontSize: screenHeight * 0.025, // 2.5% of screen height
                   fontWeight: FontWeight.bold,
                   color: Colors.black,
                 ),
               ),
-              const Text(
+              Text(
                 'Be seen by more people and get up to 6x more likes.',
-                style: TextStyle(fontSize: 18, color: Colors.black),
+                style: TextStyle(
+                  fontSize: screenHeight * 0.022, // 2.2% of screen height
+                  color: Colors.black,
+                ),
               ),
-              const SizedBox(height: 20),
+              SizedBox(height: screenHeight * 0.03), // 3% of screen height
               Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 15.0),
+                padding: EdgeInsets.symmetric(
+                    horizontal: screenWidth * 0.04), // 4% of screen width
                 child: ElevatedButton(
                   onPressed: () {
                     Navigator.push(
                       context,
                       MaterialPageRoute(
-                          builder: (context) => const PurchaseCreditsPage()),
+                        builder: (context) => const PurchaseCreditsPage(),
+                      ),
                     );
                   },
                   style: ElevatedButton.styleFrom(
                     backgroundColor: blue,
-                    padding: const EdgeInsets.symmetric(vertical: 15),
+                    padding: EdgeInsets.symmetric(
+                      vertical: screenHeight * 0.02, // 2% of screen height
+                    ),
                   ),
-                  child: const Text('Get Extra Views For 150 Credits',
-                      style: TextStyle(
-                          color: Colors.white,
-                          fontSize: 15,
-                          fontWeight: FontWeight.bold)),
-                ),
-              ),
-              const SizedBox(height: 2),
-              const Text(
-                'OR',
-                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
-                textAlign: TextAlign.center,
-              ),
-              const SizedBox(height: 2),
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 12),
-                child: OutlinedButton(
-                  onPressed: () {
-                    // Handle navigation to Premium Plan
-                  },
-                  style: OutlinedButton.styleFrom(
-                    padding: const EdgeInsets.symmetric(vertical: 15),
-                    side: const BorderSide(color: blue, width: 2),
-                  ),
-                  child: const Text(
-                    'Get Love Bird Premium Plan',
+                  child: Text(
+                    'Get Extra Views For 150 Credits',
                     style: TextStyle(
-                      color: Colors.black,
-                      fontSize: 15,
+                      color: Colors.white,
+                      fontSize: screenHeight * 0.01, // 2% of screen height
                       fontWeight: FontWeight.bold,
                     ),
                   ),
                 ),
               ),
-              const SizedBox(height: 20), // Add some spacing before the button
+              SizedBox(height: screenHeight * 0.015), // 1.5% of screen height
+              Text(
+                'OR',
+                style: TextStyle(
+                  fontWeight: FontWeight.bold,
+                  fontSize: screenHeight * 0.02, // 2.5% of screen height
+                ),
+                textAlign: TextAlign.center,
+              ),
+              SizedBox(height: screenHeight * 0.01), // 1% of screen height
+              Padding(
+                padding: EdgeInsets.symmetric(
+                    horizontal: screenWidth * 0.04), // 4% of screen width
+                child: OutlinedButton(
+                  onPressed: () {
+                    // Handle navigation to Premium Plan
+                  },
+                  style: OutlinedButton.styleFrom(
+                    padding: EdgeInsets.symmetric(
+                      vertical: screenHeight * 0.02, // 2% of screen height
+                    ),
+                    side: BorderSide(color: blue, width: 2),
+                  ),
+                  child: Text(
+                    'Get Love Bird Premium Plan',
+                    style: TextStyle(
+                      color: Colors.black,
+                      fontSize: screenHeight * 0.02, // 2% of screen height
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                ),
+              ),
+              SizedBox(height: screenHeight * 0.03), // 3% of screen height
               TextButton(
                 onPressed: () {
                   Navigator.pop(context);
                 },
-                child: const Text('Maybe Later',
-                    style: TextStyle(
-                        color: Colors.black, fontWeight: FontWeight.bold)),
+                child: Text(
+                  'Maybe Later',
+                  style: TextStyle(
+                    color: Colors.black,
+                    fontWeight: FontWeight.bold,
+                    fontSize: screenHeight * 0.018, // 1.8% of screen height
+                  ),
+                ),
               ),
             ],
           ),
@@ -750,22 +512,16 @@ void showExtraViewsPopup(BuildContext context) {
 }
 
 class ProfileInfo extends StatefulWidget {
-  final String imageUrl;
-  final String name;
-  final String location;
+  final List<Map<String, String>> profiles;
 
-  const ProfileInfo({
-    super.key,
-    required this.imageUrl,
-    required this.name,
-    required this.location,
-  });
+  const ProfileInfo({super.key, required this.profiles});
 
   @override
   State<ProfileInfo> createState() => _ProfileInfoState();
 }
 
 class _ProfileInfoState extends State<ProfileInfo> {
+  int _currentIndex = 0;
   bool _showSuperLike = false;
   bool _showLike = false;
   bool _showNo = false;
@@ -774,58 +530,54 @@ class _ProfileInfoState extends State<ProfileInfo> {
 
   void _onStarPressed() {
     setState(() {
-      _showSuperLike = true; // Show the small image tilted to the right
-      _rotationAngle = -0.2; // Tilt the image slightly to the right
+      _showSuperLike = true;
+      _rotationAngle = -0.2;
     });
 
-    // Hide the image after 1 second
     Future.delayed(const Duration(seconds: 1), () {
       setState(() {
-        _showSuperLike = false; // Hide the small image
-        _rotationAngle = 0.0; // Reset rotation
+        _showSuperLike = false;
+        _rotationAngle = 0.0;
       });
     });
   }
 
   void _onLovePressed() {
     setState(() {
-      _showLike = true; // Show "Super Like"
-      _rotationAngle = 0.3; // Tilt the image to the left
+      _showLike = true;
+      _rotationAngle = 0.3;
     });
 
-    // Hide the text and reset the rotation after 1 second
     Future.delayed(const Duration(seconds: 1), () {
       setState(() {
-        _showLike = false; // Hide "Super Like"
-        _rotationAngle = 0.0; // Reset rotation
+        _showLike = false;
+        _rotationAngle = 0.0;
       });
     });
   }
 
   void _onNoPressed() {
     setState(() {
-      _showNo = true; // Show "Super Like"
-      _rotationAngle = -0.3; // Tilt the image to the left
+      _showNo = true;
+      _rotationAngle = -0.3;
     });
 
-    // Hide the text and reset the rotation after 1 second
     Future.delayed(const Duration(seconds: 1), () {
       setState(() {
-        _showNo = false; // Hide "Super Like"
-        _rotationAngle = 0.0; // Reset rotation
+        _showNo = false;
+        _rotationAngle = 0.0;
       });
     });
   }
 
   void _onCancelPressed() {
     setState(() {
-      _showCancel = true; // Show "Super Like"
+      _showCancel = true;
     });
 
-    // Hide the text after 1 second
     Future.delayed(const Duration(seconds: 1), () {
       setState(() {
-        _showCancel = false; // Hide "Super Like"
+        _showCancel = false;
       });
     });
   }
@@ -834,39 +586,51 @@ class _ProfileInfoState extends State<ProfileInfo> {
   Widget build(BuildContext context) {
     return Stack(
       children: [
-        // The background image and details
-        GestureDetector(
-          onHorizontalDragEnd: (details) {
-            if (details.velocity.pixelsPerSecond.dx > 0) {
-              // Swipe right detected
-              ScaffoldMessenger.of(context).showSnackBar(
-                const SnackBar(content: Text('Swiped Right!')),
+        SizedBox(
+          height: MediaQuery.of(context).size.height * 0.7,
+          width: MediaQuery.of(context).size.width * 0.9,
+          child: PageView.builder(
+            itemCount: widget.profiles.length,
+            onPageChanged: (index) {
+              setState(() {
+                _currentIndex = index;
+                // Show SnackBar when swiped to the last image
+                if (index == widget.profiles.length - 1) {
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    const SnackBar(
+                      content: Text('This is the last image'),
+                      duration: Duration(seconds: 2),
+                    ),
+                  );
+                }
+              });
+            },
+            itemBuilder: (context, index) {
+              final profile = widget.profiles[index];
+              return GestureDetector(
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => const UserProfilePage(),
+                    ),
+                  );
+                },
+                child: Container(
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(10),
+                    image: DecorationImage(
+                      image: AssetImage(profile['imageUrl']!),
+                      fit: BoxFit.cover,
+                    ),
+                  ),
+                ),
               );
-            }
-          },
-          onTap: () {
-            Navigator.push(
-              context,
-              MaterialPageRoute(
-                builder: (context) =>
-                    const UserProfilePage(), // Replace with your new screen widget
-              ),
-            );
-          },
-          child: Container(
-            width: MediaQuery.of(context).size.width * 0.9,
-            height: MediaQuery.of(context).size.height * 0.74,
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(20),
-              image: DecorationImage(
-                image: AssetImage(widget.imageUrl),
-                fit: BoxFit.cover,
-              ),
-            ),
+            },
           ),
         ),
 
-        // Rotated Home Image
+        // Action indicators and buttons
         if (_showLike)
           Positioned.fill(
             child: Transform.rotate(
@@ -877,7 +641,9 @@ class _ProfileInfoState extends State<ProfileInfo> {
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(20),
                   image: DecorationImage(
-                    image: AssetImage(widget.imageUrl),
+                    image: AssetImage(
+                      widget.profiles[_currentIndex]['imageUrl']!,
+                    ),
                     fit: BoxFit.cover,
                   ),
                 ),
@@ -908,7 +674,9 @@ class _ProfileInfoState extends State<ProfileInfo> {
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(20),
                   image: DecorationImage(
-                    image: AssetImage(widget.imageUrl),
+                    image: AssetImage(
+                      widget.profiles[_currentIndex]['imageUrl']!,
+                    ),
                     fit: BoxFit.cover,
                   ),
                 ),
@@ -943,7 +711,9 @@ class _ProfileInfoState extends State<ProfileInfo> {
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(10),
                   image: DecorationImage(
-                    image: AssetImage(widget.imageUrl),
+                    image: AssetImage(
+                      widget.profiles[_currentIndex]['imageUrl']!,
+                    ),
                     fit: BoxFit.cover,
                   ),
                 ),
@@ -964,7 +734,6 @@ class _ProfileInfoState extends State<ProfileInfo> {
             ),
           ),
 
-        // Combined container for details and action buttons
         Positioned(
           bottom: 0,
           child: Container(
@@ -980,7 +749,7 @@ class _ProfileInfoState extends State<ProfileInfo> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        widget.name,
+                        widget.profiles[_currentIndex]['name']!,
                         style: const TextStyle(
                           color: Colors.white,
                           fontSize: 18,
@@ -989,7 +758,7 @@ class _ProfileInfoState extends State<ProfileInfo> {
                       ),
                       const SizedBox(height: 5),
                       Text(
-                        widget.location,
+                        widget.profiles[_currentIndex]['location']!,
                         style: const TextStyle(
                           color: Colors.white,
                           fontSize: 14,
@@ -999,7 +768,7 @@ class _ProfileInfoState extends State<ProfileInfo> {
                   ),
                 ),
                 Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 20.0),
+                  padding: const EdgeInsets.symmetric(horizontal: 10.0),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: [
@@ -1013,7 +782,6 @@ class _ProfileInfoState extends State<ProfileInfo> {
                       ),
                       const Spacer(),
                       GestureDetector(
-                        // Show "Super Like" text on press
                         onTap: _onStarPressed,
                         child: Image.asset('assets/images/star2.png'),
                       ),
@@ -1021,6 +789,7 @@ class _ProfileInfoState extends State<ProfileInfo> {
                       GestureDetector(
                           onTap: _onNoPressed,
                           child: Image.asset('assets/images/cancel.png')),
+                      //const Spacer(),
                     ],
                   ),
                 ),
@@ -1028,7 +797,6 @@ class _ProfileInfoState extends State<ProfileInfo> {
             ),
           ),
         ),
-
         if (_showCancel)
           Positioned.fill(
             child: Center(
@@ -1046,7 +814,6 @@ class _ProfileInfoState extends State<ProfileInfo> {
             ),
           ),
 
-        // Top right icon (adjust size and positioning as needed)
         Positioned(
           top: 10,
           right: 10,
@@ -1057,8 +824,6 @@ class _ProfileInfoState extends State<ProfileInfo> {
             },
           ),
         ),
-
-        // Bottom right icon
         Positioned(
           bottom: 170,
           right: 10,

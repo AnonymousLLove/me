@@ -32,7 +32,7 @@ void showAgeRangePicker(
                 const Text('Age range',
                     style:
                         TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
-                Spacer(),
+                const Spacer(),
                 Expanded(
                   child: Row(
                     children: [
@@ -364,9 +364,10 @@ void showLocationPicker(
 
                   // City Input Field
                   Padding(
-                    padding: EdgeInsets.symmetric(vertical: 20, horizontal: 10),
+                    padding: const EdgeInsets.symmetric(
+                        vertical: 20, horizontal: 10),
                     child: Container(
-                      padding: EdgeInsets.symmetric(horizontal: 20),
+                      padding: const EdgeInsets.symmetric(horizontal: 20),
                       width: double.infinity,
                       height: 45,
                       decoration: BoxDecoration(
@@ -376,7 +377,7 @@ void showLocationPicker(
                       child: TextField(
                         controller: cityController,
                         textCapitalization: TextCapitalization.sentences,
-                        decoration: InputDecoration(
+                        decoration: const InputDecoration(
                           hintText: 'Enter City',
                           border: InputBorder.none,
                         ),
@@ -384,7 +385,8 @@ void showLocationPicker(
                     ),
                   ),
                   Padding(
-                    padding: EdgeInsets.symmetric(vertical: 20, horizontal: 10),
+                    padding: const EdgeInsets.symmetric(
+                        vertical: 20, horizontal: 10),
                     child: DropdownButtonHideUnderline(
                       child: Container(
                         width: double.infinity,
@@ -475,7 +477,7 @@ void showLocationPicker(
                       ),
                     ),
                   ),
-                  SizedBox(height: 120),
+                  const SizedBox(height: 120),
                   // Apply Button
                   InkWell(
                     onTap: () {
@@ -603,7 +605,7 @@ void showFilterOptions(
                                     newValue; // Toggle the switch value
                               });
                             },
-                            activeColor: Color.fromRGBO(
+                            activeColor: const Color.fromRGBO(
                                 54, 40, 221, 1), // Thumb color when active
                             activeTrackColor:
                                 Colors.white, // Track color when active
@@ -621,7 +623,7 @@ void showFilterOptions(
                   Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        Align(
+                        const Align(
                           alignment: Alignment.centerLeft,
                           child: Text(
                             'More options',
@@ -766,11 +768,11 @@ Widget _buildFilterRow(String title, String value) {
           children: [
             Text(
               value,
-              style: TextStyle(
+              style: const TextStyle(
                 fontSize: 16,
               ),
             ),
-            SizedBox(width: 5),
+            const SizedBox(width: 5),
             Icon(Icons.arrow_forward_ios, size: 14, color: Colors.grey[600]),
           ],
         ),

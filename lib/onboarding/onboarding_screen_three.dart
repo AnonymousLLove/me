@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:love_bird/sign/sign.dart';
+import 'package:love_bird/config/routes.dart';
 
 class OnboardingScreenThree extends StatefulWidget {
   const OnboardingScreenThree({super.key});
@@ -115,31 +115,13 @@ class _OnboardingScreenThreeState extends State<OnboardingScreenThree> {
             ),
           ),
           // Transparent grey SizedBox
-          // Positioned(
-          //   top:
-          //       23, // Adjust this value to position it on top of the first SizedBox
-          //   left: 0, // Center it horizontally (adjust accordingly)
-          //   child: SizedBox(
-          //     width: 385,
-          //     height: 500,
-          //     child: DecoratedBox(
-          //       decoration: BoxDecoration(
-          //         color: Colors.black.withOpacity(0.74),
-          //         // border: Border.all(
-          //         //   color: const Color(0xFF3628DD), // Border color
-          //         //   width: 1.0, // Border width
-          //         // ),
-          //       ),
-          //     ),
-          //   ),
-          // ),
-
           Align(
             alignment:
                 Alignment.topCenter, // Align at the top center of the screen
             child: SizedBox(
-              width: MediaQuery.of(context).size.width *
-                  0.9, // Adjust width for responsiveness
+              width: MediaQuery.of(context)
+                  .size
+                  .width, // Adjust width for responsiveness
               height: MediaQuery.of(context).size.height *
                   0.6, // Adjust height for responsiveness
               child: DecoratedBox(
@@ -150,57 +132,14 @@ class _OnboardingScreenThreeState extends State<OnboardingScreenThree> {
             ),
           ),
 
-          // Second Love card positioned on top
-          // Positioned(
-          //   top:
-          //       150, // Adjust this value to position it on top of the first SizedBox
-          //   left: 30, // Center it horizontally (adjust accordingly)
-          //   child: SizedBox(
-          //     width: 320,
-          //     height: 400,
-          //     child: DecoratedBox(
-          //       decoration: BoxDecoration(
-          //         color: Colors.white,
-          //         // border: Border.all(
-          //         //   color: const Color(0xFF3628DD), // Border color
-          //         //   width: 1.0, // Border width
-          //         // ),
-          //         borderRadius: BorderRadius.circular(20),
-          //       ),
-          //       child: Column(
-          //         mainAxisAlignment: MainAxisAlignment.start,
-          //         crossAxisAlignment: CrossAxisAlignment.center,
-          //         children: [
-          //           Image.asset("images/you got a match.png"),
-          //           const Text(
-          //             "You Got The Match!",
-          //             style: TextStyle(
-          //                 fontSize: 24,
-          //                 fontWeight: FontWeight.w700,
-          //                 color: Color(0xFF3628DD)),
-          //           ),
-          //           const Text(
-          //             "You both liked each other. Take charge\n and start a meaningful connection.",
-          //             style: TextStyle(
-          //                 fontSize: 15,
-          //                 fontWeight: FontWeight.w400,
-
-          //                 ),
-          //           ),
-          //         ],
-          //       ),
-          //     ),
-          //   ),
-          // ),
-
           Align(
             alignment: Alignment.center,
             child: Transform.translate(
               offset: const Offset(
                   0, -90), // Adjust this value to move up (negative y-axis)
               child: SizedBox(
-                width:
-                    MediaQuery.of(context).size.width * 0.7, // Responsive width
+                width: MediaQuery.of(context).size.width *
+                    0.85, // Responsive width
                 height: MediaQuery.of(context).size.height *
                     0.5, // Responsive height
                 child: DecoratedBox(
@@ -305,13 +244,7 @@ class _OnboardingScreenThreeState extends State<OnboardingScreenThree> {
                               width: 140,
                               child: ElevatedButton(
                                 onPressed: () {
-                                  Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                      builder: (context) =>
-                                          const SignUpScreen(),
-                                    ),
-                                  );
+                                  Navigator.pushNamed(context, signUpRoute);
                                 },
                                 style: ElevatedButton.styleFrom(
                                   foregroundColor: Colors.black,
@@ -332,12 +265,7 @@ class _OnboardingScreenThreeState extends State<OnboardingScreenThree> {
                               width: 140,
                               child: ElevatedButton(
                                 onPressed: () {
-                                  Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                        builder: (context) =>
-                                            const SignUpScreen()),
-                                  );
+                                  Navigator.pushNamed(context, signUpRoute);
                                 },
                                 style: ElevatedButton.styleFrom(
                                   foregroundColor: Colors.black,

@@ -265,7 +265,7 @@ class _OnboardingScreenTwoState extends State<OnboardingScreenTwo> {
                       topRight: Radius.circular(30)),
                 ),
                 height: MediaQuery.of(context).size.height *
-                    0.6, // Half of the screen height
+                    0.5, // Half of the screen height
                 width: MediaQuery.of(context).size.width,
                 child: Padding(
                   padding: const EdgeInsets.all(20.0),

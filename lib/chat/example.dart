@@ -138,4 +138,4 @@ class PopupExample extends StatelessWidget {
   }
 }
 
-void main() => runApp(MaterialApp(home: PopupExample()));
+void main() => runApp(const MaterialApp(home: PopupExample()));

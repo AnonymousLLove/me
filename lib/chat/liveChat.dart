@@ -2,6 +2,7 @@ import 'package:emoji_picker_flutter/emoji_picker_flutter.dart';
 import 'package:flutter/material.dart';
 import 'package:camera/camera.dart';
 import 'package:love_bird/chat/comment.dart';
+import 'dart:math';
 
 class LiveChatScreen extends StatefulWidget {
   const LiveChatScreen({super.key});
@@ -12,6 +13,101 @@ class LiveChatScreen extends StatefulWidget {
 }
 
 class _LiveChatScreenState extends State<LiveChatScreen> {
+  bool isLiked = false; // Track whether the button is liked
+  int likeCount = 0; // Track the number of likes
+
+  void _toggleLike() {
+    setState(() {
+      if (isLiked) {
+        // If already liked, decrement the count and set isLiked to false
+        likeCount--;
+      } else {
+        // If not liked, increment the count and set isLiked to true
+        likeCount++;
+      }
+      isLiked = !isLiked; // Toggle the isLiked state
+    });
+  }
+
+  final List<Widget> _hearts = [];
+  final List<Widget> _thumbs = [];
+
+  void _showHearts() {
+    setState(() {
+      for (int i = 0; i < 20; i++) {
+        _hearts.add(_buildHeart());
+      }
+    });
+
+    Future.delayed(const Duration(seconds: 4), () {
+      setState(() {
+        _hearts.clear(); // Clear hearts after animation
+      });
+    });
+  }
+
+  Widget _buildHeart() {
+    final random = Random();
+    final duration =
+        Duration(milliseconds: 4000 + random.nextInt(3000)); // Longer duration
+    final startX = MediaQuery.of(context).size.width * 0.5 +
+        random.nextDouble() *
+            MediaQuery.of(context).size.width *
+            0.5; // Center to right
+    final size = 20.0 + random.nextDouble() * 20.0; // Heart size variation
+    final rotation = random.nextDouble() * 0.5 - 0.25; // Random slight rotation
+
+    return Positioned(
+      bottom: 50,
+      left: startX,
+      child: AnimatedHeart(
+        duration: duration,
+        endY: MediaQuery.of(context).size.height * 0.8 +
+            random.nextDouble() * 200,
+        size: size,
+        rotation: rotation,
+      ),
+    );
+  }
+
+  void _showThumbs() {
+    setState(() {
+      for (int i = 0; i < 20; i++) {
+        _thumbs.add(_buildThumbs());
+      }
+    });
+
+    Future.delayed(const Duration(seconds: 4), () {
+      setState(() {
+        _thumbs.clear(); // Clear hearts after animation
+      });
+    });
+  }
+
+  Widget _buildThumbs() {
+    final random = Random();
+    final duration =
+        Duration(milliseconds: 4000 + random.nextInt(3000)); // Longer duration
+    final startX = MediaQuery.of(context).size.width * 0.5 +
+        random.nextDouble() *
+            MediaQuery.of(context).size.width *
+            0.5; // Center to right
+    final size = 20.0 + random.nextDouble() * 20.0; // Heart size variation
+    final rotation = random.nextDouble() * 0.5 - 0.25; // Random slight rotation
+
+    return Positioned(
+      bottom: 50,
+      left: startX,
+      child: AnimatedThumb(
+        duration: duration,
+        endY: MediaQuery.of(context).size.height * 0.8 +
+            random.nextDouble() * 200,
+        size: size,
+        rotation: rotation,
+      ),
+    );
+  }
+
   final TextEditingController _messageController = TextEditingController();
   final List<Map<String, String>> _messages = [];
   final List<String> emojis = ['❤️', '😂', '🔥', '👍', '👏'];
@@ -26,11 +122,11 @@ class _LiveChatScreenState extends State<LiveChatScreen> {
       context: context,
       isScrollControlled: true,
       backgroundColor: Colors.white,
-      shape: RoundedRectangleBorder(
+      shape: const RoundedRectangleBorder(
         borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
       ),
       builder: (BuildContext context) {
-        return Container(
+        return SizedBox(
             height: screenSize.height * 0.5, child: CommentSection());
       },
     );
@@ -83,16 +179,170 @@ class _LiveChatScreenState extends State<LiveChatScreen> {
   //   }
   // }
 
+  void addComment(dynamic nameController) {
+    if (commentController.text.isNotEmpty && nameController.text.isNotEmpty) {
+      setState(() {
+        comments.add({
+          'name': nameController.text, // Capture user's name
+          'time': 'Just now',
+          'comment': commentController.text, // Capture comment with emojis
+          'profileImage': 'assets/images/homeImage.png',
+        });
+        commentController.clear(); // Clear comment input
+        nameController.clear(); // Clear name input
+      });
+    }
+  }
+
+  // void addComment() {
+  //   if (commentController.text.isNotEmpty) {
+  //     setState(() {
+  //       comments.add({
+  //         'name': 'Your Name',
+  //         'time': 'Just now',
+  //         'comment': commentController.text,
+  //         'profileImage': 'assets/images/homeImage.png'
+  //       });
+  //       commentController.clear();
+  //     });
+  //   }
+  // }
+
   void _sendMessage() {
     if (_messageController.text.isNotEmpty) {
       setState(() {
-        _messages.add({
+        // Add message to both lists
+        var message = {
+          'name': 'Ada',
           'text': _messageController.text,
           'profileImage': 'assets/images/homeImage.png',
+        };
+        _messages.add(message);
+        comments.add({
+          'name': 'Ada',
+          'comment': _messageController.text,
+          'profileImage': 'assets/images/homeImage.png',
+          'time': TimeOfDay.now().format(context),
         });
         _messageController.clear();
       });
     }
+  }
+
+  void _sendComment() {
+    if (commentController2.text.isNotEmpty) {
+      setState(() {
+        comments.add({
+          'message': commentController2.text,
+          'time': TimeOfDay.now().format(context),
+          'profileImage': 'assets/images/homeImage.png',
+          //'isMe': true,
+        });
+        commentController2.clear();
+      });
+    }
+  }
+
+  void showCommentPopup(BuildContext context) {
+    showModalBottomSheet(
+        context: context,
+        shape: const RoundedRectangleBorder(
+          borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
+        ),
+        builder: (BuildContext context) {
+          return Container(
+            padding: const EdgeInsets.all(20),
+            height: 400,
+            child: Column(
+              children: [
+                const Text("Comments",
+                    style:
+                        TextStyle(fontSize: 14, fontWeight: FontWeight.bold)),
+                const Divider(color: Colors.black, thickness: 1),
+                Expanded(
+                  child: ListView.builder(
+                    itemCount: comments.length,
+                    itemBuilder: (context, index) {
+                      return ListTile(
+                        leading: CircleAvatar(
+                          backgroundImage:
+                              AssetImage(comments[index]['profileImage']!),
+                        ),
+                        title: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Row(
+                              children: [
+                                Text(comments[index]['name']!,
+                                    style: const TextStyle(
+                                        fontSize: 12,
+                                        fontWeight: FontWeight.w500)),
+                                const SizedBox(width: 5),
+                                Text(comments[index]['time']!,
+                                    style: const TextStyle(fontSize: 10)),
+                              ],
+                            ),
+                            Container(
+                              decoration: BoxDecoration(
+                                  color: const Color.fromRGBO(217, 217, 217, 1),
+                                  borderRadius: BorderRadius.circular(10)),
+                              padding: const EdgeInsets.all(10),
+                              child: Text(comments[index]['comment']!,
+                                  style: const TextStyle(fontSize: 12)),
+                            ),
+                          ],
+                        ),
+                        trailing: const Icon(Icons.favorite_border),
+                      );
+                    },
+                  ),
+                ),
+                Row(
+                  children: [
+                    const CircleAvatar(
+                      backgroundImage:
+                          AssetImage('assets/images/homeImage.png'),
+                    ),
+                    const SizedBox(width: 5),
+                    SizedBox(
+                      height: 50,
+                      width: 200,
+                      child: TextField(
+                        controller: _messageController,
+                        textCapitalization: TextCapitalization.sentences,
+                        decoration: InputDecoration(
+                          hintText: ' Add a Reply @',
+                          hintStyle: const TextStyle(
+                              fontSize: 10, fontWeight: FontWeight.w400),
+                          filled: true,
+                          fillColor: Colors.white,
+                          border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(10),
+                            borderSide: const BorderSide(
+                                color: Color.fromRGBO(54, 40, 221, 1.0),
+                                width: 2),
+                          ),
+                        ),
+                      ),
+                    ),
+                    const SizedBox(width: 8),
+                    GestureDetector(
+                      child: const Text(
+                        'Post',
+                        style:
+                            TextStyle(color: Color.fromRGBO(54, 40, 221, 1.0)),
+                      ),
+                      onTap: () {
+                        _sendComment();
+                        Navigator.pop(context);
+                      },
+                    ),
+                  ],
+                ),
+              ],
+            ),
+          );
+        });
   }
 
   void startLiveStream() async {
@@ -141,6 +391,8 @@ class _LiveChatScreenState extends State<LiveChatScreen> {
             ),
 
             // Positioning profile picture, LIVE label, username, and view count at the top
+            ..._hearts,
+            ..._thumbs,
             Positioned(
               top: 10,
               left: 10,
@@ -259,7 +511,7 @@ class _LiveChatScreenState extends State<LiveChatScreen> {
               ),
             ),
             Positioned(
-                right: 40,
+                right: 20,
                 bottom: 130,
                 child: Column(
                   children: [
@@ -269,10 +521,28 @@ class _LiveChatScreenState extends State<LiveChatScreen> {
                           AssetImage('assets/images/homeImage.png'),
                     ),
                     const SizedBox(height: 5),
-                    IconButton(
-                        onPressed: () {},
-                        icon: const Icon(Icons.favorite,
-                            color: Colors.white, size: 30)),
+                    Column(
+                      // mainAxisSize: MainAxisSize.min,
+                      children: [
+                        IconButton(
+                          onPressed: _toggleLike,
+                          icon: Icon(
+                            Icons.favorite,
+                            color: isLiked
+                                ? Colors.red
+                                : Colors.white, // Change color based on state
+                            size: 30,
+                          ),
+                        ),
+                        Text(
+                          '$likeCount', // Display the like count
+                          style: const TextStyle(
+                              fontSize: 12,
+                              color: Colors.white,
+                              fontWeight: FontWeight.bold),
+                        ),
+                      ],
+                    ),
                     const SizedBox(height: 5),
                     IconButton(
                         onPressed: () {
@@ -291,62 +561,66 @@ class _LiveChatScreenState extends State<LiveChatScreen> {
               child: Row(
                 children: [
                   Expanded(
-                    child: TextField(
-                      textCapitalization: TextCapitalization.sentences,
-                      controller: _messageController,
-                      style: const TextStyle(color: Colors.white),
-                      decoration: InputDecoration(
-                        hintText: "Add a Comment here and send",
-                        hintStyle: const TextStyle(color: Colors.grey),
-                        filled: true,
-                        fillColor: Colors.grey[800],
-                        contentPadding:
-                            const EdgeInsets.symmetric(horizontal: 10),
-                        border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(20),
-                          borderSide: BorderSide.none,
-                        ),
-                        prefixIcon: GestureDetector(
-                          onTap: () async {
-                            await showModalBottomSheet(
-                              context: context,
-                              builder: (_) => EmojiPicker(
-                                onEmojiSelected: (category, emoji) {
-                                  setState(() {
-                                    _messageController.text += emoji.emoji;
-                                  });
-                                },
-                                config:
-                                    const Config(), // Basic config without additional parameters
+                    child: Container(
+                      color: const Color.fromRGBO(255, 255, 255, 0.12),
+                      child: TextField(
+                        textCapitalization: TextCapitalization.sentences,
+                        controller: _messageController,
+                        style: const TextStyle(color: Colors.white),
+                        decoration: InputDecoration(
+                          hintText: "Add a Comment here and send",
+                          hintStyle:
+                              const TextStyle(color: Colors.grey, fontSize: 13),
+                          filled: true,
+                          fillColor: Colors.grey[800],
+                          contentPadding:
+                              const EdgeInsets.symmetric(horizontal: 10),
+                          border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(20),
+                            borderSide: BorderSide.none,
+                          ),
+                          prefixIcon: GestureDetector(
+                            onTap: () async {
+                              await showModalBottomSheet(
+                                context: context,
+                                builder: (_) => EmojiPicker(
+                                  onEmojiSelected: (category, emoji) {
+                                    setState(() {
+                                      _messageController.text += emoji.emoji;
+                                    });
+                                  },
+                                  config:
+                                      const Config(), // Basic config without additional parameters
+                                ),
+                              );
+                            },
+                            child: const Padding(
+                              padding: EdgeInsets.all(8.0),
+                              child: Text(
+                                "😊",
+                                style: TextStyle(fontSize: 24),
                               ),
-                            );
-                          },
-                          child: const Padding(
-                            padding: EdgeInsets.all(8.0),
-                            child: Text(
-                              "😊",
-                              style: TextStyle(fontSize: 24),
                             ),
                           ),
                         ),
                       ),
                     ),
                   ),
-                  const SizedBox(width: 10),
                   IconButton(
                     onPressed: _sendMessage,
                     icon: const Icon(Icons.send, color: Colors.white),
                   ),
-                  IconButton(
-                    icon: const Icon(Icons.favorite, color: Colors.red),
-                    onPressed: () {},
+                  GestureDetector(
+                    onTap: _showHearts, // Call the heart function on tap
+                    child:
+                        const Icon(Icons.favorite, color: Colors.red, size: 30),
                   ),
                   IconButton(
                     icon: const Icon(
                       Icons.thumb_up_sharp,
                       color: Color.fromARGB(255, 192, 173, 2),
                     ),
-                    onPressed: _sendMessage,
+                    onPressed: _showThumbs,
                   ),
                 ],
               ),
@@ -385,6 +659,158 @@ class _LiveChatScreenState extends State<LiveChatScreen> {
             ),
           ],
         ),
+      ),
+    );
+  }
+}
+
+class AnimatedHeart extends StatefulWidget {
+  final Duration duration;
+  final double endY;
+  final double size;
+  final double rotation;
+
+  const AnimatedHeart({
+    super.key,
+    required this.duration,
+    required this.endY,
+    required this.size,
+    required this.rotation,
+  });
+
+  @override
+  _AnimatedHeartState createState() => _AnimatedHeartState();
+}
+
+class _AnimatedHeartState extends State<AnimatedHeart>
+    with SingleTickerProviderStateMixin {
+  late final AnimationController _controller;
+  late final Animation<double> _positionAnimation;
+  late final Animation<double> _opacityAnimation;
+  late final double _startY;
+
+  @override
+  void initState() {
+    super.initState();
+    _controller = AnimationController(vsync: this, duration: widget.duration);
+    _startY = 0;
+
+    _positionAnimation =
+        Tween<double>(begin: _startY, end: widget.endY).animate(CurvedAnimation(
+      parent: _controller,
+      curve: Curves.easeOut,
+    ));
+    _opacityAnimation =
+        Tween<double>(begin: 1.0, end: 0.0).animate(CurvedAnimation(
+      parent: _controller,
+      curve: Curves.easeOut,
+    ));
+
+    _controller.forward();
+  }
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return AnimatedBuilder(
+      animation: _controller,
+      builder: (context, child) {
+        return Opacity(
+          opacity: _opacityAnimation.value,
+          child: Transform.translate(
+            offset: Offset(0, -_positionAnimation.value),
+            child: Transform.rotate(
+              angle: widget.rotation,
+              child: child,
+            ),
+          ),
+        );
+      },
+      child: Icon(
+        Icons.favorite,
+        color: Colors.red,
+        size: widget.size,
+      ),
+    );
+  }
+}
+
+class AnimatedThumb extends StatefulWidget {
+  final Duration duration;
+  final double endY;
+  final double size;
+  final double rotation;
+
+  const AnimatedThumb({
+    super.key,
+    required this.duration,
+    required this.endY,
+    required this.size,
+    required this.rotation,
+  });
+
+  @override
+  _AnimatedThumbState createState() => _AnimatedThumbState();
+}
+
+class _AnimatedThumbState extends State<AnimatedThumb>
+    with SingleTickerProviderStateMixin {
+  late final AnimationController _controller;
+  late final Animation<double> _positionAnimation;
+  late final Animation<double> _opacityAnimation;
+  late final double _startY;
+
+  @override
+  void initState() {
+    super.initState();
+    _controller = AnimationController(vsync: this, duration: widget.duration);
+    _startY = 0;
+
+    _positionAnimation =
+        Tween<double>(begin: _startY, end: widget.endY).animate(CurvedAnimation(
+      parent: _controller,
+      curve: Curves.easeOut,
+    ));
+    _opacityAnimation =
+        Tween<double>(begin: 1.0, end: 0.0).animate(CurvedAnimation(
+      parent: _controller,
+      curve: Curves.easeOut,
+    ));
+
+    _controller.forward();
+  }
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return AnimatedBuilder(
+      animation: _controller,
+      builder: (context, child) {
+        return Opacity(
+          opacity: _opacityAnimation.value,
+          child: Transform.translate(
+            offset: Offset(0, -_positionAnimation.value),
+            child: Transform.rotate(
+              angle: widget.rotation,
+              child: child,
+            ),
+          ),
+        );
+      },
+      child: Icon(
+        Icons.thumb_up,
+        color: Colors.yellow,
+        size: widget.size,
       ),
     );
   }

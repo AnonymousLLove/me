@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:love_bird/createAccount/createAccount1.dart';
-import 'package:love_bird/homeScreen/homeScreen2.dart';
-import 'package:love_bird/createAccount/forgot.dart';
+import 'package:love_bird/config/routes.dart';
+
+import 'package:love_bird/homeScreen/homescreen.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
@@ -28,7 +28,7 @@ class _LoginPageState extends State<LoginPage> {
       });
 
       Future.delayed(const Duration(seconds: 0), () {
-        const DatingProfilePage();
+        const HomeScreen();
       });
     }
   }
@@ -36,8 +36,7 @@ class _LoginPageState extends State<LoginPage> {
   bool isChecked = false;
   void _showSubmissionDialog() {
     showDialog(
-      barrierDismissible:
-          true, // Prevent dialog from closing by tapping outside
+      barrierDismissible: true,
       context: context,
       builder: (BuildContext context) {
         return Dialog(
@@ -76,14 +75,8 @@ class _LoginPageState extends State<LoginPage> {
 
     // Wait for 2 seconds and then navigate to the next screen
     Future.delayed(const Duration(seconds: 2), () {
-      Navigator.pop(context); // Close the dialog
-      Navigator.pushReplacement(
-        context,
-        MaterialPageRoute(
-          builder: (context) =>
-              const DatingProfilePage(), // Replace with your next screen
-        ),
-      );
+      Navigator.pop(context);
+      Navigator.pushNamed(context, homeScreen);
     });
   }
 
@@ -140,7 +133,6 @@ class _LoginPageState extends State<LoginPage> {
                               ),
                             ),
                             const SizedBox(height: 60),
-                            // Add this container in your build method, wherever you'd like it to appear
 
                             // Email and Password Inputs (Form)
                             Form(
@@ -190,8 +182,8 @@ class _LoginPageState extends State<LoginPage> {
                                     ),
                                   ),
                                 ),
-                                SizedBox(width: 3),
-                                Text(
+                                const SizedBox(width: 3),
+                                const Text(
                                   'Remember me',
                                   style: TextStyle(color: Colors.white),
                                 ),
@@ -200,11 +192,8 @@ class _LoginPageState extends State<LoginPage> {
                                   padding: const EdgeInsets.only(right: 14),
                                   child: InkWell(
                                     onTap: () {
-                                      Navigator.push(
-                                        context,
-                                        MaterialPageRoute(
-                                            builder: (context) => Forgot1()),
-                                      );
+                                      Navigator.pushNamed(
+                                          context, forgotPassword);
                                     },
                                     child: const Text(
                                       'Forgot Password',
@@ -230,12 +219,8 @@ class _LoginPageState extends State<LoginPage> {
                                   const SizedBox(width: 5),
                                   InkWell(
                                     onTap: () {
-                                      Navigator.push(
-                                        context,
-                                        MaterialPageRoute(
-                                            builder: (context) =>
-                                                const CreateAcc1()),
-                                      );
+                                      Navigator.pushNamed(
+                                          context, createAccountRoute);
                                     },
                                     child: const Text(
                                       "Sign Up",
@@ -302,8 +287,8 @@ class _LoginPageState extends State<LoginPage> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(label,
-              style:
-                  TextStyle(color: Colors.white, fontWeight: FontWeight.bold)),
+              style: const TextStyle(
+                  color: Colors.white, fontWeight: FontWeight.bold)),
           Container(
             width: screenSize.width * 0.9,
             height: screenSize.height * 0.05,

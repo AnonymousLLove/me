@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:love_bird/chat/mainChat.dart';
+import 'package:love_bird/chat/main_chat.dart';
+import 'package:love_bird/config/routes.dart';
 
-import 'package:love_bird/homeScreen/homeScreen2.dart';
+import 'package:love_bird/homeScreen/homeScreen.dart';
 
 import 'package:love_bird/matches/Likes.dart';
-import 'package:love_bird/matches/peopleNearby.dart';
+import 'package:love_bird/matches/people_nearby.dart';
 import 'package:love_bird/profile/profile.dart';
 import 'dart:ui';
 
@@ -40,7 +41,8 @@ class _SuperLikesState extends State<SuperLikes> {
                 ),
                 GestureDetector(
                   onTap: () {
-                    // Call the separate function to show the popup
+                    Navigator.pushNamed(context,
+                        chatbotWelcomeScreen); // Call the separate function to show the popup
                   },
                   child: Image.asset('assets/images/robot.png', width: 40),
                 ),
@@ -58,7 +60,7 @@ class _SuperLikesState extends State<SuperLikes> {
                   ),
                 ),
                 IconButton(
-                    onPressed: () {}, icon: Icon(Icons.search, size: 30)),
+                    onPressed: () {}, icon: const Icon(Icons.search, size: 30)),
                 InkWell(
                   onTap: () {
                     showLikeSort(context);
@@ -69,7 +71,7 @@ class _SuperLikesState extends State<SuperLikes> {
               ],
             ),
           ),
-          SizedBox(height: 20),
+          const SizedBox(height: 20),
           Row(mainAxisAlignment: MainAxisAlignment.spaceEvenly, children: [
             InkWell(
               onTap: () {
@@ -85,10 +87,10 @@ class _SuperLikesState extends State<SuperLikes> {
                   color: const Color.fromRGBO(149, 140, 250, 1),
                   borderRadius: BorderRadius.circular(10),
                 ),
-                child: Center(
+                child: const Center(
                   child: Text(
                     'Likes(4)', // dynamic number
-                    style: const TextStyle(color: Colors.white, fontSize: 18),
+                    style: TextStyle(color: Colors.white, fontSize: 18),
                   ),
                 ),
               ),
@@ -97,7 +99,7 @@ class _SuperLikesState extends State<SuperLikes> {
               onTap: () {
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => SuperLikes()),
+                  MaterialPageRoute(builder: (context) => const SuperLikes()),
                 );
               },
               child: Container(
@@ -107,18 +109,18 @@ class _SuperLikesState extends State<SuperLikes> {
                   color: const Color.fromRGBO(54, 40, 221, 1),
                   borderRadius: BorderRadius.circular(10),
                 ),
-                child: Center(
+                child: const Center(
                   child: Text(
                     'SuperLikes(4)', //dynamic number
-                    style: const TextStyle(color: Colors.white, fontSize: 18),
+                    style: TextStyle(color: Colors.white, fontSize: 18),
                   ),
                 ),
               ),
             ),
           ]),
-          SizedBox(height: 20),
+          const SizedBox(height: 20),
           Expanded(child: PeopleNearbyGrid(premuimPackage: premuimPackage)),
-          SizedBox(height: 7),
+          const SizedBox(height: 7),
           if (premuimPackage == false)
             SizedBox(
               width: screenSize.width * 0.7,
@@ -192,9 +194,9 @@ class _SuperLikesState extends State<SuperLikes> {
                   label: 'Profile',
                 ),
               ],
-              selectedLabelStyle: TextStyle(
+              selectedLabelStyle: const TextStyle(
                   fontSize: 11), // Change the font size for the selected label
-              unselectedLabelStyle: TextStyle(fontSize: 11),
+              unselectedLabelStyle: const TextStyle(fontSize: 11),
               onTap: (index) {
                 // Handle navigation based on the index
                 switch (index) {
@@ -202,7 +204,7 @@ class _SuperLikesState extends State<SuperLikes> {
                     Navigator.push(
                       context,
                       MaterialPageRoute(
-                          builder: (context) => const DatingProfilePage()),
+                          builder: (context) => const HomeScreen()),
                     );
                     break;
                   case 1:
@@ -247,7 +249,7 @@ class _SuperLikesState extends State<SuperLikes> {
 class PeopleNearbyGrid extends StatelessWidget {
   final bool premuimPackage;
 
-  PeopleNearbyGrid({Key? key, required this.premuimPackage}) : super(key: key);
+  PeopleNearbyGrid({super.key, required this.premuimPackage});
 
   final List<User> users = [
     User(imageUrl: 'assets/images/homeImage.png', name: 'David', age: 31),
@@ -297,8 +299,7 @@ class UserCard extends StatelessWidget {
   final User user;
   final bool blurImage;
 
-  const UserCard({required this.user, required this.blurImage, Key? key})
-      : super(key: key);
+  const UserCard({required this.user, required this.blurImage, super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -318,7 +319,8 @@ class UserCard extends StatelessWidget {
             right: 0,
             child: Container(
               decoration: BoxDecoration(
-                borderRadius: BorderRadius.vertical(top: Radius.circular(10)),
+                borderRadius:
+                    const BorderRadius.vertical(top: Radius.circular(10)),
                 color: Colors.black.withOpacity(0.5),
               ),
               padding: const EdgeInsets.all(6.0),
@@ -389,7 +391,7 @@ void showLikeSort(BuildContext context) {
               builder: (context, setState) {
                 return SingleChildScrollView(
                     child: Padding(
-                  padding: EdgeInsets.symmetric(vertical: 10),
+                  padding: const EdgeInsets.symmetric(vertical: 10),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [

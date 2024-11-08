@@ -2,17 +2,17 @@ import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'dart:io';
 
-import 'package:love_bird/createAccount/location.dart';
+import 'package:love_bird/createAccount/enable_location.dart';
 
-class PhotoVerification2 extends StatefulWidget {
+class ImageScanner extends StatefulWidget {
   final List<File?> images;
-  const PhotoVerification2({super.key, required this.images});
+  const ImageScanner({super.key, required this.images});
 
   @override
   PhotoVerificationState createState() => PhotoVerificationState();
 }
 
-class PhotoVerificationState extends State<PhotoVerification2> {
+class PhotoVerificationState extends State<ImageScanner> {
   final List<File> _scannedImages = []; // Stores the three scanned images
   final ImagePicker _picker = ImagePicker(); // Image picker instance
 
@@ -119,7 +119,6 @@ class PhotoVerificationState extends State<PhotoVerification2> {
               height: 15,
               child: Stack(
                 children: [
-                  // Background bar
                   ClipRRect(
                     borderRadius:
                         BorderRadius.circular(10.0), // Outer rounded corners
@@ -129,18 +128,13 @@ class PhotoVerificationState extends State<PhotoVerification2> {
                     ),
                   ),
                   // Inner progress bar
-                  SizedBox(
-                    height: 25,
-                    child: ClipRRect(
-                      borderRadius: BorderRadius.circular(20),
-                      child: const LinearProgressIndicator(
-                        value: 0.85, // Simulating progress
-                        backgroundColor: Color.fromARGB(255, 247, 243, 243),
-                        valueColor: AlwaysStoppedAnimation<Color>(
-                          Color.fromRGBO(54, 40, 221, 1),
-                        ),
-                        minHeight: 8,
-                      ),
+                  ClipRRect(
+                    borderRadius:
+                        BorderRadius.circular(10.0), // Inner rounded corners
+                    child: Container(
+                      width: MediaQuery.of(context).size.width *
+                          0.8, // Set width to represent progress
+                      color: const Color(0xFF3628DD), // Progress color
                     ),
                   ),
                 ],

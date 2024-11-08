@@ -1,13 +1,15 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:love_bird/chat/chatScreen.dart';
+import 'package:love_bird/chat/chat_screen.dart';
 import 'package:love_bird/chat/liveChat.dart';
+import 'package:love_bird/config/routes.dart';
 
-import 'package:love_bird/homeScreen/homeScreen2.dart';
-
+import 'package:love_bird/homeScreen/homeScreen.dart';
+import 'dart:math';
 import 'package:love_bird/matches/likes.dart';
-import 'package:love_bird/matches/peopleNearby.dart';
+import 'package:love_bird/matches/people_nearby.dart';
+
 import 'package:love_bird/profile/profile.dart';
 
 class Mainchat extends StatefulWidget {
@@ -77,18 +79,18 @@ class _MainchatState extends State<Mainchat> {
 
   AppBar _buildAppBar() {
     return AppBar(
-      title: Text('Chats', style: TextStyle(fontWeight: FontWeight.bold)),
+      title: const Text('Chats', style: TextStyle(fontWeight: FontWeight.bold)),
       centerTitle: true,
       backgroundColor: Colors.transparent,
       leading: IconButton(
-        icon: Icon(Icons.arrow_back),
+        icon: const Icon(Icons.arrow_back),
         onPressed: () {
           Navigator.pop(context);
         },
       ),
       actions: [
         IconButton(
-          icon: Icon(Icons.search, size: 30),
+          icon: const Icon(Icons.search, size: 30),
           onPressed: () {
             setState(() {
               isSearchVisible = !isSearchVisible;
@@ -100,7 +102,7 @@ class _MainchatState extends State<Mainchat> {
         ),
         if (selectedChatIndexes.isNotEmpty)
           IconButton(
-            icon: Icon(Icons.delete, color: Colors.red),
+            icon: const Icon(Icons.delete, color: Colors.red),
             onPressed: () {
               _confirmDelete(context);
             },
@@ -122,25 +124,25 @@ class _MainchatState extends State<Mainchat> {
                 if (isSearchVisible)
                   Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 10),
-                    child: Container(
+                    child: SizedBox(
                       height: 40,
                       child: TextField(
                         controller: searchController,
                         decoration: InputDecoration(
-                          prefixIcon: Icon(Icons.search),
+                          prefixIcon: const Icon(Icons.search),
                           hintText: 'Search by name',
-                          contentPadding:
-                              EdgeInsets.symmetric(vertical: 5, horizontal: 10),
+                          contentPadding: const EdgeInsets.symmetric(
+                              vertical: 5, horizontal: 10),
                           border: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(20),
-                            borderSide: BorderSide(
+                            borderSide: const BorderSide(
                               color: Color.fromRGBO(54, 40, 221, 1.0),
                               width: 1.5,
                             ),
                           ),
                           focusedBorder: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(20),
-                            borderSide: BorderSide(
+                            borderSide: const BorderSide(
                               color: Color.fromRGBO(54, 40, 221, 1.0),
                               width: 2,
                             ),
@@ -180,7 +182,7 @@ class _MainchatState extends State<Mainchat> {
                               ),
                             );
                           },
-                          child: profileAvatarMain(
+                          child: profileAvatarMainStory(
                               "Your Story", "assets/images/homeImage.png"),
                         ),
                       profileAvatar("Lil Mama", "assets/images/homeImage.png",
@@ -192,7 +194,7 @@ class _MainchatState extends State<Mainchat> {
                     ],
                   ),
                 ),
-                Divider(),
+                const Divider(),
                 loveChatItem("Love Bird", "You have 3 new messages!", true),
                 Expanded(
                   child: ListView.builder(
@@ -218,7 +220,7 @@ class _MainchatState extends State<Mainchat> {
               right: 40,
               child: InkWell(
                   onTap: () {
-                    showLibbyChatbot(context);
+                    Navigator.pushNamed(context, chatbotWelcomeScreen);
                   },
                   child: Image.asset('assets/images/robot.png'))),
         ],
@@ -265,8 +267,8 @@ class _MainchatState extends State<Mainchat> {
                   label: 'Profile',
                 ),
               ],
-              selectedLabelStyle: TextStyle(fontSize: 11),
-              unselectedLabelStyle: TextStyle(fontSize: 11),
+              selectedLabelStyle: const TextStyle(fontSize: 11),
+              unselectedLabelStyle: const TextStyle(fontSize: 11),
               onTap: (index) {
                 // Handle navigation based on the index
                 switch (index) {
@@ -274,7 +276,7 @@ class _MainchatState extends State<Mainchat> {
                     Navigator.push(
                       context,
                       MaterialPageRoute(
-                          builder: (context) => const DatingProfilePage()),
+                          builder: (context) => const HomeScreen()),
                     );
                     break;
                   case 1:
@@ -326,10 +328,10 @@ class _MainchatState extends State<Mainchat> {
                     color: Colors.red,
                     borderRadius: BorderRadius.circular(35),
                   ),
-                  padding: EdgeInsets.all(1.5),
+                  padding: const EdgeInsets.all(1.5),
                   child: Container(
-                    padding: EdgeInsets.all(4),
-                    decoration: BoxDecoration(
+                    padding: const EdgeInsets.all(4),
+                    decoration: const BoxDecoration(
                       color: Colors.white,
                       shape: BoxShape.circle,
                     ),
@@ -345,10 +347,10 @@ class _MainchatState extends State<Mainchat> {
                     color: Colors.white,
                     borderRadius: BorderRadius.circular(35),
                   ),
-                  padding: EdgeInsets.all(1.5),
+                  padding: const EdgeInsets.all(1.5),
                   child: Container(
-                    padding: EdgeInsets.all(4),
-                    decoration: BoxDecoration(
+                    padding: const EdgeInsets.all(4),
+                    decoration: const BoxDecoration(
                       color: Colors.white,
                       shape: BoxShape.circle,
                     ),
@@ -365,7 +367,7 @@ class _MainchatState extends State<Mainchat> {
                   child: Container(
                     height: 12,
                     width: 12,
-                    decoration: BoxDecoration(
+                    decoration: const BoxDecoration(
                       color: Colors.green,
                       shape: BoxShape.circle,
                     ),
@@ -373,8 +375,8 @@ class _MainchatState extends State<Mainchat> {
                 ),
             ],
           ),
-          SizedBox(height: 8),
-          Text(name, style: TextStyle(fontSize: 12)),
+          const SizedBox(height: 8),
+          Text(name, style: const TextStyle(fontSize: 12)),
         ],
       ),
     );
@@ -401,7 +403,7 @@ class _MainchatState extends State<Mainchat> {
                 height: 10,
 
                 alignment: Alignment.center,
-                decoration: BoxDecoration(
+                decoration: const BoxDecoration(
                   color: Colors.red,
                   shape: BoxShape.circle,
                 ),
@@ -409,7 +411,7 @@ class _MainchatState extends State<Mainchat> {
             ),
         ],
       ),
-      title: Text(name, style: TextStyle(fontWeight: FontWeight.bold)),
+      title: Text(name, style: const TextStyle(fontWeight: FontWeight.bold)),
       subtitle: Text(chat ? 'No new messages' : message),
       trailing: Column(
         mainAxisAlignment: MainAxisAlignment.start,
@@ -418,12 +420,12 @@ class _MainchatState extends State<Mainchat> {
             onTap: () {
               Navigator.push(
                 context,
-                MaterialPageRoute(builder: (context) => LiveChatScreen()),
+                MaterialPageRoute(builder: (context) => const LiveChatScreen()),
               );
             },
             child: Image.asset('assets/images/icons/live.png'),
           ),
-          Text('Live', style: TextStyle(fontWeight: FontWeight.bold)),
+          const Text('Live', style: TextStyle(fontWeight: FontWeight.bold)),
         ],
       ),
     );
@@ -434,18 +436,18 @@ class _MainchatState extends State<Mainchat> {
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
-          title: Text('Delete Conversation'),
-          content:
-              Text('Are you sure you want to delete selected conversations?'),
+          title: const Text('Delete Conversation'),
+          content: const Text(
+              'Are you sure you want to delete selected conversations?'),
           actions: <Widget>[
             TextButton(
-              child: Text('Cancel'),
+              child: const Text('Cancel'),
               onPressed: () {
                 Navigator.of(context).pop();
               },
             ),
             TextButton(
-              child: Text('Delete'),
+              child: const Text('Delete'),
               onPressed: () {
                 setState(() {
                   selectedChatIndexes.sort((a, b) => b.compareTo(a));
@@ -487,7 +489,8 @@ class _MainchatState extends State<Mainchat> {
           leading: CircleAvatar(
             backgroundImage: AssetImage(imagePath),
           ),
-          title: Text(name, style: TextStyle(fontWeight: FontWeight.bold)),
+          title:
+              Text(name, style: const TextStyle(fontWeight: FontWeight.bold)),
           subtitle: Text(message),
           onTap: () {
             if (selectedChatIndexes.isEmpty) {
@@ -538,7 +541,7 @@ class _MainchatState extends State<Mainchat> {
                   child: Container(
                     height: 20,
                     width: 20,
-                    decoration: BoxDecoration(
+                    decoration: const BoxDecoration(
                       color: blue,
                       shape: BoxShape.circle,
                     ),
@@ -554,7 +557,69 @@ class _MainchatState extends State<Mainchat> {
               ),
             ],
           ),
-          SizedBox(height: 4),
+          const SizedBox(height: 4),
+          Text(name, style: const TextStyle(fontSize: 12)),
+        ],
+      ),
+    );
+  }
+
+  Widget profileAvatarMainStory(String name, String imagePath) {
+    const Color blue = Color.fromRGBO(54, 40, 221, 1.0);
+    return Padding(
+      padding: const EdgeInsets.only(left: 8, right: 8),
+      child: Column(
+        children: [
+          Stack(
+            children: [
+              // Container to add a red circular border
+
+              Container(
+                decoration: BoxDecoration(
+                  color: Colors.red,
+                  borderRadius: BorderRadius.circular(35),
+                ),
+                padding: const EdgeInsets.all(1.5),
+                child: Container(
+                  padding: const EdgeInsets.all(4),
+                  decoration: const BoxDecoration(
+                    color: Colors.white,
+                    shape: BoxShape.circle,
+                  ),
+                  child: CircleAvatar(
+                    radius:
+                        30, // Half of container's height/width for centering
+                    backgroundImage: AssetImage(imagePath),
+                  ),
+                ),
+              ),
+              Positioned(
+                right: 6,
+                bottom: 0,
+                child: GestureDetector(
+                  onTap: () {
+                    _showAddStatusOptions(context);
+                  },
+                  child: Container(
+                    height: 20,
+                    width: 20,
+                    decoration: const BoxDecoration(
+                      color: blue,
+                      shape: BoxShape.circle,
+                    ),
+                    child: const Center(
+                      child: Icon(
+                        Icons.add,
+                        color: Colors.white,
+                        size: 15,
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+            ],
+          ),
+          const SizedBox(height: 4),
           Text(name, style: const TextStyle(fontSize: 12)),
         ],
       ),
@@ -565,13 +630,13 @@ class _MainchatState extends State<Mainchat> {
     showModalBottomSheet(
       context: context,
       builder: (context) {
-        return Container(
+        return SizedBox(
           height: 200,
           child: Column(
             children: [
               ListTile(
-                leading: Icon(Icons.camera_alt),
-                title: Text('Take a photo'),
+                leading: const Icon(Icons.camera_alt),
+                title: const Text('Take a photo'),
                 onTap: () async {
                   final pickedFile =
                       await ImagePicker().pickImage(source: ImageSource.camera);
@@ -590,8 +655,8 @@ class _MainchatState extends State<Mainchat> {
                 },
               ),
               ListTile(
-                leading: Icon(Icons.image),
-                title: Text('Choose from gallery'),
+                leading: const Icon(Icons.image),
+                title: const Text('Choose from gallery'),
                 onTap: () async {
                   final pickedFile = await ImagePicker()
                       .pickImage(source: ImageSource.gallery);
@@ -608,8 +673,8 @@ class _MainchatState extends State<Mainchat> {
                 },
               ),
               ListTile(
-                leading: Icon(Icons.cancel),
-                title: Text('Cancel'),
+                leading: const Icon(Icons.cancel),
+                title: const Text('Cancel'),
                 onTap: () {
                   Navigator.pop(context);
                 },
@@ -625,7 +690,8 @@ class _MainchatState extends State<Mainchat> {
 class StoryViewerScreen extends StatefulWidget {
   final List<String> storyPaths; // Expecting List<String>
 
-  StoryViewerScreen({
+  const StoryViewerScreen({
+    super.key,
     required this.storyPaths,
   });
 
@@ -635,6 +701,13 @@ class StoryViewerScreen extends StatefulWidget {
 
 class _StoryViewerScreenState extends State<StoryViewerScreen> {
   int _currentStoryIndex = 0;
+  late PageController _pageController;
+
+  @override
+  void initState() {
+    super.initState();
+    _pageController = PageController();
+  }
 
   void _showNextStory() {
     if (_currentStoryIndex < widget.storyPaths.length - 1) {
@@ -646,22 +719,214 @@ class _StoryViewerScreenState extends State<StoryViewerScreen> {
     }
   }
 
+  void _onPageChanged(int index) {
+    setState(() {
+      _currentStoryIndex = index;
+    });
+  }
+
+  @override
+  void dispose() {
+    _pageController.dispose();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Your Story'),
+        title: const Text('Your Story'),
       ),
-      body: GestureDetector(
-        onTap: _showNextStory,
-        child: Container(
-          width: double.infinity, // Expand to full width
-          height: double.infinity, // Expand to full height
-          child: Image.file(
-            File(widget.storyPaths[_currentStoryIndex]),
-            fit: BoxFit.cover, // Ensure the image covers the entire area
+      body: Column(
+        children: [
+          // Page Indicator
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: List.generate(
+                widget.storyPaths.length,
+                (index) => Container(
+                  margin: const EdgeInsets.symmetric(horizontal: 4.0),
+                  width: 10.0,
+                  height: 10.0,
+                  decoration: BoxDecoration(
+                    color: _currentStoryIndex == index
+                        ? Colors.blue // Active indicator color
+                        : Colors.grey, // Inactive indicator color
+                    shape: BoxShape.circle,
+                  ),
+                ),
+              ),
+            ),
           ),
+          // PageView for Stories
+          Expanded(
+            child: GestureDetector(
+              onTap: _showNextStory,
+              child: PageView.builder(
+                controller: _pageController,
+                itemCount: widget.storyPaths.length,
+                onPageChanged: _onPageChanged,
+                itemBuilder: (context, index) {
+                  return Image.file(
+                    File(widget.storyPaths[index]),
+                    fit:
+                        BoxFit.cover, // Ensure the image covers the entire area
+                  );
+                },
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class HeartAnimationScreen extends StatefulWidget {
+  const HeartAnimationScreen({super.key});
+
+  @override
+  _HeartAnimationScreenState createState() => _HeartAnimationScreenState();
+}
+
+class _HeartAnimationScreenState extends State<HeartAnimationScreen> {
+  final List<Widget> _hearts = [];
+
+  void _showHearts() {
+    setState(() {
+      for (int i = 0; i < 10; i++) {
+        _hearts.add(_buildHeart());
+      }
+    });
+
+    Future.delayed(const Duration(seconds: 2), () {
+      setState(() {
+        _hearts.clear(); // Clear hearts after animation
+      });
+    });
+  }
+
+  Widget _buildHeart() {
+    final random = Random();
+    final duration =
+        Duration(milliseconds: 3000 + random.nextInt(1000)); // Longer duration
+    final startX = MediaQuery.of(context).size.width * 0.5 +
+        random.nextDouble() *
+            MediaQuery.of(context).size.width *
+            0.5; // Center to right
+    final size = 20.0 + random.nextDouble() * 20.0; // Heart size variation
+    final rotation = random.nextDouble() * 0.5 - 0.25; // Random slight rotation
+
+    return Positioned(
+      bottom: 50,
+      left: startX,
+      child: AnimatedHeart(
+        duration: duration,
+        endY: MediaQuery.of(context).size.height * 0.5 +
+            random.nextDouble() * 200,
+        size: size,
+        rotation: rotation,
+      ),
+    );
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      backgroundColor: Colors.black,
+      body: GestureDetector(
+        onTap: _showHearts,
+        child: Stack(
+          children: [
+            const Positioned.fill(
+              child: Center(
+                child: Text(
+                  'Tap to send hearts',
+                  style: TextStyle(color: Colors.white, fontSize: 20),
+                ),
+              ),
+            ),
+            ..._hearts,
+          ],
         ),
+      ),
+    );
+  }
+}
+
+class AnimatedHeart extends StatefulWidget {
+  final Duration duration;
+  final double endY;
+  final double size;
+  final double rotation;
+
+  const AnimatedHeart({
+    super.key,
+    required this.duration,
+    required this.endY,
+    required this.size,
+    required this.rotation,
+  });
+
+  @override
+  _AnimatedHeartState createState() => _AnimatedHeartState();
+}
+
+class _AnimatedHeartState extends State<AnimatedHeart>
+    with SingleTickerProviderStateMixin {
+  late final AnimationController _controller;
+  late final Animation<double> _positionAnimation;
+  late final Animation<double> _opacityAnimation;
+  late final double _startY;
+
+  @override
+  void initState() {
+    super.initState();
+    _controller = AnimationController(vsync: this, duration: widget.duration);
+    _startY = 0;
+
+    _positionAnimation =
+        Tween<double>(begin: _startY, end: widget.endY).animate(CurvedAnimation(
+      parent: _controller,
+      curve: Curves.easeOut,
+    ));
+    _opacityAnimation =
+        Tween<double>(begin: 1.0, end: 0.0).animate(CurvedAnimation(
+      parent: _controller,
+      curve: Curves.easeOut,
+    ));
+
+    _controller.forward();
+  }
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return AnimatedBuilder(
+      animation: _controller,
+      builder: (context, child) {
+        return Opacity(
+          opacity: _opacityAnimation.value,
+          child: Transform.translate(
+            offset: Offset(0, -_positionAnimation.value),
+            child: Transform.rotate(
+              angle: widget.rotation,
+              child: child,
+            ),
+          ),
+        );
+      },
+      child: Icon(
+        Icons.favorite,
+        color: Colors.pink,
+        size: widget.size,
       ),
     );
   }

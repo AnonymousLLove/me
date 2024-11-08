@@ -1,16 +1,16 @@
 import 'package:flutter/material.dart';
-import 'package:love_bird/onboarding/slidable.dart';
+import 'package:love_bird/config/routes.dart';
+
 import 'package:video_player/video_player.dart';
 
-class VideoApp extends StatefulWidget {
-  const VideoApp({super.key});
+class FirstScreen extends StatefulWidget {
+  const FirstScreen({super.key});
 
   @override
-  // ignore: library_private_types_in_public_api
-  _VideoAppState createState() => _VideoAppState();
+  _FirstScreenState createState() => _FirstScreenState();
 }
 
-class _VideoAppState extends State<VideoApp> {
+class _FirstScreenState extends State<FirstScreen> {
   late VideoPlayerController _controller;
 
   @override
@@ -24,7 +24,7 @@ class _VideoAppState extends State<VideoApp> {
       ..setLooping(true)
       ..initialize().then((_) {
         setState(() {});
-        _controller.play();
+        //   _controller.play();
       });
   }
 
@@ -93,11 +93,6 @@ class _VideoAppState extends State<VideoApp> {
   }
 
   void _navigateToSignUpScreen(BuildContext context) {
-    Navigator.push(
-      context,
-      MaterialPageRoute(
-        builder: (context) => const SlideableOnboardingScreen(),
-      ),
-    );
+    Navigator.pushNamed(context, slideableOnboardingScreen);
   }
 }

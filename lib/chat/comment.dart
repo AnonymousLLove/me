@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 
 class CommentSection extends StatefulWidget {
+  const CommentSection({super.key});
+
   @override
   _CommentSectionState createState() => _CommentSectionState();
 }
@@ -35,10 +37,10 @@ class _CommentSectionState extends State<CommentSection> {
               ),
             ),
           ),
-          SizedBox(height: 16), // Space before the text input
+          const SizedBox(height: 16), // Space before the text input
           AnimatedPadding(
             padding: EdgeInsets.only(bottom: keyboardHeight),
-            duration: Duration(milliseconds: 300),
+            duration: const Duration(milliseconds: 300),
             curve: Curves.easeOut,
             child: _buildCommentInput(),
           ),
@@ -52,19 +54,19 @@ class _CommentSectionState extends State<CommentSection> {
       padding: const EdgeInsets.only(top: 8.0),
       child: Row(
         children: [
-          CircleAvatar(
+          const CircleAvatar(
             backgroundImage: AssetImage('assets/images/homeImage.png'),
           ),
-          SizedBox(width: 8),
+          const SizedBox(width: 8),
           Expanded(
             child: Container(
-              padding: EdgeInsets.symmetric(
+              padding: const EdgeInsets.symmetric(
                   horizontal: 5,
                   vertical: 4), // Adjust padding for compact size
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(10),
                 border: Border.all(
-                  color: Color.fromRGBO(54, 40, 221, 1.0),
+                  color: const Color.fromRGBO(54, 40, 221, 1.0),
                   width: 1,
                 ),
               ),
@@ -77,12 +79,12 @@ class _CommentSectionState extends State<CommentSection> {
                         ? 'Add a comment...'
                         : 'Replying to ${_replyingTo!.username}',
                     border: InputBorder.none,
-                    hintStyle:
-                        TextStyle(fontSize: 12), // Adjust hint text font size
-                    contentPadding: EdgeInsets.symmetric(
+                    hintStyle: const TextStyle(
+                        fontSize: 12), // Adjust hint text font size
+                    contentPadding: const EdgeInsets.symmetric(
                         vertical: 8), // Reduce vertical padding
                   ),
-                  style: TextStyle(fontSize: 12), // Adjust text font size
+                  style: const TextStyle(fontSize: 12), // Adjust text font size
                 ),
               ),
             ),
@@ -111,7 +113,7 @@ class _CommentSectionState extends State<CommentSection> {
                 _replyingTo = null;
               }
             },
-            child: Text('Post'),
+            child: const Text('Post'),
           ),
         ],
       ),
@@ -132,18 +134,18 @@ class _CommentSectionState extends State<CommentSection> {
               RichText(
                 text: TextSpan(
                   text: comment.username,
-                  style: TextStyle(
+                  style: const TextStyle(
                       fontWeight: FontWeight.bold, color: Colors.black),
                   children: [
                     TextSpan(
                       text:
                           '  ${comment.timeAgo}', // Adds comma and space before time
-                      style: TextStyle(color: Colors.grey, fontSize: 12),
+                      style: const TextStyle(color: Colors.grey, fontSize: 12),
                     ),
                   ],
                 ),
               ),
-              Spacer(),
+              const Spacer(),
               Column(
                 children: [
                   GestureDetector(
@@ -164,10 +166,11 @@ class _CommentSectionState extends State<CommentSection> {
                       size: 16,
                     ),
                   ),
-                  SizedBox(height: 2), // Space between icon and like count
+                  const SizedBox(
+                      height: 2), // Space between icon and like count
                   Text(
                     '${comment.likeCount}', // Display like count
-                    style: TextStyle(color: Colors.grey, fontSize: 10),
+                    style: const TextStyle(color: Colors.grey, fontSize: 10),
                   ),
                 ],
               ),
@@ -180,17 +183,17 @@ class _CommentSectionState extends State<CommentSection> {
               Row(
                 children: [
                   Container(
-                    padding: EdgeInsets.all(5),
+                    padding: const EdgeInsets.all(5),
                     width: screenSize.width * 0.6,
                     decoration: BoxDecoration(
-                        color: Color.fromRGBO(217, 217, 217, 1),
+                        color: const Color.fromRGBO(217, 217, 217, 1),
                         borderRadius: BorderRadius.circular(5)),
                     child: Text(
                       " ${comment.content}",
-                      style: TextStyle(fontWeight: FontWeight.normal),
+                      style: const TextStyle(fontWeight: FontWeight.normal),
                     ),
                   ),
-                  SizedBox(width: 8),
+                  const SizedBox(width: 8),
                 ],
               ),
               GestureDetector(
@@ -199,12 +202,12 @@ class _CommentSectionState extends State<CommentSection> {
                     _replyingTo = comment;
                   });
                 },
-                child: Text(
+                child: const Text(
                   "Reply",
                   style: TextStyle(color: Colors.black, fontSize: 12),
                 ),
               ),
-              SizedBox(width: 8),
+              const SizedBox(width: 8),
               if (comment.replies.isNotEmpty)
                 Row(
                   children: [
@@ -219,7 +222,7 @@ class _CommentSectionState extends State<CommentSection> {
                         comment.areRepliesVisible
                             ? "Hide Replies"
                             : "View Replies",
-                        style: TextStyle(
+                        style: const TextStyle(
                             color: Color.fromRGBO(54, 40, 221, 1.0),
                             fontSize: 12),
                       ),

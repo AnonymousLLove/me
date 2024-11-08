@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:love_bird/createAccount/createAccount1.dart';
-import 'package:love_bird/sign/sign2.dart';
+import 'package:love_bird/config/routes.dart';
 import 'package:video_player/video_player.dart';
 
 class SignUpScreen extends StatefulWidget {
@@ -51,7 +50,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
       child: _controller.value.isInitialized
           ? SizedBox.expand(
               child: FittedBox(
-                fit: BoxFit.cover, // Make the video cover the entire screen
+                fit: BoxFit.cover,
                 child: SizedBox(
                   width: _controller.value.size.width,
                   height: _controller.value.size.height,
@@ -80,7 +79,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
           children: [
             _buildHeader(screenSize),
             _buildSignInOptions(screenSize),
-            SizedBox(width: 20),
+            const SizedBox(width: 20),
             _buildSignUpOption(),
           ],
         ),
@@ -155,10 +154,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
   Widget _buildLoginButton(Size screenSize) {
     return InkWell(
       onTap: () {
-        Navigator.push(
-          context,
-          MaterialPageRoute(builder: (context) => const LoginPage()),
-        );
+        Navigator.pushNamed(context, loginPage);
       },
       child: Container(
         width: screenSize.width * 0.8,
@@ -182,10 +178,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
         padding: const EdgeInsets.only(left: 20, right: 20, top: 60),
         child: InkWell(
           onTap: () {
-            Navigator.push(
-              context,
-              MaterialPageRoute(builder: (context) => const CreateAcc1()),
-            );
+            Navigator.pushNamed(context, createAccountRoute);
           },
           child: const Row(
             mainAxisAlignment: MainAxisAlignment.center,

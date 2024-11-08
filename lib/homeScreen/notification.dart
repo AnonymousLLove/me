@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:love_bird/chat/chatScreen.dart';
-import 'package:love_bird/chat/mainChat.dart';
+
+import 'package:love_bird/chat/main_chat.dart';
+import 'package:love_bird/config/routes.dart';
 import 'package:love_bird/edit%20profile%20screens/edit_low_profile_screen.dart';
 
-import 'package:love_bird/homeScreen/homeScreen2.dart';
+import 'package:love_bird/homeScreen/homescreen.dart';
 import 'package:love_bird/matches/likes.dart';
-import 'package:love_bird/matches/peopleNearby.dart';
+
+import 'package:love_bird/matches/people_nearby.dart';
 
 import 'package:love_bird/setting_screen/setting_screen.dart';
 import 'package:love_bird/safety_privacy_screens/safety_screen.dart';
@@ -116,8 +118,7 @@ class NotificationsPage extends StatelessWidget {
                   const SizedBox(width: 5),
                   GestureDetector(
                     onTap: () {
-                      showLibbyChatbot(
-                          context); // Call the separate function to show the popup
+                      Navigator.pushNamed(context, chatbotWelcomeScreen);
                     },
                     child: Image.asset('assets/images/robot.png'),
                   ),
@@ -183,684 +184,20 @@ class NotificationsPage extends StatelessWidget {
   }
 }
 
-class PurchaseCreditsPage extends StatelessWidget {
-  const PurchaseCreditsPage({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    const Color blue = Color.fromRGBO(54, 40, 221, 1.0);
-    return Scaffold(
-      body: Padding(
-        padding: const EdgeInsets.only(top: 12.0, right: 16, left: 16),
-        child: Column(
-          children: [
-            Row(
-              children: [
-                IconButton(
-                  icon: const Icon(Icons.arrow_back,
-                      color: Colors.black, size: 40),
-                  onPressed: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => const DatingProfilePage()),
-                    );
-                  },
-                ),
-                const SizedBox(width: 5),
-                GestureDetector(
-                  onTap: () {
-                    // Call the separate function to show the popup
-                    showLibbyChatbot(context);
-                  },
-                  child: Image.asset(
-                    'assets/images/robot.png',
-                    width: 50,
-                    height: 50,
-                  ),
-                ),
-              ],
-            ),
-
-            const Padding(
-              padding: EdgeInsets.only(top: 10),
-              child: Text(
-                "Get more messages, matches, and get to the top at one click!",
-                textAlign: TextAlign.center,
-                style: TextStyle(
-                    fontSize: 20, fontWeight: FontWeight.bold, color: blue),
-              ),
-            ),
-            const SizedBox(height: 10.0),
-            Expanded(
-              child: ListView(
-                children: const [
-                  // First Row (50 credits, N500.00)
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceAround,
-                    children: [
-                      CreditOption(
-                        credits: '50 credits',
-                        price: 'N500.00',
-                        description: 'Send up to 15 messages',
-                      ),
-                      Spacer(),
-                      CreditOption(
-                        credits: '150 credits',
-                        price: 'N1,100',
-                        description:
-                            'Send up to 25 messages, and get more chances to be matched instantly',
-                      ),
-                    ],
-                  ),
-                  SizedBox(height: 30.0),
-                  // Second Row (200 credits, N1600)
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      CreditOption(
-                        credits: '200 credits',
-                        price: 'N1,600',
-                        description:
-                            'Send up to 30 messages, get more chances to be matched instantly, and appear at the top on people nearby',
-                      ),
-                    ],
-                  ),
-                ],
-              ),
-            ),
-            // Buttons at the bottom
-            Column(
-              children: [
-                ElevatedButton(
-                  onPressed: () {
-                    // Handle continue action
-                  },
-                  style: ElevatedButton.styleFrom(
-                      minimumSize: const Size.fromHeight(50),
-                      backgroundColor: blue // Background color
-                      ),
-                  child: const Text(
-                    'Continue',
-                    style: TextStyle(
-                        fontSize: 18,
-                        color: Colors.white,
-                        fontWeight: FontWeight.bold),
-                  ),
-                ),
-                const SizedBox(height: 20),
-                ElevatedButton(
-                  onPressed: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => const DatingProfilePage()),
-                    ); // Handle close action
-                  },
-                  style: ElevatedButton.styleFrom(
-                    minimumSize: const Size.fromHeight(50),
-                    backgroundColor:
-                        Colors.deepPurple.shade100, // Background color
-                  ),
-                  child: const Text(
-                    'Close',
-                    style: TextStyle(
-                        fontSize: 18,
-                        color: Colors.white,
-                        fontWeight: FontWeight.bold),
-                  ),
-                ),
-                const SizedBox(height: 20),
-              ],
-            ),
-          ],
-        ),
-      ),
-    );
-  }
-}
-
-class CreditOption extends StatelessWidget {
-  final String credits;
-  final String price;
-  final String description;
-
-  const CreditOption({
-    super.key,
-    required this.credits,
-    required this.price,
-    required this.description,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    const Color blue = Color.fromRGBO(54, 40, 221, 1.0);
-    return Stack(
-      clipBehavior: Clip.none, // Allow overflow
-      alignment:
-          Alignment.topCenter, // Aligns the "200 credits" to the top center
-      children: [
-        // Main container for N1,600, description, etc.
-        Container(
-          width: 140,
-          height: 150,
-          padding: const EdgeInsets.only(top: 40, bottom: 20),
-          decoration: BoxDecoration(
-            border: Border.all(
-              color: blue, // Your color
-              width: 2.0, // Adjust this value to make the border thicker
-            ),
-            borderRadius: BorderRadius.circular(8),
-          ),
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              //  SizedBox(height: 20), // Spacer for the stacked "200 credits"
-              Text(
-                price,
-                style: const TextStyle(
-                  fontSize: 18,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-              const SizedBox(height: 8),
-              Text(
-                description,
-                textAlign: TextAlign.center,
-                style: const TextStyle(
-                  color: Color.fromRGBO(149, 140, 250, 1),
-                  fontSize: 8,
-                ),
-              ),
-            ],
-          ),
-        ),
-
-        // Stacked "200 credits" container
-        Positioned(
-          top: -10, // This aligns the container to sit on the border
-          child: Container(
-            padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 5),
-            decoration: BoxDecoration(
-              color: blue,
-              borderRadius: BorderRadius.circular(2),
-            ),
-            child: Text(
-              credits,
-              style: const TextStyle(
-                color: Colors.white,
-                fontWeight: FontWeight.bold,
-              ),
-            ),
-          ),
-        ),
-      ],
-    );
-  }
-}
-
-class UserProfilePage extends StatelessWidget {
-  const UserProfilePage({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    final screenHeight = MediaQuery.of(context).size.height;
-    final screenWidth = MediaQuery.of(context).size.width;
-
-    return Scaffold(
-      // appBar: AppBar(
-      //   leading: Row(
-      //     children: [
-      //       IconButton(
-      //         icon: const Icon(Icons.arrow_back, color: Colors.black, size: 10),
-      //         onPressed: () {
-      //           Navigator.pop(context);
-      //         },
-      //       ),
-      //       GestureDetector(
-      //         onTap: () {
-      //           showLibbyChatbot(context); // Call the popup function
-      //         },
-      //         child: Image.asset('assets/images/robot.png', width: 0),
-      //       ),
-      //     ],
-      //   ),
-      //   title: const Text(
-      //     'Profile',
-      //     style: TextStyle(
-      //       fontWeight: FontWeight.bold,
-      //       fontSize: 20,
-      //     ),
-      //   ),
-      //   centerTitle: true,
-      //   actions: [
-      //     Padding(
-      //       padding: EdgeInsets.only(top: 5),
-      //       child: IconButton(
-      //         icon: Image.asset('assets/images/icons/verblue.png',
-      //             width: 30, height: 30),
-      //         onPressed: () {
-      //           verify(context);
-      //         },
-      //       ),
-      //     ),
-      //     const SizedBox(width: 4),
-      //     IconButton(
-      //       icon: Image.asset('assets/images/message.png', width: 30),
-      //       onPressed: () {
-      //         showExtraViewsPopup(context); // Show extra views popup
-      //       },
-      //     ),
-      //     IconButton(
-      //       icon: const Icon(Icons.more_vert, color: Colors.black, size: 30),
-      //       onPressed: () {
-      //         _showPopup(context);
-      //       },
-      //     ),
-      //   ],
-      // ),
-      body: Padding(
-        padding: const EdgeInsets.all(10.0),
-        child: Column(
-          children: [
-            Padding(
-              padding: EdgeInsets.symmetric(
-                vertical: screenHeight * 0.01,
-              ), // Responsive vertical padding
-              // horizontal: screenWidth * 0.001),
-              child: Row(
-                children: [
-                  IconButton(
-                    icon: const Icon(Icons.arrow_back,
-                        color: Colors.black, size: 40),
-                    onPressed: () {
-                      Navigator.pop(context);
-                    },
-                  ),
-                  GestureDetector(
-                    onTap: () {
-                      showLibbyChatbot(
-                          context); // Call the separate function to show the popup
-                    },
-                    child: Image.asset('assets/images/robot.png', width: 40),
-                  ),
-                  const Expanded(
-                    child: Center(
-                        child: Text(
-                      'Profile',
-                      style:
-                          TextStyle(fontWeight: FontWeight.bold, fontSize: 24),
-                      textAlign: TextAlign.center,
-                    )),
-                  ),
-                  Padding(
-                    padding: EdgeInsets.only(top: 5),
-                    child: IconButton(
-                      icon: Image.asset('assets/images/icons/verblue.png',
-                          width: 30, height: 30),
-                      onPressed: () {
-                        verify(context);
-                      },
-                    ),
-                  ),
-                  const SizedBox(width: 4),
-                  IconButton(
-                    icon: Image.asset('assets/images/message.png', width: 30),
-                    onPressed: () {
-                      showExtraViewsPopup(context); // Show extra views popup
-                    },
-                  ),
-                  IconButton(
-                    icon: const Icon(Icons.more_vert,
-                        color: Colors.black, size: 30),
-                    onPressed: () {
-                      _showPopup(context);
-                    },
-                  ),
-                ],
-              ),
-            ),
-            Stack(
-              alignment: Alignment
-                  .bottomRight, // Aligns child widgets to the bottom right
-              children: [
-                ClipRRect(
-                  borderRadius: BorderRadius.circular(12.0),
-                  child: Image.asset(
-                    'assets/images/homeImage.png', // Path to the main image
-                    width: screenWidth * 0.9,
-                    height: screenHeight * 0.5,
-                    fit: BoxFit.cover,
-                  ),
-                ),
-                Positioned(
-                  bottom: 20, // Distance from the bottom
-                  right: 20,
-                  child: InkWell(
-                    onTap: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => const ChatDetailScreen(
-                            name: 'Daniel',
-                            profileImage: 'assets/images/homeImage.png',
-                            isOnline: true,
-                            lastMessage: 'Hello',
-                          ),
-                        ),
-                      );
-                    },
-                    child: Image.asset('assets/images/icons/messageicon.png'),
-                  ),
-                ),
-              ],
-            ),
-
-            const SizedBox(height: 20.0),
-            // Wrap the following content in a SingleChildScrollView
-            const Expanded(
-              child: SingleChildScrollView(
-                child: Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 20),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Text(
-                            'Daniel, 31',
-                            style: TextStyle(
-                                fontSize: 22, fontWeight: FontWeight.bold),
-                          ),
-                          Text(
-                            'Bio',
-                            style: TextStyle(
-                                fontSize: 22, fontWeight: FontWeight.bold),
-                          ),
-                        ],
-                      ),
-
-                      const SizedBox(height: 16.0),
-                      Row(children: [
-                        const ProfileDetail(
-                          icon: Icons.man,
-                          title: "Man",
-                        ),
-                        Spacer(),
-                        Text('Fun and Interesting',
-                            style: TextStyle(fontSize: 16))
-                      ]),
-
-                      const ProfileDetail(
-                        icon: Icons.rule_sharp,
-                        title: "145cm 65kg",
-                      ),
-                      ProfileDetail(
-                        icon: Icons.work,
-                        title: "Banker at Citi Bank",
-                      ),
-                      const ProfileDetail(
-                        icon: Icons.school,
-                        title: "University of Leeds, UK",
-                      ),
-                      const ProfileDetail(
-                        icon: Icons.home,
-                        title: "Lives in New London",
-                      ),
-                      const ProfileDetail(
-                        icon: Icons.location_on,
-                        title: "25km away",
-                      ),
-                      const SizedBox(height: 20.0),
-                      // Relationship basics
-                      const Text(
-                        'My relationship Basics',
-                        style: TextStyle(
-                            fontSize: 18, fontWeight: FontWeight.bold),
-                      ),
-                      const SizedBox(height: 10),
-                      const RelationshipOption(
-                        title: 'Friendship',
-                        icon: Icons.people,
-                        color: Colors.pinkAccent,
-                      ),
-                      const SizedBox(height: 20),
-                      // Interests
-                      const Text(
-                        'Interests',
-                        style: TextStyle(
-                            fontSize: 18, fontWeight: FontWeight.bold),
-                      ),
-                      const SizedBox(height: 10),
-                      const Wrap(
-                        spacing: 10,
-                        children: [
-                          InterestOption(
-                            title: 'Cooking',
-                            icon: Icons.restaurant_menu,
-                            color: Colors.orange,
-                          ),
-                          InterestOption(
-                            title: 'Hiking',
-                            icon: Icons.hiking,
-                            color: Colors.green,
-                          ),
-                        ],
-                      ),
-                      const SizedBox(height: 20),
-                      const Text(
-                        'Location',
-                        style: TextStyle(
-                            fontSize: 18, fontWeight: FontWeight.bold),
-                      ),
-                      const Text(
-                        'London,Uk',
-                        style: TextStyle(
-                          fontSize: 14,
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-              ),
-            ),
-          ],
-        ),
-      ),
-      bottomNavigationBar: Padding(
-        padding:
-            const EdgeInsets.only(left: 12.0, right: 12, top: 12, bottom: 22),
-        child: Container(
-          decoration: BoxDecoration(
-            color: Colors.grey[800],
-            borderRadius: BorderRadius.circular(50),
-          ),
-          child: ClipRRect(
-            borderRadius: BorderRadius.circular(50),
-            child: BottomNavigationBar(
-              type: BottomNavigationBarType.fixed,
-              items: [
-                BottomNavigationBarItem(
-                  icon: Image.asset('assets/images/icons/home.png', width: 30),
-                  label: 'Home',
-                ),
-                BottomNavigationBarItem(
-                  icon: Image.asset('assets/images/icons/localcon.png',
-                      width: 30),
-                  label: 'Location',
-                ),
-                BottomNavigationBarItem(
-                  icon: Image.asset('assets/images/icons/chatIcon.png',
-                      width: 30),
-                  label: 'Chats',
-                ),
-                BottomNavigationBarItem(
-                  icon:
-                      Image.asset('assets/images/icons/matches.png', width: 30),
-                  label: 'Matches',
-                ),
-                BottomNavigationBarItem(
-                  icon: Image.asset('assets/images/icons/blueProfile.png',
-                      width: 30),
-                  label: 'Profile',
-                ),
-              ],
-              onTap: (index) {
-                // Handle navigation based on the index
-                switch (index) {
-                  case 0:
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => DatingProfilePage()),
-                    );
-                    break;
-                  case 1:
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => PeopleNearbyPage()),
-                    );
-
-                    break;
-                  case 2:
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(builder: (context) => const Mainchat()),
-                    );
-
-                    break;
-                  case 3:
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(builder: (context) => const Likes()),
-                    );
-                    break;
-                  case 4:
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => const EditLowProfileScreen()),
-                    );
-                }
-              },
-            ),
-          ),
-        ),
-      ),
-    );
-  }
-}
-
-class ProfileDetail extends StatelessWidget {
-  final IconData icon;
-  final String title;
-
-  const ProfileDetail({super.key, required this.icon, required this.title});
-
-  @override
-  Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 4.0),
-      child: Row(
-        children: [
-          Icon(icon, color: Colors.black),
-          const SizedBox(width: 10),
-          Text(
-            title,
-            style: const TextStyle(fontSize: 16),
-          ),
-        ],
-      ),
-    );
-  }
-}
-
-class RelationshipOption extends StatelessWidget {
-  final String title;
-  final IconData icon;
-  final Color color;
-
-  const RelationshipOption({
-    super.key,
-    required this.title,
-    required this.icon,
-    required this.color,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 16),
-      decoration: BoxDecoration(
-        border: Border.all(color: Colors.purple),
-        borderRadius: BorderRadius.circular(20),
-      ),
-      child: Row(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          Text(
-            title,
-            style: const TextStyle(fontSize: 16),
-          ),
-          Icon(icon, color: color),
-          const SizedBox(width: 10),
-        ],
-      ),
-    );
-  }
-}
-
-class InterestOption extends StatelessWidget {
-  final String title;
-  final IconData icon;
-  final Color color;
-
-  const InterestOption({
-    super.key,
-    required this.title,
-    required this.icon,
-    required this.color,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 16),
-      decoration: BoxDecoration(
-        border: Border.all(color: Colors.purple),
-        borderRadius: BorderRadius.circular(20),
-      ),
-      child: Row(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          Text(
-            title,
-            style: const TextStyle(fontSize: 16),
-          ),
-          Icon(icon, color: color),
-          const SizedBox(width: 10),
-        ],
-      ),
-    );
-  }
-}
-
 void _showPopup(BuildContext context) {
   showGeneralDialog(
     context: context,
     barrierDismissible: true, // Dismiss when tapped outside
     barrierLabel: 'Dismiss',
     // Add a background overlay
-    transitionDuration: Duration(milliseconds: 300),
+    transitionDuration: const Duration(milliseconds: 300),
     pageBuilder: (context, animation1, animation2) {
       return Align(
         alignment: Alignment.topRight, // Align the dialog to the right
         child: Material(
           color: Colors.transparent,
           child: Padding(
-            padding: EdgeInsets.symmetric(vertical: 90, horizontal: 20),
+            padding: const EdgeInsets.symmetric(vertical: 90, horizontal: 20),
             child: Container(
               width: 200, // Set the width of your popup
               height: 335, // Set the height of your popup
@@ -868,7 +205,7 @@ void _showPopup(BuildContext context) {
                 color: Colors.white,
                 borderRadius: BorderRadius.circular(10),
               ),
-              padding: EdgeInsets.all(16),
+              padding: const EdgeInsets.all(16),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -876,7 +213,7 @@ void _showPopup(BuildContext context) {
                     onTap: () {
                       showSharePopup(context);
                     },
-                    child: Row(
+                    child: const Row(
                       children: [
                         Icon(Icons.share),
                         SizedBox(width: 5),
@@ -885,12 +222,12 @@ void _showPopup(BuildContext context) {
                       ],
                     ),
                   ),
-                  SizedBox(height: 15), // Space between items
+                  const SizedBox(height: 15), // Space between items
                   InkWell(
                     onTap: () {
                       showBlockPopup(context);
                     },
-                    child: Row(
+                    child: const Row(
                       children: [
                         Icon(Icons.block),
                         SizedBox(width: 5),
@@ -898,7 +235,7 @@ void _showPopup(BuildContext context) {
                       ],
                     ),
                   ),
-                  SizedBox(height: 15), // Space between items
+                  const SizedBox(height: 15), // Space between items
                   InkWell(
                     onTap: () {
                       Navigator.push(
@@ -906,7 +243,7 @@ void _showPopup(BuildContext context) {
                         MaterialPageRoute(builder: (context) => ReportPage()),
                       );
                     },
-                    child: Row(
+                    child: const Row(
                       children: [
                         Icon(Icons.report),
                         SizedBox(width: 5),
@@ -914,7 +251,7 @@ void _showPopup(BuildContext context) {
                       ],
                     ),
                   ),
-                  SizedBox(height: 15), // Space between items
+                  const SizedBox(height: 15), // Space between items
                   InkWell(
                     onTap: () {
                       Navigator.push(
@@ -923,7 +260,7 @@ void _showPopup(BuildContext context) {
                             builder: (context) => DatingPicture()),
                       );
                     },
-                    child: Row(
+                    child: const Row(
                       children: [
                         Icon(Icons.tips_and_updates),
                         SizedBox(width: 5),
@@ -931,7 +268,7 @@ void _showPopup(BuildContext context) {
                       ],
                     ),
                   ),
-                  SizedBox(height: 15), // Space between items
+                  const SizedBox(height: 15), // Space between items
                   InkWell(
                     onTap: () {
                       Navigator.push(
@@ -940,7 +277,7 @@ void _showPopup(BuildContext context) {
                             builder: (context) => const EditLowProfileScreen()),
                       );
                     },
-                    child: Row(
+                    child: const Row(
                       children: [
                         Icon(Icons.edit),
                         SizedBox(width: 5),
@@ -948,10 +285,10 @@ void _showPopup(BuildContext context) {
                       ],
                     ),
                   ),
-                  SizedBox(height: 15), // Space between items
+                  const SizedBox(height: 15), // Space between items
                   InkWell(
                     onTap: () {},
-                    child: Row(
+                    child: const Row(
                       children: [
                         Icon(Icons.money),
                         SizedBox(width: 5),
@@ -959,12 +296,13 @@ void _showPopup(BuildContext context) {
                       ],
                     ),
                   ),
-                  SizedBox(height: 15), // Space between items
+                  const SizedBox(height: 15), // Space between items
                   InkWell(
                     onTap: () {
                       Navigator.push(
                         context,
-                        MaterialPageRoute(builder: (context) => SafetyScreen()),
+                        MaterialPageRoute(
+                            builder: (context) => const SafetyScreen()),
                       );
                     },
                     child: const Row(
@@ -984,7 +322,7 @@ void _showPopup(BuildContext context) {
                             builder: (context) => const SettingsScreen()),
                       );
                     },
-                    child: Row(
+                    child: const Row(
                       children: [
                         Icon(Icons.settings),
                         SizedBox(width: 5),
@@ -1002,8 +340,8 @@ void _showPopup(BuildContext context) {
     transitionBuilder: (context, animation1, animation2, child) {
       return SlideTransition(
         position: Tween<Offset>(
-          begin: Offset(1, 0), // Slide in from the right
-          end: Offset(0, 0),
+          begin: const Offset(1, 0), // Slide in from the right
+          end: const Offset(0, 0),
         ).animate(animation1),
         child: child,
       );
@@ -1268,7 +606,7 @@ void showSharePopupp(BuildContext context) {
       ),
       builder: (BuildContext context) {
         return Container(
-          padding: EdgeInsets.all(16),
+          padding: const EdgeInsets.all(16),
           height: MediaQuery.of(context).size.height *
               0.4, // Adjust height as needed
           child: SingleChildScrollView(
@@ -1383,7 +721,7 @@ Widget _buildProfileAvatar(String name, String lname, String i) {
   return Column(
     children: [
       Padding(
-        padding: EdgeInsets.all(10),
+        padding: const EdgeInsets.all(10),
         child: CircleAvatar(
           radius: 30,
           backgroundColor: Colors.grey[300],
@@ -1397,14 +735,14 @@ Widget _buildProfileAvatar(String name, String lname, String i) {
           ),
         ),
       ),
-      SizedBox(height: 10),
+      const SizedBox(height: 10),
       Text(
         name,
-        style: TextStyle(fontSize: 14),
+        style: const TextStyle(fontSize: 14),
       ),
       Text(
         lname,
-        style: TextStyle(fontSize: 14),
+        style: const TextStyle(fontSize: 14),
       )
     ],
   );
@@ -1412,7 +750,7 @@ Widget _buildProfileAvatar(String name, String lname, String i) {
 
 Widget _buildSocialMediaIcon(String social) {
   return Padding(
-      padding: EdgeInsets.all(10),
+      padding: const EdgeInsets.all(10),
       child: Image.asset(
         social,
         // fit: BoxFit.cover,
@@ -1422,6 +760,8 @@ Widget _buildSocialMediaIcon(String social) {
 }
 
 class ReportPage extends StatefulWidget {
+  const ReportPage({super.key});
+
   @override
   _ReportPageState createState() => _ReportPageState();
 }
@@ -1447,7 +787,7 @@ class _ReportPageState extends State<ReportPage> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Row(
+              const Row(
                 children: [],
               ),
 
@@ -1531,14 +871,14 @@ void verify(BuildContext context) {
     barrierDismissible: true, // Dismiss when tapped outside
     barrierLabel: 'Dismiss',
     barrierColor: Colors.transparent,
-    transitionDuration: Duration(milliseconds: 300),
+    transitionDuration: const Duration(milliseconds: 300),
     pageBuilder: (context, animation1, animation2) {
       return Align(
         alignment: Alignment.topRight,
         child: Material(
           color: Colors.transparent,
           child: Padding(
-            padding: EdgeInsets.symmetric(vertical: 90, horizontal: 20),
+            padding: const EdgeInsets.symmetric(vertical: 90, horizontal: 20),
             child: Container(
                 width: 250,
                 height: 50,
@@ -1546,12 +886,12 @@ void verify(BuildContext context) {
                   color: Colors.white,
                   borderRadius: BorderRadius.circular(10),
                 ),
-                padding: EdgeInsets.all(16),
+                padding: const EdgeInsets.all(16),
                 child: Row(
                   children: [
                     Image.asset('assets/images/icons/verblue.png',
                         width: 30, height: 30),
-                    Text('Daniel is Photo Verified',
+                    const Text('Daniel is Photo Verified',
                         style: TextStyle(
                             fontWeight: FontWeight.bold, fontSize: 15))
                   ],
@@ -1563,8 +903,8 @@ void verify(BuildContext context) {
     transitionBuilder: (context, animation1, animation2, child) {
       return SlideTransition(
         position: Tween<Offset>(
-          begin: Offset(1, 0), // Slide in from the right
-          end: Offset(0, 0),
+          begin: const Offset(1, 0), // Slide in from the right
+          end: const Offset(0, 0),
         ).animate(animation1),
         child: child,
       );
@@ -1619,33 +959,33 @@ void showBlockPopup(BuildContext context) {
                     ),
                     const Divider(thickness: 1, color: Colors.black),
                     const SizedBox(height: 12),
-                    Row(children: [
-                      const Icon(Icons.person_remove),
-                      const SizedBox(width: 5),
+                    const Row(children: [
+                      Icon(Icons.person_remove),
+                      SizedBox(width: 5),
                       Expanded(
-                        child: const Text(
+                        child: Text(
                           'They will not be able to find your profile or send you messages.',
                           style: TextStyle(fontSize: 13, color: Colors.black),
                         ),
                       ),
                     ]),
                     const SizedBox(height: 12),
-                    Row(children: [
-                      const Icon(Icons.notifications_none),
-                      const SizedBox(width: 5),
+                    const Row(children: [
+                      Icon(Icons.notifications_none),
+                      SizedBox(width: 5),
                       Expanded(
-                        child: const Text(
+                        child: Text(
                           'They will not be notified if you block them.',
                           style: TextStyle(fontSize: 13, color: Colors.black),
                         ),
                       ),
                     ]),
                     const SizedBox(height: 12),
-                    Row(children: [
-                      const Icon(Icons.settings),
-                      const SizedBox(width: 5),
+                    const Row(children: [
+                      Icon(Icons.settings),
+                      SizedBox(width: 5),
                       Expanded(
-                        child: const Text(
+                        child: Text(
                           'You can unblock them anytime in Settings.',
                           style: TextStyle(fontSize: 13, color: Colors.black),
                         ),
@@ -1720,12 +1060,14 @@ void showBlockPopup(BuildContext context) {
 }
 
 class DatingPicture extends StatefulWidget {
+  const DatingPicture({super.key});
+
   @override
   _DatingPictureState createState() => _DatingPictureState();
 }
 
 class _DatingPictureState extends State<DatingPicture> {
-  PageController _pageController = PageController(initialPage: 0);
+  final PageController _pageController = PageController(initialPage: 0);
   int _currentPage = 0;
 
   @override
@@ -1736,7 +1078,7 @@ class _DatingPictureState extends State<DatingPicture> {
 
   @override
   Widget build(BuildContext context) {
-    Color blue = Color.fromRGBO(54, 40, 221, 1.0);
+    Color blue = const Color.fromRGBO(54, 40, 221, 1.0);
     final screenHeight = MediaQuery.of(context).size.height;
 
     return Scaffold(
@@ -1752,7 +1094,8 @@ class _DatingPictureState extends State<DatingPicture> {
           children: [
             GestureDetector(
               onTap: () {
-                showLibbyChatbot(context); // Call the popup function
+                Navigator.pushNamed(
+                    context, chatbotWelcomeScreen); // Call the popup function
               },
               child: Image.asset('assets/images/robot.png', width: 40),
             ),
@@ -1829,7 +1172,7 @@ class _DatingPictureState extends State<DatingPicture> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     PageIndicator(isActive: _currentPage == 0),
-                    SizedBox(width: 10),
+                    const SizedBox(width: 10),
                     PageIndicator(isActive: _currentPage == 1),
                   ],
                 ),
@@ -1838,7 +1181,7 @@ class _DatingPictureState extends State<DatingPicture> {
           ),
 
           // Second page
-          DatingTipsPage(),
+          const DatingTipsPage(),
         ],
       ),
       // Bottom page indicators
@@ -1888,14 +1231,14 @@ class _DatingPictureState extends State<DatingPicture> {
                     Navigator.push(
                       context,
                       MaterialPageRoute(
-                          builder: (context) => DatingProfilePage()),
+                          builder: (context) => const HomeScreen()),
                     );
                     break;
                   case 1:
                     Navigator.push(
                       context,
                       MaterialPageRoute(
-                          builder: (context) => PeopleNearbyPage()),
+                          builder: (context) => const PeopleNearbyPage()),
                     );
 
                     break;
@@ -1932,7 +1275,7 @@ class _DatingPictureState extends State<DatingPicture> {
 class PageIndicator extends StatelessWidget {
   final bool isActive;
 
-  PageIndicator({required this.isActive});
+  const PageIndicator({super.key, required this.isActive});
 
   @override
   Widget build(BuildContext context) {
@@ -1941,7 +1284,7 @@ class PageIndicator extends StatelessWidget {
       height: 10,
       decoration: BoxDecoration(
         shape: BoxShape.circle,
-        color: isActive ? Color.fromRGBO(54, 40, 221, 1.0) : Colors.grey,
+        color: isActive ? const Color.fromRGBO(54, 40, 221, 1.0) : Colors.grey,
       ),
     );
   }
@@ -1993,7 +1336,7 @@ class _DatingTipsPageState extends State<DatingTipsPage> {
       "If you're enjoying the date, end it with an 'accidental touch.'",
       "After a first date, ask yourself 8 questions to decide if you could be compatible for the long term.",
     ];
-    Color blue = Color.fromRGBO(54, 40, 221, 1.0);
+    Color blue = const Color.fromRGBO(54, 40, 221, 1.0);
     // final screenHeight = MediaQuery.of(context).size.height;
     //  final screenWidth = MediaQuery.of(context).size.width;
 
@@ -2009,7 +1352,7 @@ class _DatingTipsPageState extends State<DatingTipsPage> {
                     padding: const EdgeInsets.symmetric(vertical: 16.0),
                     child: ListView.builder(
                       physics:
-                          NeverScrollableScrollPhysics(), // Prevent inner scroll
+                          const NeverScrollableScrollPhysics(), // Prevent inner scroll
                       shrinkWrap:
                           true, // Makes ListView take only necessary space
                       itemCount: datingTips.length,
@@ -2019,7 +1362,7 @@ class _DatingTipsPageState extends State<DatingTipsPage> {
                               Image.asset('assets/images/icons/loveTips.png'),
                           title: Text(
                             datingTips[index],
-                            style: TextStyle(
+                            style: const TextStyle(
                               fontSize: 16,
                               color: Colors.black,
                             ),
@@ -2029,10 +1372,10 @@ class _DatingTipsPageState extends State<DatingTipsPage> {
                     ),
                   ),
                   Padding(
-                    padding: EdgeInsets.only(left: 20),
+                    padding: const EdgeInsets.only(left: 20),
                     child: ListView.builder(
                       physics:
-                          NeverScrollableScrollPhysics(), // Prevent inner scroll
+                          const NeverScrollableScrollPhysics(), // Prevent inner scroll
                       shrinkWrap:
                           true, // Makes ListView take only necessary space
                       itemCount: datingBlue.length,
@@ -2049,7 +1392,7 @@ class _DatingTipsPageState extends State<DatingTipsPage> {
                   ),
                   ListView.builder(
                     physics:
-                        NeverScrollableScrollPhysics(), // Prevent inner scroll
+                        const NeverScrollableScrollPhysics(), // Prevent inner scroll
                     shrinkWrap:
                         true, // Makes ListView take only necessary space
                     itemCount: datingTips2.length,
@@ -2059,7 +1402,7 @@ class _DatingTipsPageState extends State<DatingTipsPage> {
                             Icon(Icons.favorite_border_outlined, color: blue),
                         title: Text(
                           datingTips2[index],
-                          style: TextStyle(
+                          style: const TextStyle(
                             fontSize: 16,
                             color: Colors.black,
                           ),

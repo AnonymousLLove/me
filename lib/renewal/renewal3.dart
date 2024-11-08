@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:love_bird/homeScreen/homeScreen2.dart';
+import 'package:love_bird/homeScreen/homeScreen.dart';
 
 import 'package:love_bird/subscription%20plan/standard_plan.dart';
 
 class PremiumExpiredScreen extends StatelessWidget {
-  const PremiumExpiredScreen({Key? key}) : super(key: key);
+  const PremiumExpiredScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -54,7 +54,7 @@ class PremiumExpiredScreen extends StatelessWidget {
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(30),
                     ),
-                    backgroundColor: Color.fromRGBO(54, 40, 221, 1.0),
+                    backgroundColor: const Color.fromRGBO(54, 40, 221, 1.0),
                   ),
                   child: const Text(
                     'Renew',
@@ -75,14 +75,14 @@ class PremiumExpiredScreen extends StatelessWidget {
                     Navigator.push(
                       context,
                       MaterialPageRoute(
-                          builder: (context) => const DatingProfilePage()),
+                          builder: (context) => const HomeScreen()),
                     );
                   },
                   style: ElevatedButton.styleFrom(
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(30),
                     ),
-                    backgroundColor: Color.fromRGBO(
+                    backgroundColor: const Color.fromRGBO(
                       149,
                       140,
                       250,
