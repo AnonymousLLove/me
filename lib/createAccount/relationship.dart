@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:love_bird/config/routes.dart';
-import 'package:love_bird/providers/relationship_goal_dart';
+import 'package:love_bird/providers/relationship_goal_provider.dart';
 import 'package:provider/provider.dart';
 
 class RelationshipGoalsScreen extends StatelessWidget {

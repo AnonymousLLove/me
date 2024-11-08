@@ -9,10 +9,10 @@ import 'package:love_bird/providers/gender_provider.dart';
 import 'package:love_bird/providers/interest_provider.dart';
 import 'package:love_bird/providers/nickname_provider.dart';
 import 'package:love_bird/providers/relationship_goal_provider.dart';
-import 'package:love_bird/providers/image_provider.dart';
 
 import 'package:provider/provider.dart';
 
+//START FRROM SIX IMAGES
 void main() {
   runApp(
     MultiProvider(

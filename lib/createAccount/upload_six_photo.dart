@@ -1,48 +1,36 @@
+import 'dart:io';
 import 'package:flutter/material.dart';
-import 'package:love_bird/createAccount/photoVerification/photoVerificationOne.dart';
-import 'package:love_bird/providers/image_provider.dart';
-import 'package:provider/provider.dart';
 import 'package:image_picker/image_picker.dart';
 
-class UploadPicturesScreen extends StatelessWidget {
+import 'package:love_bird/createAccount/photoVerification/photoVerificationOne.dart';
+
+class UploadPicturesScreen extends StatefulWidget {
   const UploadPicturesScreen({super.key});
 
-  _showImageSourceActionSheet(BuildContext context, int index) {
-    showModalBottomSheet(
-      context: context,
-      builder: (BuildContext context) {
-        return SafeArea(
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              ListTile(
-                leading: const Icon(Icons.photo_library),
-                title: const Text('Pick from gallery'),
-                onTap: () {
-                  Navigator.pop(context);
-                  Provider.of<SixImageProvider>(context, listen: false)
-                      .pickImage(index, ImageSource.gallery);
-                },
-              ),
-              ListTile(
-                leading: const Icon(Icons.camera_alt),
-                title: const Text('Take a photo'),
-                onTap: () {
-                  Navigator.pop(context);
-                  Provider.of<SixImageProvider>(context, listen: false)
-                      .pickImage(index, ImageSource.camera);
-                },
-              ),
-            ],
-          ),
-        );
-      },
-    );
+  @override
+  _UploadPicturesScreenState createState() => _UploadPicturesScreenState();
+}
+
+class _UploadPicturesScreenState extends State<UploadPicturesScreen> {
+  List<File?> images = List.filled(9, null); // Stores up to 9 images
+  final ImagePicker _picker = ImagePicker();
+
+  Future<void> _pickImage(int index, ImageSource source) async {
+    final pickedFile = await _picker.pickImage(source: source);
+    if (pickedFile != null) {
+      setState(() {
+        images[index] = File(pickedFile.path);
+      });
+    }
   }
 
-  Widget _buildImageGrid(BuildContext context) {
-    final imageProvider = Provider.of<SixImageProvider>(context);
+  void _removeImage(int index) {
+    setState(() {
+      images[index] = null;
+    });
+  }
 
+  Widget _buildImageGrid() {
     return GridView.builder(
       shrinkWrap: true,
       gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
@@ -50,37 +38,38 @@ class UploadPicturesScreen extends StatelessWidget {
         crossAxisSpacing: 10,
         mainAxisSpacing: 20,
       ),
-      itemCount: 9,
+      itemCount: 9, // Total images or slots
       itemBuilder: (context, index) {
         return GestureDetector(
-          onTap: () => _showImageSourceActionSheet(context, index),
+          onTap: () => _showImageSourceActionSheet(index),
           child: Stack(
-            clipBehavior: Clip.none,
+            clipBehavior:
+                Clip.none, // Allows elements to overflow outside the grid item
             children: [
               Container(
                 decoration: BoxDecoration(
                   color: Colors.grey[300],
                   borderRadius: BorderRadius.circular(8),
                 ),
-                child: imageProvider.images[index] == null
+                child: images[index] == null
                     ? const Center(
                         child: Icon(Icons.add, size: 24, color: Colors.grey))
                     : ClipRRect(
                         borderRadius: BorderRadius.circular(8),
                         child: Image.file(
-                          imageProvider.images[index]!,
+                          images[index]!,
                           fit: BoxFit.cover,
                           width: double.infinity,
                           height: double.infinity,
                         ),
                       ),
               ),
-              if (imageProvider.images[index] != null)
+              if (images[index] != null)
                 Positioned(
                   top: -8,
                   right: -8,
                   child: GestureDetector(
-                    onTap: () => imageProvider.removeImage(index),
+                    onTap: () => _removeImage(index),
                     child: Container(
                       color: Colors.red,
                       padding: const EdgeInsets.all(2),
@@ -99,88 +88,122 @@ class UploadPicturesScreen extends StatelessWidget {
     );
   }
 
-  @override
-  Widget build(BuildContext context) {
-    final imageProvider = Provider.of<SixImageProvider>(context);
-
-    return Scaffold(
-      body: SafeArea(
-        child: Padding(
-          padding: EdgeInsets.symmetric(
-            horizontal: MediaQuery.of(context).size.width * 0.05,
-            vertical: MediaQuery.of(context).size.height * 0.02,
-          ),
+  void _showImageSourceActionSheet(int index) {
+    showModalBottomSheet(
+      context: context,
+      builder: (BuildContext context) {
+        return SafeArea(
           child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
+            mainAxisSize: MainAxisSize.min,
             children: [
-              SizedBox(
-                width: MediaQuery.of(context).size.width,
-                height: 15,
-                child: Stack(
-                  children: [
-                    ClipRRect(
-                      borderRadius: BorderRadius.circular(10.0),
-                      child: Container(
-                        color: const Color(0xFF3628DD).withOpacity(0.19),
-                      ),
-                    ),
-                    ClipRRect(
-                      borderRadius: BorderRadius.circular(10.0),
-                      child: Container(
-                        width: MediaQuery.of(context).size.width * 0.7,
-                        color: const Color(0xFF3628DD),
-                      ),
-                    ),
-                  ],
-                ),
+              ListTile(
+                leading: const Icon(Icons.photo_library),
+                title: const Text('Pick from gallery'),
+                onTap: () {
+                  Navigator.pop(context);
+                  _pickImage(index, ImageSource.gallery);
+                },
               ),
-              const SizedBox(height: 25),
-              Row(children: [
-                const Text('Show Your Best Self',
-                    style:
-                        TextStyle(fontSize: 24, fontWeight: FontWeight.bold)),
-                const SizedBox(width: 5),
-                Image.asset('assets/images/six.png', width: 40)
-              ]),
-              const Text(
-                'Upload at least 6 of your best pictures to make a great first impression.',
-                style: TextStyle(fontSize: 18),
-              ),
-              const SizedBox(height: 20),
-              _buildImageGrid(context),
-              const Spacer(),
-              Container(
-                alignment: Alignment.center,
-                child: ElevatedButton(
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: imageProvider.uploadedImageCount >= 1
-                        ? const Color.fromRGBO(54, 40, 221, 1)
-                        : Colors.grey,
-                    foregroundColor: const Color.fromRGBO(54, 40, 221, 1),
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(25.0),
-                    ),
-                    minimumSize: const Size(double.infinity, 50),
-                  ),
-                  onPressed: imageProvider.uploadedImageCount >= 1
-                      ? () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => PhotoVerificationOne(
-                                  images: imageProvider.images),
-                            ),
-                          );
-                        }
-                      : null,
-                  child: Text(
-                    "Continue (${imageProvider.uploadedImageCount}/9)",
-                    style: const TextStyle(fontSize: 18, color: Colors.white),
-                  ),
-                ),
+              ListTile(
+                leading: const Icon(Icons.camera_alt),
+                title: const Text('Take a photo'),
+                onTap: () {
+                  Navigator.pop(context);
+                  _pickImage(index, ImageSource.camera);
+                },
               ),
             ],
           ),
+        );
+      },
+    );
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    // Count how many images have been uploaded
+    int uploadedImageCount = images.where((image) => image != null).length;
+
+    return Scaffold(
+      body: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 50.0),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            SizedBox(
+              width: MediaQuery.of(context).size.width,
+              height: 15,
+              child: Stack(
+                children: [
+                  ClipRRect(
+                    borderRadius:
+                        BorderRadius.circular(10.0), // Outer rounded corners
+                    child: Container(
+                      color: const Color(0xFF3628DD)
+                          .withOpacity(0.19), // Background color
+                    ),
+                  ),
+                  // Inner progress bar
+                  ClipRRect(
+                    borderRadius:
+                        BorderRadius.circular(10.0), // Inner rounded corners
+                    child: Container(
+                      width: MediaQuery.of(context).size.width *
+                          0.7, // Set width to represent progress
+                      color: const Color(0xFF3628DD), // Progress color
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            const SizedBox(height: 25),
+            Row(children: [
+              const Text('Show Your Best Self',
+                  style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold)),
+              const SizedBox(width: 5),
+              Image.asset('assets/images/six.png', width: 40)
+            ]),
+            const Text(
+              'Upload at least 6 of your best pictures to make a great first impression.',
+              style: TextStyle(fontSize: 18),
+            ),
+            const SizedBox(height: 20),
+            _buildImageGrid(),
+            const Spacer(),
+            Container(
+              alignment: Alignment.center,
+              child: ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: uploadedImageCount >= 1
+                      ? const Color.fromRGBO(54, 40, 221, 1)
+                      : Colors
+                          .grey, // Button is disabled (gray) until 6 images are uploaded
+                  foregroundColor: const Color.fromRGBO(54, 40, 221, 1),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(25.0),
+                  ),
+                  minimumSize:
+                      const Size(double.infinity, 50), // full-width button
+                ),
+                onPressed: uploadedImageCount >= 1
+                    ? () {
+                        //Navigator.pushNamed(context, photoVerificationOne);
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) =>
+                                  PhotoVerificationOne(images: images)),
+                        );
+                      }
+                    : null,
+                // Button disabled until at least 6 images are uploaded
+                child: Text(
+                  "Continue ($uploadedImageCount/9)", // Show current progress
+                  style: const TextStyle(fontSize: 18, color: Colors.white),
+                ),
+              ),
+            ),
+          ],
         ),
       ),
     );
